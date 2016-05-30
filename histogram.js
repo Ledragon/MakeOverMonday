@@ -60,10 +60,6 @@ function histogram(container, width, height) {
                 .classed('title', true)
                 .attr('transform', `translate(${width/2},10)`)
                 .append('text')
-                .attr({
-                    'text-anchor': 'middle'
-                })
-                .style('font-size','1.2em')
                 .text('Number of famous people by century')
         }
     });

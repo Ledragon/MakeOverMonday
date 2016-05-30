@@ -10,3 +10,7 @@
     fill:transparent;
     stroke:darkgray;
 }
+.title{
+    text-anchor: middle;
+    font-size: 1.2em;
+}
