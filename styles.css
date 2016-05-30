@@ -1,0 +1,12 @@
+.chart{
+}
+.axis .tick text{
+    font-size:.8em;
+}
+.tick line{
+    stroke:darkgray;
+}
+.domain{
+    fill:transparent;
+    stroke:darkgray;
+}
