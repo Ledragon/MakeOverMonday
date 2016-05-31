@@ -1,16 +1,16 @@
-function map(container, width, height) {
-    d3.csv('History of Famous People.csv', function (error, data) {
-        if (error) {
-            console.error(error);
-        } else {
+function map(container, width, height, data) {
             var map = d3.select(`#${container}`)
+                .attr({
+                    width: width,
+                    height: height
+                })
                 .append('g')
                 .classed('map', true);
-                //.attr('transform', 'translate(0,50)');
+            //.attr('transform', 'translate(0,50)');
             map.append('g')
                 .classed('title', true)
-                .attr('transform', `translate(${width/2},30)`)
-                .append('text')                
+                .attr('transform', `translate(${width / 2},30)`)
+                .append('text')
                 .text('Number of famous people by country');
             var key = 'Country Name';
             var nested = d3.nest()
@@ -29,10 +29,10 @@ function map(container, width, height) {
                     var color = d3.scale.linear()
                         .domain(extent)
                         .interpolate(d3.interpolateHcl)
-                        .range([d3.rgb('#F0F7F4'), d3.rgb('#3C493F')]);
+                        .range([d3.rgb('#C2E7D9'), d3.rgb('#0D0221')]);
                     var projection = d3.geo.mercator()
                         .translate([width / 2, height / 2])
-                        .scale(width / 8);
+                        .scale(height / 6);
                     var pathGenerator = d3.geo.path().projection(projection);
                     countries.selectAll('path')
                         .data(geo.features)
@@ -86,5 +86,5 @@ function map(container, width, height) {
                 }
             });
         }
-    });
-}
+//     });
+// }
