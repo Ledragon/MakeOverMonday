@@ -16,7 +16,7 @@ function map(container, width, height, data) {
             var nested = d3.nest()
                 .key(d => d[key])
                 .entries(data.filter(d => d[key] && d[key] !== "Unknown"));
-            d3.json('data/world.json', function (error, geo) {
+            d3.json('world.json', function (error, geo) {
                 if (error) {
                     console.error(error);
                 } else {
