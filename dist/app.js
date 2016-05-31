@@ -2,7 +2,7 @@ function histogram(container, width, height, data) {
     // console.log(data);
     var marginLeft = 50;
     var marginRight = 20;
-    var marginTop = 20;
+    var marginTop = 40;
     var marginBottom = 40;
     // var width = 800;
     // var height = 600;
@@ -15,7 +15,10 @@ function histogram(container, width, height, data) {
     })
         .append('g')
         .classed('chart', true)
-        .attr('transform', "translate(" + marginLeft + "," + marginTop + ")");
+        .attr('transform', "translate(" + marginLeft + "," + 0 + ")");
+    var plotArea = chart.append('g')
+        .classed('chart-container', true)
+        .attr('transform', "translate(" + 0 + "," + marginTop + ")");
     var yScale = d3.time.scale()
         .range([0, height - marginTop - marginBottom])
         .domain([-3500, 2000]);
@@ -23,7 +26,7 @@ function histogram(container, width, height, data) {
         .scale(yScale)
         .orient('left')
         .tickFormat(d3.format('YYYY'));
-    var axisGroup = chart.append('g')
+    var axisGroup = plotArea.append('g')
         .classed('axis', true)
         .call(axis);
     var histogram = d3.layout.histogram()
@@ -35,7 +38,7 @@ function histogram(container, width, height, data) {
         .range([0, width - marginLeft - marginRight])
         .domain([0, 6000]);
     // console.log(split)
-    chart.append('g')
+    plotArea.append('g')
         .classed('series', true)
         .selectAll('.bin')
         .data(split)
@@ -53,11 +56,11 @@ function histogram(container, width, height, data) {
         }
     })
         .style('fill', '#A6CFD5');
-    chart.append('g')
-        .classed('title', true)
-        .attr('transform', "translate(" + width / 2 + ",10)")
-        .append('text')
-        .text('Number of famous people by century');
+    // chart.append('g')
+    //     .classed('title', true)
+    //     .attr('transform', `translate(${width / 2},10)`)
+    //     .append('text')
+    title(chart, width, 'Number of famous people by century');
 }
 function map(container, width, height, data) {
     var map = d3.select("#" + container)
@@ -159,7 +162,7 @@ function womenPerIndustry(container, width, height, data) {
     })
         .append('g')
         .classed('chart', true);
-    title(chart, width, height);
+    title(chart, width, 'Women per industry');
     var women = data.filter(function (d) { return d['Gender'] === 'Female'; });
     var nested = d3.nest()
         .key(function (d) { return d.Industry; })
@@ -197,21 +200,21 @@ function womenPerIndustry(container, width, height, data) {
         .attr('transform', "translate(" + marginLeft + "," + marginTop + ")")
         .call(oridnalAxis);
 }
-function title(container, width, height) {
-    container.append('g')
-        .classed('title', true)
-        .attr('transform', "translate(" + width / 2 + ", 40)")
-        .append('text')
-        .classed('title', true)
-        .text('Women per industry');
-}
+// function title(container, width, height) {
+//     container.append('g')
+//         .classed('title', true)
+//         .attr('transform', `translate(${width / 2}, 40)`)
+//         .append('text')
+//         .classed('title', true)
+//         .text('Women per industry');
+// } 
 var app;
 (function (app) {
     var viewPerYearOfBirth = (function () {
         function viewPerYearOfBirth(containerId, _width, _height) {
             this._width = _width;
             this._height = _height;
-            this._marginTop = 20;
+            this._marginTop = 50;
             this._marginBottom = 50;
             this._marginLeft = 50;
             this._marginRight = 20;
@@ -222,9 +225,12 @@ var app;
             })
                 .append('g')
                 .classed('chart', true)
-                .attr('transform', "translate(" + this._marginLeft + "," + this._marginTop + ")");
+                .attr('transform', "translate(" + this._marginLeft + "," + 0 + ")");
         }
         viewPerYearOfBirth.prototype.update = function (data) {
+            var container = this._container.append('g')
+                .classed('chart-container', true)
+                .attr('transform', "translate(" + 0 + "," + this._marginTop + ")");
             var years = data.map(function (d) { return +d.Birthyear; })
                 .sort(function (a, b) { return a - b; });
             var scale = d3.scale.linear()
@@ -232,15 +238,69 @@ var app;
                 .range([0, this._width - this._marginLeft - this._marginRight]);
             var axis = d3.svg.axis()
                 .scale(scale);
-            var axisGroup = this._container.append('g')
-                .attr('transform', "translate(" + 0 + "," + (this._height - this._marginBottom) + ")")
+            var axisGroup = container.append('g')
+                .classed('axis', true)
+                .attr('transform', "translate(" + 0 + "," + (this._height - this._marginBottom - this._marginTop) + ")")
                 .call(axis);
+            var pointsGroup = this.drawPoints(container, data, scale);
+            var chartXScale = d3.scale.linear()
+                .domain(d3.extent(years))
+                .range([0, this._width - this._marginLeft - this._marginRight]);
+            var viewsChart = container.append('g')
+                .classed('data-chart', true);
+            var mapped = data.map(function (d) { return +(d['Total Page Views'].replace(/,/g, '')); });
+            var chartYScale = d3.scale.linear()
+                .range([this._height - this._marginBottom - this._marginTop - 25, 0])
+                .domain(d3.extent(mapped));
+            var yAxis = d3.svg.axis()
+                .orient('left')
+                .scale(chartYScale)
+                .tickFormat(d3.format('s'));
+            var yAxisGroup = viewsChart.append('g')
+                .classed('axis', true)
+                .attr('transform', "translate(" + 0 + "," + 0 + ")")
+                .call(yAxis);
+            var pathGenerator = d3.svg.line()
+                .x(function (d) { return chartXScale(d.Birthyear); })
+                .y(function (d) { return chartYScale(+(d['Total Page Views'].replace(/,/g, ''))); })
+                .interpolate('basis');
+            var prepared = data.filter(function (d) { return !!d.Birthyear; })
+                .sort(function (a, b) { return a.Birthyear - b.Birthyear; });
+            var pathGroup = container.append('g')
+                .append('path')
+                .style({
+                'fill': 'transparent',
+                'stroke': '#C2E7D9',
+                'stroke-width': '1px'
+            })
+                .attr('d', pathGenerator(prepared));
+            var brush = this.drawBrush(scale);
+            pointsGroup.append('g')
+                .classed('brush', true)
+                .call(brush)
+                .selectAll('rect')
+                .attr({
+                'height': 25,
+                'y': -10
+            });
+            brush.on('brush', function (d, i) {
+                console.log(brush.extent());
+                if (!brush.empty()) {
+                    chartXScale.domain(brush.extent());
+                    axisGroup.call(axis);
+                    pathGroup
+                        .attr('d', pathGenerator(prepared));
+                }
+            });
+            title(this._container, this._width, 'Total number of views according to birth year');
+        };
+        viewPerYearOfBirth.prototype.drawPoints = function (container, data, scale) {
             var colors = d3.scale.ordinal()
                 .range([d3.rgb('#C2E7D9'), d3.rgb('#0D0221')])
                 .domain(["Female", 'Male']);
-            var pointsGroup = this._container.append('g')
+            var pointsGroup = container.append('g')
                 .classed('points', true)
-                .attr('transform', "translate(" + 0 + "," + (this._height - this._marginBottom - 15) + ")");
+                .attr('transform', "translate(" + 0 + "," + (this._height - this._marginTop - this._marginBottom - 15) + ")");
             pointsGroup.append('rect')
                 .attr({
                 'x': 0,
@@ -270,24 +330,13 @@ var app;
                     return "rgb(" + color.r + "," + color.g + "," + color.b + ")";
                 }
             });
-            var viewsChart = this._container.append('g')
-                .classed('data-chart', true);
-            var mapped = data.map(function (d) { return +(d['Total Page Views'].replace(/,/g, '')); });
-            var chartYScale = d3.scale.linear()
-                .range([this._height - this._marginBottom - 25, 0])
-                .domain(d3.extent(mapped));
-            console.log(chartYScale.domain());
-            var yAxis = d3.svg.axis()
-                .orient('left')
-                .scale(chartYScale)
-                .tickFormat(d3.format('s'));
-            var yAxisGroup = viewsChart.append('g')
-                .attr('transform', "translate(" + 0 + "," + 0 + ")")
-                .call(yAxis);
-            var pathGenerator = d3.svg.line()
-                .x(function (d) { return scale(d.Birthyear); })
-                .y(function (d) { return chartYScale(+(d['Total Page Views'].replace(/,/g, ''))); })
-                .interpolate('basis');
+            return pointsGroup;
+        };
+        viewPerYearOfBirth.prototype.drawPath = function (data, scale, chartYScale, pathGenerator) {
+            // var pathGenerator = d3.svg.line()
+            //     .x(d => scale(d.Birthyear))
+            //     .y(d => chartYScale(+(d['Total Page Views'].replace(/,/g, ''))))
+            //     .interpolate('basis');
             var pathGroup = this._container.append('g')
                 .append('path')
                 .style({
@@ -297,6 +346,15 @@ var app;
             })
                 .attr('d', pathGenerator(data.filter(function (d) { return !!d.Birthyear; })
                 .sort(function (a, b) { return a.Birthyear - b.Birthyear; })));
+            return pathGroup;
+        };
+        viewPerYearOfBirth.prototype.drawBrush = function (scale) {
+            var brush = d3.svg.brush()
+                .x(scale)
+                .on('brush', function (d, i) {
+                console.log(brush.extent());
+            });
+            return brush;
         };
         return viewPerYearOfBirth;
     }());
@@ -376,4 +434,11 @@ function raw(container, width, height) {
                 .style('fill', 'blue');
         }
     });
+}
+function title(container, width, text) {
+    container.append('g')
+        .classed('title', true)
+        .attr('transform', "translate(" + width / 2 + ",30)")
+        .append('text')
+        .text(text);
 }

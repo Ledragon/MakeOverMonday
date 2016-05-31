@@ -1,4 +1,8 @@
-.chart{
+body{
+    /*font-family: 'Raleway', sans-serif;*/
+    font-family: 'Karla', sans-serif;
+}
+    .chart{
 }
 .axis .tick text{
     font-size:.8em;
@@ -13,4 +17,9 @@
 .title{
     text-anchor: middle;
     font-size: 1.2em;
+}
+.brush .extent {
+  stroke: #fff;
+  fill-opacity: .125;
+  shape-rendering: crispEdges;
 }

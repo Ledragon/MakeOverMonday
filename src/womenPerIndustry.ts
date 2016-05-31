@@ -11,7 +11,7 @@ function womenPerIndustry(container, width, height, data) {
         .append('g')
         .classed('chart', true);
 
-    title(chart, width, height);
+    title(chart, width, 'Women per industry');
 
     var women = data.filter(d => d['Gender'] === 'Female');
     var nested = d3.nest()
@@ -56,11 +56,11 @@ function womenPerIndustry(container, width, height, data) {
         .call(oridnalAxis);
 }
 
-function title(container, width, height) {
-    container.append('g')
-        .classed('title', true)
-        .attr('transform', `translate(${width / 2}, 40)`)
-        .append('text')
-        .classed('title', true)
-        .text('Women per industry');
-}
+// function title(container, width, height) {
+//     container.append('g')
+//         .classed('title', true)
+//         .attr('transform', `translate(${width / 2}, 40)`)
+//         .append('text')
+//         .classed('title', true)
+//         .text('Women per industry');
+// }

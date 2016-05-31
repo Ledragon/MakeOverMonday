@@ -3,7 +3,7 @@ function histogram(container: string, width: number, height: number, data) {
     // console.log(data);
     var marginLeft = 50;
     var marginRight = 20;
-    var marginTop = 20;
+    var marginTop = 40;
     var marginBottom = 40;
     // var width = 800;
     // var height = 600;
@@ -17,8 +17,10 @@ function histogram(container: string, width: number, height: number, data) {
         // .attr('height', filtered.length * 5)
         .append('g')
         .classed('chart', true)
-        .attr('transform', `translate(${marginLeft},${marginTop})`);
-
+        .attr('transform', `translate(${marginLeft},${0})`);
+    var plotArea = chart.append('g')
+        .classed('chart-container', true)  
+        .attr('transform', `translate(${0},${marginTop})`);
     var yScale = d3.time.scale()
         .range([0, height - marginTop - marginBottom])
         .domain([-3500, 2000]);
@@ -27,7 +29,7 @@ function histogram(container: string, width: number, height: number, data) {
         .scale(yScale)
         .orient('left')
         .tickFormat(d3.format('YYYY'));
-    var axisGroup = chart.append('g')
+    var axisGroup = plotArea.append('g')
         .classed('axis', true)
         .call(axis);
     var histogram = d3.layout.histogram()
@@ -39,7 +41,7 @@ function histogram(container: string, width: number, height: number, data) {
         .range([0, width - marginLeft - marginRight])
         .domain([0, 6000]);
     // console.log(split)
-    chart.append('g')
+    plotArea.append('g')
         .classed('series', true)
         .selectAll('.bin')
         .data(split)
@@ -58,9 +60,9 @@ function histogram(container: string, width: number, height: number, data) {
         })
         .style('fill', '#A6CFD5');
 
-    chart.append('g')
-        .classed('title', true)
-        .attr('transform', `translate(${width / 2},10)`)
-        .append('text')
-        .text('Number of famous people by century')
+    // chart.append('g')
+    //     .classed('title', true)
+    //     .attr('transform', `translate(${width / 2},10)`)
+    //     .append('text')
+    title(chart, width,'Number of famous people by century')
 }
