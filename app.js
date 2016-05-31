@@ -7,6 +7,7 @@
         } else {
             histogram('histogram', width, height, data);
             map('map', width, height, data);
+            womenPerIndustry('other', width, height, data)
         }
     });
 }());
