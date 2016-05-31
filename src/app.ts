@@ -1,7 +1,11 @@
+/// <reference path="histogram.ts" />
+/// <reference path="map.ts" />
+/// <reference path="womenPerIndustry.ts" />
+
 (function () {
     var width = 800;
     var height = 450;
-    d3.csv('History of Famous People.csv', function (error, data) {
+    d3.csv('data/History of Famous People.csv', function (error, data) {
         if (error) {
             console.error(error);
         } else {

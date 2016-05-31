@@ -1,5 +1,5 @@
 function raw(container, width, height) {
-    d3.csv('History of Famous People.csv', function (error, data) {
+    d3.csv('data/History of Famous People.csv', function (error, data) {
         if (error) {
             console.error(error);
         } else {

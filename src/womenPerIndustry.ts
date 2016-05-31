@@ -1,7 +1,7 @@
 function womenPerIndustry(container, width, height, data) {
     var marginTop = 50;
-    var marginBotom = 50;
-    var marginLeft = 20;
+    var marginBotom = 10;
+    var marginLeft = 150;
     var marginRight = 20;
     var chart = d3.select(`#${container}`)
         .attr({
@@ -18,14 +18,16 @@ function womenPerIndustry(container, width, height, data) {
         .key(d => d.Industry)
         .entries(women);
 
-    var xScale = d3.scale.ordinal()
-        .domain(nested.map(d => d.key))
-        .rangeBands([0, width - marginLeft - marginRight]);
-
     var chartHeight = height - marginBotom - marginTop;
+    var chartWidth = width - marginLeft - marginRight;
+
+    var ordinalScale = d3.scale.ordinal()
+        .domain(nested.map(d => d.key))
+        .rangeBands([0, chartHeight]);
+
     var yScale = d3.scale.linear()
         .domain(d3.extent(nested, d => d.values.length).reverse())
-        .range([chartHeight, 0]);
+        .range([0, chartWidth]);
 
     var enterSelection = chart.append('g')
         .classed('bar', true)
@@ -35,22 +37,23 @@ function womenPerIndustry(container, width, height, data) {
         .enter()
         .append('g')
         .classed('data', true)
-        .attr('transform', d=>`translate(${xScale(d.key)},${0})`);
+        .attr('transform', d => `translate(${0},${ordinalScale(d.key)})`);
     enterSelection.append('rect')
         .attr({
             x: 0,
-            y: d => chartHeight - yScale(d.values.length),
-            width: 10,
-            height: d => yScale(d.values.length)
+            y: 0,
+            width: d => yScale(d.values.length),
+            height: 10
         })
         .style('fill', '#26408B');
 
-    var xAxis = d3.svg.axis()
-        .scale(xScale);
+    var oridnalAxis = d3.svg.axis()
+        .orient('left')
+        .scale(ordinalScale);
     chart.append('g')
         .classed('axis', true)
-        .attr('transform',`translate(0,${height-marginBotom})`)
-        .call(xAxis);
+        .attr('transform', `translate(${marginLeft},${marginTop})`)
+        .call(oridnalAxis);
 }
 
 function title(container, width, height) {
