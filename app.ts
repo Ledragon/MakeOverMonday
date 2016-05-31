@@ -4,11 +4,10 @@
     d3.csv('History of Famous People.csv', function (error, data) {
         if (error) {
             console.error(error);
-        }
-        else {
+        } else {
             histogram('histogram', width, height, data);
             map('map', width, height, data);
-            womenPerIndustry('other', width, height, data);
+            womenPerIndustry('other', width, height, data)
         }
     });
 }());
