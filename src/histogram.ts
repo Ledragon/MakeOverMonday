@@ -1,4 +1,4 @@
-function histogram(container, width, height, data) {
+function histogram(container: string, width: number, height: number, data) {
 
     // console.log(data);
     var marginLeft = 50;
@@ -46,13 +46,13 @@ function histogram(container, width, height, data) {
         .enter()
         .append('g')
         .classed('bin', true)
-        .attr('transform', d => `translate(${0},${yScale(d.x)})`)
+        .attr('transform', (d: any) => `translate(${0},${yScale(d.x)})`)
         .append('rect')
         .attr({
             'x': 0,
             'y': 0,
             'height': 5,
-            'width': d => {
+            'width': (d: any) => {
                 return xScale(d.y)
             }
         })

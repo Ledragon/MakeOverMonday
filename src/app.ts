@@ -1,6 +1,7 @@
 /// <reference path="histogram.ts" />
 /// <reference path="map.ts" />
 /// <reference path="womenPerIndustry.ts" />
+/// <reference path="viewPerYearOfBirth.ts" />
 
 (function () {
     var width = 800;
@@ -12,6 +13,8 @@
             histogram('histogram', width, height, data);
             map('map', width, height, data);
             womenPerIndustry('other', width, height, data)
+            var perYear = new app.viewPerYearOfBirth('perYear', width, height);
+            perYear.update(data);
         }
     });
 }());
