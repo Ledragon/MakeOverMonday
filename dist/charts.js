@@ -489,7 +489,6 @@ var app;
         };
         womenPerIndustry.prototype.updateBars = function (nested) {
             var _this = this;
-            console.log(this._ordinalScale.domain());
             var dataBound = this._barsGroup
                 .selectAll('g.data')
                 .data(nested);
@@ -504,7 +503,6 @@ var app;
                 y: 0
             })
                 .style('fill', '#26408B');
-            // enterSelection.append('text');
             var rectHeight = this._ordinalScale.rangeBand() / 2;
             dataBound
                 .attr('transform', function (d) { return ("translate(" + 0 + "," + (_this._ordinalScale(d.key) + rectHeight / 2) + ")"); })
@@ -514,8 +512,6 @@ var app;
                 width: function (d) { return _this._yScale(d.values.length); },
                 height: rectHeight
             });
-            // dataBound.select('text')
-            //     .text(d => d.key);
         };
         return womenPerIndustry;
     }());
