@@ -37,34 +37,37 @@ var app;
             this.initHistogram();
             this._seriesGroup = plotArea.append('g')
                 .classed('series', true);
-            new app.title(this._container, width, 'Number of famous people by century');
+            new app.title(this._container, width, 'Number of famous people');
         }
         histogram.prototype.initHistogram = function () {
             this._histogram = d3.layout.histogram()
-                .bins(55)
-                .range(([-3500, 2000]))
+                .bins(50)
                 .value(function (d) { return d.Birthyear; });
         };
         histogram.prototype.initAxis = function (container, height) {
             this._yScale = d3.time.scale()
-                .range([0, height - this._marginTop - this._marginBottom])
-                .domain([-3500, 2000]);
-            var axis = d3.svg.axis()
+                .range([0, height - this._marginTop - this._marginBottom]);
+            this._yAxis = d3.svg.axis()
                 .scale(this._yScale)
                 .orient('left')
                 .tickFormat(d3.format('YYYY'));
-            var axisGroup = container.append('g')
-                .classed('axis', true)
-                .call(axis);
+            this._yAxisGroup = container.append('g')
+                .classed('axis', true);
         };
         histogram.prototype.initXAxis = function (width) {
             this._xScale = d3.scale.linear()
-                .range([0, width - this._marginLeft - this._marginRight])
-                .domain([0, 6000]);
+                .range([0, width - this._marginLeft - this._marginRight]);
         };
         histogram.prototype.update = function (data) {
             var _this = this;
+            var yearsExtent = d3.extent(data, function (d) { return +d.Birthyear; });
+            // var delta = Math.ceil((yearsExtent[1] - yearsExtent[0]) / 100);
+            this._histogram
+                .range(function (d, i) { return yearsExtent; });
             var split = this._histogram(data);
+            this._xScale.domain([0, d3.max(split, function (d) { return d.y; })]);
+            this._yScale.domain(yearsExtent);
+            this._yAxisGroup.call(this._yAxis);
             var dataBound = this._seriesGroup.selectAll('.bin')
                 .data(split);
             dataBound.exit()
@@ -78,15 +81,107 @@ var app;
                 'x': 0,
                 'y': 0,
                 'height': 5,
+            })
+                .style('fill', '#A6CFD5');
+            dataBound.select('rect')
+                .transition()
+                .attr({
                 'width': function (d) {
                     return _this._xScale(d.y);
                 }
-            })
-                .style('fill', '#A6CFD5');
+            });
         };
         return histogram;
     }());
     app.histogram = histogram;
+})(app || (app = {}));
+var app;
+(function (app) {
+    var brush = (function () {
+        function brush(containerId, _width, _height) {
+            this._width = _width;
+            this._height = _height;
+            this._marginTop = 5;
+            this._marginBottom = 30;
+            this._marginLeft = 20;
+            this._marginRight = 20;
+            this._container = d3.select("#" + containerId)
+                .attr({
+                'width': this._width,
+                'height': _height
+            })
+                .append('g')
+                .classed('chart', true)
+                .attr('transform', "translate(" + this._marginLeft + "," + this._marginTop + ")");
+            this.initPoints(this._container);
+            this.initBrush(this._container);
+            this.initAxisGroup(this._container);
+            this._dispatch = d3.dispatch('brushed');
+        }
+        brush.prototype.dispatch = function () {
+            return this._dispatch;
+        };
+        brush.prototype.initPoints = function (container) {
+            this._genderColorScale = d3.scale.ordinal()
+                .range([d3.rgb('#C2E7D9'), d3.rgb('#0D0221')])
+                .domain(["Female", 'Male']);
+            this._pointsGroup = container.append('g')
+                .classed('points', true)
+                .attr('transform', "translate(" + 0 + "," + 10 + ")");
+        };
+        brush.prototype.initBrush = function (container) {
+            var _this = this;
+            this._brushGroup = container.append('g')
+                .classed('brush', true);
+            this._brushScale = d3.scale.linear()
+                .range([0, this._width - this._marginLeft - this._marginRight]);
+            this._brush = d3.svg.brush()
+                .x(this._brushScale)
+                .on('brush', function (d, i) {
+                if (!_this._brush.empty()) {
+                    _this._dispatch.brushed(_this._brush.extent());
+                }
+            });
+        };
+        brush.prototype.initAxisGroup = function (container) {
+            this._axis = d3.svg.axis()
+                .scale(this._brushScale);
+            this._axisGroup = container.append('g')
+                .classed('axis', true)
+                .attr('transform', "translate(" + 0 + "," + (this._height - this._marginBottom) + ")");
+        };
+        brush.prototype.update = function (data) {
+            this._brushScale.domain(d3.extent(data, function (d) { return +d.Birthyear; }));
+            this.updatePoints(data);
+            this._brushGroup.call(this._brush)
+                .selectAll('rect')
+                .attr({
+                'height': this._height - this._marginBottom,
+            });
+            this._axisGroup.call(this._axis);
+        };
+        brush.prototype.updatePoints = function (data) {
+            var _this = this;
+            this._pointsGroup
+                .selectAll('circle')
+                .data(data)
+                .enter()
+                .append('circle')
+                .attr({
+                'cx': function (d) { return _this._brushScale(+d.Birthyear); },
+                'cy': 0,
+                'r': 2
+            })
+                .style({
+                'fill': function (d) {
+                    var color = _this._genderColorScale(d.Gender);
+                    return "rgb(" + color.r + "," + color.g + "," + color.b + ")";
+                }
+            });
+        };
+        return brush;
+    }());
+    app.brush = brush;
 })(app || (app = {}));
 /// <reference path="title.ts" />
 var app;
@@ -105,13 +200,12 @@ var app;
                 .append('g')
                 .classed('countries', true)
                 .attr('transform', 'translate(0,50)');
-            var extent = [0, 1600];
+            // var extent: [number, number] = [0, 1600];
             this._color = d3.scale.linear()
-                .domain(extent)
                 .interpolate(d3.interpolateHcl)
                 .range([d3.rgb('#C2E7D9'), d3.rgb('#0D0221')]);
             this.initMap(countries, width, height);
-            this.initLegend(this._container, width, height, extent);
+            this.initLegend(this._container, width, height);
         }
         map.prototype.initMap = function (container, width, height) {
             var _this = this;
@@ -143,14 +237,16 @@ var app;
                 }
             });
         };
-        map.prototype.initLegend = function (container, width, height, extent) {
+        map.prototype.initLegend = function (container, width, height) {
             var _this = this;
-            var legend = container.append('g')
+            this._legendGroup = container.append('g')
                 .classed('legend', true)
                 .attr('transform', "translate(10," + (height - 40) + ")");
-            var step = 100;
-            var range = d3.range(extent[0], extent[1] + step, step);
-            legend
+            var step = 1;
+            var range = d3.range(0, 10 + step, step);
+            var extent = d3.extent(range);
+            this._color.domain(d3.extent(range));
+            this._legendGroup
                 .append('g')
                 .selectAll('rect')
                 .data(range)
@@ -165,21 +261,21 @@ var app;
                 .style({
                 'fill': function (d) { return _this._color(d); }
             });
-            var legnedText = legend.append('g')
+            var legnedText = this._legendGroup.append('g')
                 .attr('transform', 'translate(0,25)');
             legnedText.append('text')
+                .classed('first', true)
                 .style({
                 'text-anchor': 'middle'
-            })
-                .text(extent[0]);
+            });
             legnedText.append('text')
+                .classed('last', true)
                 .attr({
                 'x': range.length * 10
             })
                 .style({
                 'text-anchor': 'middle'
-            })
-                .text(extent[1]);
+            });
         };
         map.prototype.update = function (data) {
             var _this = this;
@@ -188,6 +284,10 @@ var app;
                 .key(function (d) { return d[key]; })
                 .entries(data.filter(function (d) { return d[key] && d[key] !== "Unknown"; }));
             this._data = nested;
+            var extent = d3.extent(nested, function (d) { return d.values.length; });
+            this._color.domain(extent);
+            this._legendGroup.select('.first').text(extent[0]);
+            this._legendGroup.select('.last').text(extent[1]);
             if (this._countries) {
                 this._countries
                     .style('fill', function (d, i) {
@@ -222,7 +322,7 @@ var app;
             this._plotArea = this._container.append('g')
                 .classed('bar', true)
                 .attr('transform', "translate(" + this._marginLeft + ", " + this._marginTop + ")");
-            new app.title(this._container, width, 'Women per industry');
+            new app.title(this._container, width, 'Famous people per industry');
             this._chartHeight = height - this._marginBotom - this._marginTop;
             this._chartWidth = width - this._marginLeft - this._marginRight;
             this.initOrdinalScale(this._plotArea);
@@ -244,10 +344,9 @@ var app;
                 .range([0, this._chartWidth]);
         };
         womenPerIndustry.prototype.update = function (data) {
-            var women = data.filter(function (d) { return d['Gender'] === 'Female'; });
             var nested = d3.nest()
                 .key(function (d) { return d.Industry; })
-                .entries(women);
+                .entries(data);
             this._yScale.domain(d3.extent(nested, function (d) { return d.values.length; }).reverse());
             this._ordinalScale.domain(nested.map(function (d) { return d.key; }));
             this._ordinalAxisGroup.call(this._ordinalAxis);
@@ -255,21 +354,27 @@ var app;
         };
         womenPerIndustry.prototype.updateBars = function (nested) {
             var _this = this;
-            var enterSelection = this._barsGroup
+            var dataBound = this._barsGroup
                 .selectAll('g.data')
-                .data(nested)
-                .enter()
+                .data(nested);
+            dataBound.exit()
+                .remove();
+            var enterSelection = dataBound.enter()
                 .append('g')
                 .classed('data', true)
                 .attr('transform', function (d) { return ("translate(" + 0 + "," + _this._ordinalScale(d.key) + ")"); });
             enterSelection.append('rect')
                 .attr({
                 x: 0,
-                y: 0,
-                width: function (d) { return _this._yScale(d.values.length); },
+                y: function (d) { return _this._ordinalScale(d.key); },
                 height: 10
             })
                 .style('fill', '#26408B');
+            dataBound.select('rect')
+                .transition()
+                .attr({
+                width: function (d) { return _this._yScale(d.values.length); }
+            });
         };
         return womenPerIndustry;
     }());
@@ -283,9 +388,9 @@ var app;
             this._width = _width;
             this._height = _height;
             this._marginTop = 50;
-            this._marginBottom = 50;
+            this._marginBottom = 40;
             this._marginLeft = 50;
-            this._marginRight = 20;
+            this._marginRight = 30;
             this._container = d3.select("#" + containerId)
                 .attr({
                 'width': this._width,
@@ -299,9 +404,9 @@ var app;
             this.initXAxis(container);
             this.initYAxis(container);
             this.initPathGenerator(container);
-            this.initPoints(container);
+            // this.initPoints(container);
             new app.title(this._container, this._width, 'Total number of views according to birth year');
-            this.initBrush(this._pointsGroup);
+            // this.initBrush(this._pointsGroup);
         }
         viewPerYearOfBirth.prototype.initXAxis = function (container) {
             this._scale = d3.scale.linear()
@@ -314,7 +419,7 @@ var app;
         };
         viewPerYearOfBirth.prototype.initYAxis = function (container) {
             this._yScale = d3.scale.linear()
-                .range([this._height - this._marginBottom - this._marginTop - 25, 0]);
+                .range([this._height - this._marginBottom - this._marginTop, 0]);
             this._yAxis = d3.svg.axis()
                 .orient('left')
                 .scale(this._yScale)
@@ -336,44 +441,6 @@ var app;
                 'stroke-width': '1px'
             });
         };
-        viewPerYearOfBirth.prototype.initPoints = function (container) {
-            this._genderColorScale = d3.scale.ordinal()
-                .range([d3.rgb('#C2E7D9'), d3.rgb('#0D0221')])
-                .domain(["Female", 'Male']);
-            this._pointsGroup = container.append('g')
-                .classed('points', true)
-                .attr('transform', "translate(" + 0 + "," + (this._height - this._marginTop - this._marginBottom - 15) + ")");
-            this._pointsGroup.append('rect')
-                .attr({
-                'x': 0,
-                'y': 0,
-                width: this._width - this._marginLeft - this._marginRight,
-                height: 25,
-                'transform': 'translate(0,-10)'
-            })
-                .style({
-                'fill': 'transparent',
-                'stroke': 'darkgray',
-                'stroke-width': '1px'
-            });
-        };
-        viewPerYearOfBirth.prototype.initBrush = function (container) {
-            var _this = this;
-            this._brushScale = d3.scale.linear()
-                .range([0, this._width - this._marginLeft - this._marginRight]);
-            this._brush = d3.svg.brush()
-                .x(this._brushScale)
-                .on('brush', function (d, i) {
-                if (!_this._brush.empty()) {
-                    _this._scale.domain(_this._brush.extent());
-                    _this._axisGroup.call(_this._axis);
-                    _this._pathGroup
-                        .attr('d', _this._pathGenerator(_this._preparedData));
-                }
-            });
-            this._brushGroup = container.append('g')
-                .classed('brush', true);
-        };
         viewPerYearOfBirth.prototype.update = function (data) {
             var years = data.map(function (d) { return +d.Birthyear; })
                 .sort(function (a, b) { return a - b; });
@@ -384,41 +451,16 @@ var app;
             this._yAxisGroup.call(this._yAxis);
             var prepared = data.filter(function (d) { return !!d.Birthyear; })
                 .sort(function (a, b) { return a.Birthyear - b.Birthyear; });
-            this._pathGroup.attr('d', this._pathGenerator(prepared));
-            this.updatePoints(data);
+            this._pathGroup
+                .attr('d', this._pathGenerator(prepared));
             this._preparedData = prepared;
-            this._brushScale.domain(this._scale.domain());
-            this._brushGroup.call(this._brush)
-                .selectAll('rect')
-                .attr({
-                'height': 25,
-                'y': -10
-            });
-        };
-        viewPerYearOfBirth.prototype.updatePoints = function (data) {
-            var _this = this;
-            this._pointsGroup
-                .selectAll('circle')
-                .data(data)
-                .enter()
-                .append('circle')
-                .attr({
-                'cx': function (d) { return _this._scale(d.Birthyear); },
-                'cy': 0,
-                'r': 2
-            })
-                .style({
-                'fill': function (d) {
-                    var color = _this._genderColorScale(d.Gender);
-                    return "rgb(" + color.r + "," + color.g + "," + color.b + ")";
-                }
-            });
         };
         return viewPerYearOfBirth;
     }());
     app.viewPerYearOfBirth = viewPerYearOfBirth;
 })(app || (app = {}));
 /// <reference path="histogram.ts" />
+/// <reference path="brush.ts" />
 /// <reference path="map.ts" />
 /// <reference path="womenPerIndustry.ts" />
 /// <reference path="viewPerYearOfBirth.ts" />
@@ -430,17 +472,28 @@ var app;
     var map = new app.map('map', width, height);
     var perYear = new app.viewPerYearOfBirth('perYear', width, height);
     var perIndustry = new app.womenPerIndustry('other', width, height);
+    var brush = new app.brush('brush', 1606, 50);
     d3.csv('data/History of Famous People.csv', function (error, data) {
         if (error) {
             console.error(error);
         }
         else {
-            histogram.update(data);
-            map.update(data);
-            perIndustry.update(data);
-            perYear.update(data);
+            brush.update(data);
+            var filtered = data; //.filter(d => +d.Birthyear > 1500);
+            refresh(filtered);
+            brush.dispatch().on('brushed', function (extent) {
+                var filtered = data.filter(function (d) { return +d.Birthyear >= extent[0] && +d.Birthyear <= extent[1]; }); //.filter(d => +d.Birthyear > 1500);
+                console.log(filtered);
+                refresh(filtered);
+            });
         }
     });
+    function refresh(data) {
+        histogram.update(data);
+        map.update(data);
+        perIndustry.update(data);
+        perYear.update(data);
+    }
 }());
 function raw(container, width, height) {
     d3.csv('data/History of Famous People.csv', function (error, data) {

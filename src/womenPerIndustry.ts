@@ -28,7 +28,7 @@ module app {
             this._plotArea = this._container.append('g')
                 .classed('bar', true)
                 .attr('transform', `translate(${this._marginLeft}, ${this._marginTop})`)
-            new app.title(this._container, width, 'Women per industry');
+            new app.title(this._container, width, 'Famous people per industry');
             this._chartHeight = height - this._marginBotom - this._marginTop;
             this._chartWidth = width - this._marginLeft - this._marginRight;
             this.initOrdinalScale(this._plotArea);
@@ -53,10 +53,9 @@ module app {
         }
 
         update(data: Array<IHistory>) {
-            var women = data.filter(d => d['Gender'] === 'Female');
             var nested = d3.nest()
                 .key((d: app.IHistory) => d.Industry)
-                .entries(women);
+                .entries(data);
 
             this._yScale.domain(d3.extent(nested, d => d.values.length).reverse())
             this._ordinalScale.domain(nested.map(d => d.key));
@@ -65,21 +64,27 @@ module app {
         }
 
         private updateBars(nested: Array<{ key: string, values: Array<any> }>) {
-            var enterSelection = this._barsGroup
+            var dataBound = this._barsGroup
                 .selectAll('g.data')
-                .data(nested)
-                .enter()
+                .data(nested);
+            dataBound.exit()
+                .remove();
+            var enterSelection = dataBound.enter()
                 .append('g')
                 .classed('data', true)
                 .attr('transform', d => `translate(${0},${this._ordinalScale(d.key)})`);
             enterSelection.append('rect')
                 .attr({
                     x: 0,
-                    y: 0,
-                    width: d => this._yScale(d.values.length),
+                    y: d => this._ordinalScale(d.key),
                     height: 10
                 })
                 .style('fill', '#26408B');
+            dataBound.select('rect')
+                .transition()
+                .attr({
+                    width: d => this._yScale(d.values.length)
+                })
         }
 
     }
