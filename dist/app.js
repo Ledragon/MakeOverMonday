@@ -27,7 +27,7 @@ var app;
         histogram.prototype.initHistogram = function () {
             this._histogram = d3.layout.histogram()
                 .bins(55)
-                .range([-3500, 2000])
+                .range(([-3500, 2000]))
                 .value(function (d) { return d.Birthyear; });
         };
         histogram.prototype.initAxis = function (container, height) {
@@ -70,6 +70,81 @@ var app;
         return histogram;
     }());
     app.histogram = histogram;
+})(app || (app = {}));
+var app;
+(function (app) {
+    var map = (function () {
+        function map(containerId, width, height) {
+            this._container = d3.select("#" + containerId)
+                .attr({
+                width: width,
+                height: height
+            })
+                .append('g')
+                .classed('map', true);
+            title(this._container, width, 'Number of famous people by country');
+            var countries = this._container
+                .append('g')
+                .classed('countries', true)
+                .attr('transform', 'translate(0,50)');
+            this.initMap(countries, width, height);
+            var extent = [0, 1600]; //d3.extent(nested, n => n.values.length);
+            this._color = d3.scale.linear()
+                .domain(extent)
+                .interpolate(d3.interpolateHcl)
+                .range([d3.rgb('#C2E7D9'), d3.rgb('#0D0221')]);
+        }
+        map.prototype.initMap = function (container, width, height) {
+            var _this = this;
+            var projection = d3.geo.mercator()
+                .translate([width / 2, height / 2])
+                .scale(height / 6);
+            var pathGenerator = d3.geo.path().projection(projection);
+            d3.json('data/world.json', function (error, geo) {
+                if (error) {
+                    console.error(error);
+                }
+                else {
+                    _this._countries = container.selectAll('path')
+                        .data(geo.features)
+                        .enter()
+                        .append('path')
+                        .attr('d', pathGenerator)
+                        .style('fill', 'lightgray');
+                    if (_this._data) {
+                        _this._countries
+                            .style('fill', function (d, i) {
+                            var lowerCase = d.properties.name.toLowerCase();
+                            var index = _this._data.find(function (el) { return el.key.toLowerCase() === lowerCase; });
+                            var value = index ? index.values.length : 0;
+                            var c = _this._color(value);
+                            return c;
+                        });
+                    }
+                }
+            });
+        };
+        map.prototype.update = function (data) {
+            var _this = this;
+            var key = 'Country Name';
+            var nested = d3.nest()
+                .key(function (d) { return d[key]; })
+                .entries(data.filter(function (d) { return d[key] && d[key] !== "Unknown"; }));
+            this._data = nested;
+            if (this._countries) {
+                this._countries
+                    .style('fill', function (d, i) {
+                    var lowerCase = d.properties.name.toLowerCase();
+                    var index = nested.find(function (el) { return el.key.toLowerCase() === lowerCase; });
+                    var value = index ? index.values.length : 0;
+                    var c = _this._color(value);
+                    return c;
+                });
+            }
+        };
+        return map;
+    }());
+    app.map = map;
 })(app || (app = {}));
 function map(container, width, height, data) {
     var map = d3.select("#" + container)
@@ -373,6 +448,7 @@ var app;
 /// <reference path="map.ts" />
 /// <reference path="womenPerIndustry.ts" />
 /// <reference path="viewPerYearOfBirth.ts" />
+/// <reference path="IHistory.d.ts" />
 (function () {
     var width = 800;
     var height = 450;
@@ -383,8 +459,9 @@ var app;
         else {
             var histogram = new app.histogram('histogram', width, height);
             histogram.update(data);
-            // histogram('histogram', width, height, data);
-            map('map', width, height, data);
+            //            map('map', width, height, data);
+            var map = new app.map('map', width, height);
+            map.update(data);
             womenPerIndustry('other', width, height, data);
             var perYear = new app.viewPerYearOfBirth('perYear', width, height);
             perYear.update(data);

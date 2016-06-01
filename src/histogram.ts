@@ -6,7 +6,7 @@ module app {
         private _marginTop = 40;
         private _marginBottom = 40;
         private _container: d3.Selection<any>;
-        private _histogram: d3.layout.Histogram<number>;
+        private _histogram: d3.layout.Histogram<app.IHistory>;
         private _xScale: d3.scale.Linear<any, any>;
         private _yScale: d3.time.Scale<any, any>;
         private _seriesGroup: d3.Selection<any>;
@@ -30,13 +30,13 @@ module app {
             this.initHistogram();
             this._seriesGroup = plotArea.append('g')
                 .classed('series', true);
-            title(this._container, width, 'Number of famous people by century')
+            title(this._container, width, 'Number of famous people by century');
         }
 
         private initHistogram() {
-            this._histogram = d3.layout.histogram()
+            this._histogram = d3.layout.histogram<IHistory>()
                 .bins(55)
-                .range([-3500, 2000])
+                .range(([-3500, 2000]))
                 .value(d => d.Birthyear);
         }
 
@@ -60,9 +60,8 @@ module app {
                 .domain([0, 6000]);
         }
 
-        update(data) {
+        update(data: Array<app.IHistory>) {
             var split = this._histogram(data);
-
             this._seriesGroup.selectAll('.bin')
                 .data(split)
                 .enter()
