@@ -10,7 +10,9 @@
         if (error) {
             console.error(error);
         } else {
-            histogram('histogram', width, height, data);
+            var histogram = new app.histogram('histogram', width, height);
+            histogram.update(data);
+            // histogram('histogram', width, height, data);
             map('map', width, height, data);
             womenPerIndustry('other', width, height, data)
             var perYear = new app.viewPerYearOfBirth('perYear', width, height);

@@ -1,67 +1,76 @@
-function histogram(container, width, height, data) {
-    // console.log(data);
-    var marginLeft = 50;
-    var marginRight = 20;
-    var marginTop = 40;
-    var marginBottom = 40;
-    // var width = 800;
-    // var height = 600;
-    var filtered = data //.filter(d => d['Dead or Alive'] === 'Dead')
-        .sort(function (a, b) { return a.Birthyear - b.Birthyear; });
-    var chart = d3.select('#' + container)
-        .attr({
-        width: width,
-        height: height
-    })
-        .append('g')
-        .classed('chart', true)
-        .attr('transform', "translate(" + marginLeft + "," + 0 + ")");
-    var plotArea = chart.append('g')
-        .classed('chart-container', true)
-        .attr('transform', "translate(" + 0 + "," + marginTop + ")");
-    var yScale = d3.time.scale()
-        .range([0, height - marginTop - marginBottom])
-        .domain([-3500, 2000]);
-    var axis = d3.svg.axis()
-        .scale(yScale)
-        .orient('left')
-        .tickFormat(d3.format('YYYY'));
-    var axisGroup = plotArea.append('g')
-        .classed('axis', true)
-        .call(axis);
-    var histogram = d3.layout.histogram()
-        .bins(55)
-        .range([-3500, 2000])
-        .value(function (d) { return d.Birthyear; });
-    var split = histogram(data);
-    var xScale = d3.scale.linear()
-        .range([0, width - marginLeft - marginRight])
-        .domain([0, 6000]);
-    // console.log(split)
-    plotArea.append('g')
-        .classed('series', true)
-        .selectAll('.bin')
-        .data(split)
-        .enter()
-        .append('g')
-        .classed('bin', true)
-        .attr('transform', function (d) { return ("translate(" + 0 + "," + yScale(d.x) + ")"); })
-        .append('rect')
-        .attr({
-        'x': 0,
-        'y': 0,
-        'height': 5,
-        'width': function (d) {
-            return xScale(d.y);
+var app;
+(function (app) {
+    var histogram = (function () {
+        function histogram(container, width, height) {
+            this._marginLeft = 50;
+            this._marginRight = 20;
+            this._marginTop = 40;
+            this._marginBottom = 40;
+            this._container = d3.select('#' + container)
+                .attr({
+                width: width,
+                height: height
+            })
+                .append('g')
+                .classed('chart', true)
+                .attr('transform', "translate(" + this._marginLeft + "," + 0 + ")");
+            var plotArea = this._container.append('g')
+                .classed('chart-container', true)
+                .attr('transform', "translate(" + 0 + "," + this._marginTop + ")");
+            this.initAxis(plotArea, height);
+            this.initXAxis(width);
+            this.initHistogram();
+            this._seriesGroup = plotArea.append('g')
+                .classed('series', true);
+            title(this._container, width, 'Number of famous people by century');
         }
-    })
-        .style('fill', '#A6CFD5');
-    // chart.append('g')
-    //     .classed('title', true)
-    //     .attr('transform', `translate(${width / 2},10)`)
-    //     .append('text')
-    title(chart, width, 'Number of famous people by century');
-}
+        histogram.prototype.initHistogram = function () {
+            this._histogram = d3.layout.histogram()
+                .bins(55)
+                .range([-3500, 2000])
+                .value(function (d) { return d.Birthyear; });
+        };
+        histogram.prototype.initAxis = function (container, height) {
+            this._yScale = d3.time.scale()
+                .range([0, height - this._marginTop - this._marginBottom])
+                .domain([-3500, 2000]);
+            var axis = d3.svg.axis()
+                .scale(this._yScale)
+                .orient('left')
+                .tickFormat(d3.format('YYYY'));
+            var axisGroup = container.append('g')
+                .classed('axis', true)
+                .call(axis);
+        };
+        histogram.prototype.initXAxis = function (width) {
+            this._xScale = d3.scale.linear()
+                .range([0, width - this._marginLeft - this._marginRight])
+                .domain([0, 6000]);
+        };
+        histogram.prototype.update = function (data) {
+            var _this = this;
+            var split = this._histogram(data);
+            this._seriesGroup.selectAll('.bin')
+                .data(split)
+                .enter()
+                .append('g')
+                .classed('bin', true)
+                .attr('transform', function (d) { return ("translate(" + 0 + "," + _this._yScale(d.x) + ")"); })
+                .append('rect')
+                .attr({
+                'x': 0,
+                'y': 0,
+                'height': 5,
+                'width': function (d) {
+                    return _this._xScale(d.y);
+                }
+            })
+                .style('fill', '#A6CFD5');
+        };
+        return histogram;
+    }());
+    app.histogram = histogram;
+})(app || (app = {}));
 function map(container, width, height, data) {
     var map = d3.select("#" + container)
         .attr({
@@ -372,7 +381,9 @@ var app;
             console.error(error);
         }
         else {
-            histogram('histogram', width, height, data);
+            var histogram = new app.histogram('histogram', width, height);
+            histogram.update(data);
+            // histogram('histogram', width, height, data);
             map('map', width, height, data);
             womenPerIndustry('other', width, height, data);
             var perYear = new app.viewPerYearOfBirth('perYear', width, height);
@@ -442,3 +453,4 @@ function title(container, width, text) {
         .append('text')
         .text(text);
 }
+//# sourceMappingURL=app.js.map
