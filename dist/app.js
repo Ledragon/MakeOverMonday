@@ -80,7 +80,7 @@ function map(container, width, height, data) {
     var nested = d3.nest()
         .key(function (d) { return d[key]; })
         .entries(data.filter(function (d) { return d[key] && d[key] !== "Unknown"; }));
-    d3.json('world.json', function (error, geo) {
+    d3.json('data/world.json', function (error, geo) {
         if (error) {
             console.error(error);
         }
@@ -367,7 +367,7 @@ var app;
 (function () {
     var width = 800;
     var height = 450;
-    d3.csv('History of Famous People.csv', function (error, data) {
+    d3.csv('data/History of Famous People.csv', function (error, data) {
         if (error) {
             console.error(error);
         }
