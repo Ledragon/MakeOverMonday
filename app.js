@@ -1,10 +1,3 @@
-/// <reference path="histogram.ts" />
-/// <reference path="brush.ts" />
-/// <reference path="map.ts" />
-/// <reference path="womenPerIndustry.ts" />
-/// <reference path="viewPerYearOfBirth.ts" />
-/// <reference path="IHistory.d.ts" />
-
 (function () {
     var width = 800;
     var height = 450;
@@ -21,9 +14,9 @@
             var filtered = data;//.filter(d => +d.Birthyear > 1500);
             refresh(filtered);
             brush.dispatch().on('brushed', extent => {
-
-                var filtered = data.filter(d => +d.Birthyear >= extent[0] && +d.Birthyear <= extent[1]);//.filter(d => +d.Birthyear > 1500);
-                console.log(filtered);
+                var filtered = data.filter(function (d) {
+                    return +d.Birthyear >= extent[0] && +d.Birthyear <= extent[1];
+                }); //.filter(d => +d.Birthyear > 1500);
                 refresh(filtered);
             })
         }
