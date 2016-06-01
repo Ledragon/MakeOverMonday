@@ -11,12 +11,11 @@
             console.error(error);
         } else {
             brush.update(data);
-            var filtered = data;//.filter(d => +d.Birthyear > 1500);
-            refresh(filtered);
+            refresh(data);
             brush.dispatch().on('brushed', extent => {
                 var filtered = data.filter(function (d) {
                     return +d.Birthyear >= extent[0] && +d.Birthyear <= extent[1];
-                }); //.filter(d => +d.Birthyear > 1500);
+                }); 
                 refresh(filtered);
             })
         }

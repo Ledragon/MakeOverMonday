@@ -77,7 +77,6 @@ module app {
             dataBound.enter()
                 .append('g')
                 .classed('bin', true)
-                .attr('transform', (d: any) => `translate(${0},${this._yScale(d.x)})`)
                 .append('rect')
                 .attr({
                     'x': 0,
@@ -86,7 +85,9 @@ module app {
                     
                 })
                 .style('fill', '#A6CFD5');
-            dataBound.select('rect')
+            dataBound
+                .attr('transform', (d: any) => `translate(${0},${this._yScale(d.x)})`)
+                .select('rect')
                 .transition()
                 .attr({
                     'width': (d: any) => {

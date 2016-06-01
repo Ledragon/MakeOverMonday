@@ -163,7 +163,6 @@ var app;
             dataBound.enter()
                 .append('g')
                 .classed('bin', true)
-                .attr('transform', function (d) { return ("translate(" + 0 + "," + _this._yScale(d.x) + ")"); })
                 .append('rect')
                 .attr({
                 'x': 0,
@@ -171,7 +170,9 @@ var app;
                 'height': 5,
             })
                 .style('fill', '#A6CFD5');
-            dataBound.select('rect')
+            dataBound
+                .attr('transform', function (d) { return ("translate(" + 0 + "," + _this._yScale(d.x) + ")"); })
+                .select('rect')
                 .transition()
                 .attr({
                 'width': function (d) {
@@ -488,6 +489,7 @@ var app;
         };
         womenPerIndustry.prototype.updateBars = function (nested) {
             var _this = this;
+            console.log(this._ordinalScale.domain());
             var dataBound = this._barsGroup
                 .selectAll('g.data')
                 .data(nested);
@@ -495,20 +497,25 @@ var app;
                 .remove();
             var enterSelection = dataBound.enter()
                 .append('g')
-                .classed('data', true)
-                .attr('transform', function (d) { return ("translate(" + 0 + "," + _this._ordinalScale(d.key) + ")"); });
+                .classed('data', true);
             enterSelection.append('rect')
                 .attr({
                 x: 0,
-                y: function (d) { return _this._ordinalScale(d.key); },
-                height: 10
+                y: 0
             })
                 .style('fill', '#26408B');
-            dataBound.select('rect')
+            // enterSelection.append('text');
+            var rectHeight = this._ordinalScale.rangeBand() / 2;
+            dataBound
+                .attr('transform', function (d) { return ("translate(" + 0 + "," + (_this._ordinalScale(d.key) + rectHeight / 2) + ")"); })
+                .select('rect')
                 .transition()
                 .attr({
-                width: function (d) { return _this._yScale(d.values.length); }
+                width: function (d) { return _this._yScale(d.values.length); },
+                height: rectHeight
             });
+            // dataBound.select('text')
+            //     .text(d => d.key);
         };
         return womenPerIndustry;
     }());

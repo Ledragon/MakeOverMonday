@@ -64,6 +64,8 @@ module app {
         }
 
         private updateBars(nested: Array<{ key: string, values: Array<any> }>) {
+            console.log(this._ordinalScale.domain());
+
             var dataBound = this._barsGroup
                 .selectAll('g.data')
                 .data(nested);
@@ -71,20 +73,25 @@ module app {
                 .remove();
             var enterSelection = dataBound.enter()
                 .append('g')
-                .classed('data', true)
-                .attr('transform', d => `translate(${0},${this._ordinalScale(d.key)})`);
+                .classed('data', true);
             enterSelection.append('rect')
                 .attr({
                     x: 0,
-                    y: d => this._ordinalScale(d.key),
-                    height: 10
+                    y:0
                 })
                 .style('fill', '#26408B');
-            dataBound.select('rect')
+            // enterSelection.append('text');
+            var rectHeight = this._ordinalScale.rangeBand() / 2;
+            dataBound
+                .attr('transform', d => `translate(${0},${this._ordinalScale(d.key) + rectHeight / 2})`)
+                .select('rect')
                 .transition()
                 .attr({
-                    width: d => this._yScale(d.values.length)
-                })
+                    width: d => this._yScale(d.values.length),
+                    height: rectHeight
+                });
+            // dataBound.select('text')
+            //     .text(d => d.key);
         }
 
     }
