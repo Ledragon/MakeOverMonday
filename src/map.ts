@@ -8,7 +8,7 @@ module app {
 
         private _data: any;
         
-        constructor(containerId: string, width: number, height: number) {
+        constructor(containerId: string, width: number, height: number, mapFile:string) {
             this._container = d3.select(`#${containerId}`)
                 .attr({
                     width: width,
@@ -26,17 +26,17 @@ module app {
                 // .domain(extent)
                 .interpolate(d3.interpolateHcl)
                 .range([d3.rgb('#C2E7D9'), d3.rgb('#0D0221')]);
-            this.initMap(countries, width, height);
+            this.initMap(countries, width, height, mapFile);
             this.initLegend(this._container, width, height);
 
         }
 
-        private initMap(container: d3.Selection<any>, width: number, height: number) {
+        private initMap(container: d3.Selection<any>, width: number, height: number, mapFile:string) {
             var projection = d3.geo.mercator()
                 .translate([width / 2, height / 2])
                 .scale(height / 6);
             var pathGenerator = d3.geo.path().projection(projection);
-            d3.json('data/world.json', (error, geo) => {
+            d3.json(mapFile, (error, geo) => {
                 if (error) {
                     console.error(error);
                 } else {

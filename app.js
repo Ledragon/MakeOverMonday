@@ -2,7 +2,7 @@
     var width = 800;
     var height = 450;
     var histogram = new app.histogram('histogram', width, height);
-    var map = new app.map('map', width, height);
+    var map = new app.map('map', width, height, 'data/world.json');
     var perYear = new app.viewPerYearOfBirth('perYear', width, height);
     var perIndustry = new app.womenPerIndustry('other', width, height);
     var brush = new app.brush('brush', 1606, 50);

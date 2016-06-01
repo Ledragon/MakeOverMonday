@@ -187,7 +187,7 @@ var app;
 var app;
 (function (app) {
     var map = (function () {
-        function map(containerId, width, height) {
+        function map(containerId, width, height, mapFile) {
             this._container = d3.select("#" + containerId)
                 .attr({
                 width: width,
@@ -204,16 +204,16 @@ var app;
             this._color = d3.scale.linear()
                 .interpolate(d3.interpolateHcl)
                 .range([d3.rgb('#C2E7D9'), d3.rgb('#0D0221')]);
-            this.initMap(countries, width, height);
+            this.initMap(countries, width, height, mapFile);
             this.initLegend(this._container, width, height);
         }
-        map.prototype.initMap = function (container, width, height) {
+        map.prototype.initMap = function (container, width, height, mapFile) {
             var _this = this;
             var projection = d3.geo.mercator()
                 .translate([width / 2, height / 2])
                 .scale(height / 6);
             var pathGenerator = d3.geo.path().projection(projection);
-            d3.json('data/world.json', function (error, geo) {
+            d3.json(mapFile, function (error, geo) {
                 if (error) {
                     console.error(error);
                 }
