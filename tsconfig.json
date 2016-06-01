@@ -1,7 +1,7 @@
 {
     "compilerOptions": {
         "target": "es5",
-        "outFile": "app.js"
+        "outFile": "dist/app.js"
     },
     "exclude": [
         "node_modules",
