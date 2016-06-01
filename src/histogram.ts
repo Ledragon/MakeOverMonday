@@ -1,3 +1,5 @@
+/// <reference path="title.ts" />
+
 module app {
     export class histogram {
 
@@ -30,7 +32,7 @@ module app {
             this.initHistogram();
             this._seriesGroup = plotArea.append('g')
                 .classed('series', true);
-            title(this._container, width, 'Number of famous people by century');
+            new title(this._container, width, 'Number of famous people by century');
         }
 
         private initHistogram() {
@@ -62,9 +64,11 @@ module app {
 
         update(data: Array<app.IHistory>) {
             var split = this._histogram(data);
-            this._seriesGroup.selectAll('.bin')
-                .data(split)
-                .enter()
+            var dataBound = this._seriesGroup.selectAll('.bin')
+                .data(split);
+            dataBound.exit()
+                .remove();
+            dataBound.enter()
                 .append('g')
                 .classed('bin', true)
                 .attr('transform', (d: any) => `translate(${0},${this._yScale(d.x)})`)

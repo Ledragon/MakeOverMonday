@@ -1,3 +1,4 @@
+/// <reference path="title.ts" />
 module app {
     export class map {
         private _container: d3.Selection<any>;
@@ -13,12 +14,12 @@ module app {
                 })
                 .append('g')
                 .classed('map', true);
-            title(this._container, width, 'Number of famous people by country');
+            new title(this._container, width, 'Number of famous people by country');
             var countries = this._container
                 .append('g')
                 .classed('countries', true)
                 .attr('transform', 'translate(0,50)');
-            var extent: [number, number] = [0, 1600];//d3.extent(nested, n => n.values.length);
+            var extent: [number, number] = [0, 1600];
             this._color = d3.scale.linear()
                 .domain(extent)
                 .interpolate(d3.interpolateHcl)
