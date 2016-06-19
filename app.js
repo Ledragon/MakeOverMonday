@@ -20,32 +20,6 @@
                     .entries(data);
                 chart.update(byYear[0].values);
                 chart2015.update(byYear[1].values);
-                //                 xScale.domain(byYear[0].values.map(d => d.level));
-                //                 xAxisGroup.call(xAxis);
-
-                //                 var seriesGroup = plotGroup.append('g')
-                //                     .classed('series', true);
-                //                 var items = seriesGroup.selectAll('.item')
-                //                     .data(byYear[0].values)
-                //                     .enter()
-                //                     .append('g')
-                //                     .classed('item', true);
-                //                 items.append('rect')
-                //                     .style('fill', 'pink')
-                //                     .attr({
-                //                         'x': d => xScale(d.level),
-                //                         'y': d => yScale(d.female),
-                //                         'width': xScale.rangeBand(),
-                //                         height: d => plotHeight - yScale(d.female)
-                //                     })
-                //                 items.append('rect')
-                //                     .style('fill', 'lightblue')
-                //                     .attr({
-                //                         'x': d => xScale(d.level),
-                //                         'y': 0,
-                //                         'width': xScale.rangeBand(),
-                //                         height: d => yScale(d.female)
-                //                     })
             }
         })
 } ());
