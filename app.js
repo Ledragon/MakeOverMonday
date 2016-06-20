@@ -14,7 +14,7 @@
             if (error) {
                 console.error(error);
             } else {
-                console.log(data);
+                chart.update(data)
             }
         })
 } ());
