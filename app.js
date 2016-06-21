@@ -1,6 +1,6 @@
 (function () {
     'use strict';
-    var chart = d3.chart(d3.select('#container'), 800, 600);
+    var chart = d3.chart(d3.select('#container'), 600, 600);
 
     d3.csv('Theft in Japan.csv',
         function (d) {
@@ -14,7 +14,8 @@
             if (error) {
                 console.error(error);
             } else {
-                chart.update(data)
+                chart.update(data.sort((a, b) => b.percentage - a.percentage))
+                
             }
         })
 } ());
