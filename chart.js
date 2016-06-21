@@ -61,7 +61,7 @@
                     .attr('d', arc)
                     .style('fill', 'lightgray');//d => colorScale(d.data.category));
                 arcGroup.select('#Bicycle')
-                    .style('fill', 'yellow');                
+                    .style('fill', 'lightblue');                
                 // var legendGroup = chartGroup.append('g')
                 //     .classed('legend', true)
                 //     .attr('transform', `translate(${470},${50})`);
