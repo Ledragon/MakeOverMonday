@@ -20,7 +20,3 @@ body{
   fill-opacity: .125;
   shape-rendering: crispEdges;
 }
-circle{
-    fill:transparent;
-    stroke: black;
-}
