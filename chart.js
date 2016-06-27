@@ -42,8 +42,9 @@
             .classed('arc', true)
             .attr('transform', `translate(${250},${250})`);
 
-
-        var colorScale = d3.scale.category10();
+        var colorScale = d3.scale.linear()
+            .range(['#e5f5f9', '#2ca25f'])
+            .interpolate(d3.interpolateHcl);
 
         var pie = d3.layout.pie()
             .sort(null)
@@ -52,16 +53,17 @@
         return {
             update: function (data) {
                 var domain = data.map(d => d.category);
-                colorScale.domain([domain[0]]);
+                colorScale.domain(d3.extent(data, d => d.percentage));
+                console.log(d3.extent(data, d => d.percentage))
                 arcGroup.selectAll('path')
                     .data(pie(data))
                     .enter()
                     .append('path')
                     .attr('id', d => d.data.category)
                     .attr('d', arc)
-                    .style('fill', 'lightgray');//d => colorScale(d.data.category));
-                arcGroup.select('#Bicycle')
-                    .style('fill', 'lightblue');                
+                    .style('fill', d => colorScale(d.data.percentage));//d => colorScale(d.data.category));
+                // arcGroup.select('#Bicycle')
+                //     .style('fill', 'lightblue');
                 // var legendGroup = chartGroup.append('g')
                 //     .classed('legend', true)
                 //     .attr('transform', `translate(${470},${50})`);
