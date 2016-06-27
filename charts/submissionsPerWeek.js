@@ -4,6 +4,11 @@ var charting = charting || {};
     'use strict';
     var _width;
     var _height;
+
+    var xScale, xAxis, xAxisGroup;
+    var yScale, yAxis, yAxisGroup;
+
+    var seriesGroup;
     charting.submissionsPerWeek = (container, width, height) => {
         _width = width;
         _height = height;
@@ -29,13 +34,80 @@ var charting = charting || {};
         var plotWidth = chartWidth - plotMargin.left - plotMargin.right;
         var plotHeight = chartHeight - plotMargin.top - plotMargin.bottom;
 
+        initTitle(chartGroup, chartWidth, chartHeight)
+        initxScale(plotGroup, plotWidth, plotHeight);
+        inityScale(plotGroup, plotWidth, plotHeight);
 
-        chartGroup.append('g')
+        seriesGroup = plotGroup.append('g')
+            .classed('series', true);
+        
+        return {
+            update: update
+        }
+
+    }
+
+    function initTitle(container, width, height) {
+        container.append('g')
             .classed('title', true)
-            .attr('transform', `translate(${chartWidth / 2},${0})`)
+            .attr('transform', `translate(${width / 2},${0})`)
             .append('text')
             .text('Number of submissions per week');
+    }
 
+    function initxScale(container, width, height) {
+        xScale = d3.scale.linear()
+            .domain([0, 1])
+            .range([0, width]);
+        xAxis = d3.svg.axis()
+            .orient('bottom')
+            .scale(xScale);
+        xAxisGroup = container.append('g')
+            .classed('axis', true)
+            .attr('transform', `translate(${0},${height})`)
+            .call(xAxis);
+    }
+
+    function inityScale(container, width, height) {
+        yScale = d3.scale.linear()
+            .domain([0, 1])
+            .range([height, 0]);
+        yAxis = d3.svg.axis()
+            .orient('left')
+            .scale(yScale);
+        yAxisGroup = container.append('g')
+            .classed('axis', true)
+            .call(yAxis);
+    }
+
+
+    function update(data) {
+        var byWeek = d3.nest()
+            .key(d => d.week)
+            .entries(data);
+
+        xScale.domain([0, d3.max(byWeek, w => +w.key)]);
+        xAxisGroup.call(xAxis);
+
+        yScale.domain([0, d3.max(byWeek, w => +w.values.length)]);
+        yAxisGroup.call(yAxis);
+
+        var dataBound = seriesGroup.selectAll('.data')
+            .data(byWeek);
+        dataBound
+            .exit()
+            .remove();
+        var enterSelection = dataBound
+            .enter()
+            .append('g')
+            .classed('data', true)
+            .attr('transform', d => `translate(${xScale(+d.key)},${yScale(d.values.length)})`);
+        enterSelection.append('circle')
+            .attr({
+                'cx': 0,
+                'cy': 0,
+                'r': 2
+            });
     }
 
 } ());

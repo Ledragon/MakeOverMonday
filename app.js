@@ -14,6 +14,8 @@
         bottom: 0
     };
     var container = d3.select('svg');
+
+    var submissionsPerWeek = charting.submissionsPerWeek(container, width, height);
     // var chartGroup = 
     //     .append('g')
     //     .attr('transform', `translate(${marginLeft},${marginTop})`);
@@ -40,23 +42,24 @@
 
 
 
-    // d3.csv('data/Makeover Monday.csv',
-    //     (d) => {
-    //         return {
-    //             pinterestBoard: d['Pinterest Board'],
-    //             pinboardUrl: d['Pinboard URL'],
-    //             description: d.Description,
-    //             pinNote: d['Pin Note'],
-    //             originalLink: d['Original Link'],
-    //             name: d['Name'],
-    //             week: +d.Week,
-    //             datePinned: moment(d['Date Pinned'], 'DD-MM-YY HH:mm')
-    //         }
-    //     },
-    //     (error, data) => {
-    //         if (error) {
-    //             console.error(error);
-    //         } else {
+    d3.csv('data/Makeover Monday.csv',
+        (d) => {
+            return {
+                pinterestBoard: d['Pinterest Board'],
+                pinboardUrl: d['Pinboard URL'],
+                description: d.Description,
+                pinNote: d['Pin Note'],
+                originalLink: d['Original Link'],
+                name: d['Name'],
+                week: +d.Week,
+                datePinned: moment(d['Date Pinned'], 'DD-MM-YY HH:mm')
+            }
+        },
+        (error, data) => {
+            if (error) {
+                console.error(error);
+            } else {
+                submissionsPerWeek.update(data);
     //             var byWeek = d3.nest()
     //                 .key(d => d.week)
     //                 .entries(data);
@@ -100,6 +103,6 @@
     //                     'cy': 0,
     //                     'r': 2
     //                 });
-    //         }
-    //     });
+            }
+        });
 } ());
