@@ -10,16 +10,6 @@ var charting = charting || {};
 
     var seriesGroup;
 
-    var marginBottom = 50;
-    var marginTop = 50;
-    var marginLeft = 50;
-    var marginRight = 50;
-    var plotMargin = {
-        top: 40,
-        left: 0,
-        right: 0,
-        bottom: 0
-    };
     var plotWidth, plotHeight;
 
     var colorScale;
@@ -27,17 +17,24 @@ var charting = charting || {};
     charting.numberOfSubmissionsDistribution = (container, width, height) => {
         _width = width;
         _height = height;
-        var chartContainer = charting.chartContainer(container, width, height, {
+        
+        var chartMargins = {
             top: 50,
             left: 50,
             right: 50,
             bottom: 50
-        },
-            'chart');
+        };
+        var chartContainer = charting.chartContainer(container, width, height, chartMargins, 'chart');
         var chartGroup = chartContainer.group();
         var chartWidth = chartContainer.width();
         var chartHeight = chartContainer.height();
 
+        var plotMargin = {
+            top: 40,
+            left: 0,
+            right: 0,
+            bottom: 0
+        };
         var plotContainer = charting.chartContainer(chartGroup, chartWidth, chartHeight, plotMargin, 'plot');
         var plotGroup = plotContainer.group();
         plotWidth = plotContainer.width();
