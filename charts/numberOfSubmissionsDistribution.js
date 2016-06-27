@@ -27,17 +27,21 @@ var charting = charting || {};
     charting.numberOfSubmissionsDistribution = (container, width, height) => {
         _width = width;
         _height = height;
-        var chartGroup = container
-            .append('g')
-            .attr('transform', `translate(${marginLeft},${marginTop})`);
-        var chartWidth = width - marginLeft - marginRight;
-        var chartHeight = height - marginTop - marginBottom;
+        var chartContainer = charting.chartContainer(container, width, height, {
+            top: 50,
+            left: 50,
+            right: 50,
+            bottom: 50
+        },
+            'chart');
+        var chartGroup = chartContainer.group();
+        var chartWidth = chartContainer.width();
+        var chartHeight = chartContainer.height();
 
-        var plotGroup = chartGroup
-            .append('g')
-            .attr('transform', `translate(${plotMargin.left},${plotMargin.top})`);
-        plotWidth = chartWidth - plotMargin.left - plotMargin.right;
-        plotHeight = chartHeight - plotMargin.top - plotMargin.bottom;
+        var plotContainer = charting.chartContainer(chartGroup, chartWidth, chartHeight, plotMargin, 'plot');
+        var plotGroup = plotContainer.group();
+        plotWidth = plotContainer.width();
+        plotHeight = plotContainer.height();
 
         initTitle(chartGroup, chartWidth, chartHeight)
         initxScale(plotGroup, plotWidth, plotHeight);
@@ -60,19 +64,11 @@ var charting = charting || {};
     }
 
     function initxScale(container, width, height) {
-        xScale = d3.scale.linear()
-            .domain([0, 25])
-            .range([0, width]);
-        xAxis = d3.svg.axis()
-            .orient('bottom')
-            .scale(xScale);
-        xAxisGroup = container.append('g')
-            .classed('axis', true)
-            .attr('transform', `translate(${0},${height})`)
-            .call(xAxis);
+        xAxis = charting.horizontalAxis(container, width, height, 'bottom');
     }
 
     function inityScale(container, width, height) {
+        // yAxis = charting.linearAxis(container, width, height, 'left');
         yScale = d3.scale.linear()
             .domain([0, 1])
             .range([height, 0]);
@@ -93,11 +89,13 @@ var charting = charting || {};
         var byCount = d3.nest()
             .key(d => d)
             .entries(count);
-        xScale.domain([0, d3.max(byCount, d => +d.key)]);
-        xAxisGroup.call(xAxis);
+
+        xAxis.domain([0, d3.max(byCount, d => +d.key)]);
+        var xScale = xAxis.scale();
 
         yScale.domain([0, d3.max(byCount, d => d.values.length)]).nice();
         yAxisGroup.call(yAxis);
+
         colorScale.domain(d3.extent(byCount, d => d.values.length));
         var dataBound = seriesGroup.selectAll('.data')
             .data(byCount);

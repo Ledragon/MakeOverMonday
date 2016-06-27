@@ -40,7 +40,7 @@ var charting = charting || {};
 
         seriesGroup = plotGroup.append('g')
             .classed('series', true);
-        
+
         return {
             update: update
         }
@@ -53,16 +53,7 @@ var charting = charting || {};
     }
 
     function initxScale(container, width, height) {
-        xScale = d3.scale.linear()
-            .domain([0, 1])
-            .range([0, width]);
-        xAxis = d3.svg.axis()
-            .orient('bottom')
-            .scale(xScale);
-        xAxisGroup = container.append('g')
-            .classed('axis', true)
-            .attr('transform', `translate(${0},${height})`)
-            .call(xAxis);
+        xAxis = charting.horizontalAxis(container, width, height, 'bottom');
     }
 
     function inityScale(container, width, height) {
@@ -83,8 +74,8 @@ var charting = charting || {};
             .key(d => d.week)
             .entries(data);
 
-        xScale.domain([0, d3.max(byWeek, w => +w.key)]);
-        xAxisGroup.call(xAxis);
+        xAxis.domain([0, d3.max(byWeek, w => +w.key)]);
+        var xScale = xAxis.scale();
 
         yScale.domain([0, d3.max(byWeek, w => +w.values.length)]);
         yAxisGroup.call(yAxis);
