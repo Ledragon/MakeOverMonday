@@ -9,19 +9,24 @@ var charting = charting || {};
     var yScale, yAxis, yAxisGroup;
 
     var seriesGroup;
-    charting.submissionsPerWeek = (container, width, height) => {
+
+    var marginBottom = 50;
+    var marginTop = 50;
+    var marginLeft = 50;
+    var marginRight = 50;
+    var plotMargin = {
+        top: 40,
+        left: 0,
+        right: 0,
+        bottom: 0
+    };
+    var plotWidth, plotHeight;
+
+    var colorScale;
+
+    charting.numberOfSubmissionsDistribution = (container, width, height) => {
         _width = width;
         _height = height;
-        var marginBottom = 50;
-        var marginTop = 50;
-        var marginLeft = 50;
-        var marginRight = 50;
-        var plotMargin = {
-            top: 40,
-            left: 0,
-            right: 0,
-            bottom: 0
-        };
         var chartGroup = container
             .append('g')
             .attr('transform', `translate(${marginLeft},${marginTop})`);
@@ -31,8 +36,8 @@ var charting = charting || {};
         var plotGroup = chartGroup
             .append('g')
             .attr('transform', `translate(${plotMargin.left},${plotMargin.top})`);
-        var plotWidth = chartWidth - plotMargin.left - plotMargin.right;
-        var plotHeight = chartHeight - plotMargin.top - plotMargin.bottom;
+        plotWidth = chartWidth - plotMargin.left - plotMargin.right;
+        plotHeight = chartHeight - plotMargin.top - plotMargin.bottom;
 
         initTitle(chartGroup, chartWidth, chartHeight)
         initxScale(plotGroup, plotWidth, plotHeight);
@@ -40,7 +45,9 @@ var charting = charting || {};
 
         seriesGroup = plotGroup.append('g')
             .classed('series', true);
-        
+        colorScale = d3.scale.linear()
+            .range(['#e5f5f9', '#2ca25f'])
+            .interpolate(d3.interpolateHcl);
         return {
             update: update
         }
@@ -49,12 +56,12 @@ var charting = charting || {};
 
     function initTitle(container, width, height) {
         var title = charting.title(container, width, height);
-        title.text('Number of submissions per week');
+        title.text('Submission frequency');
     }
 
     function initxScale(container, width, height) {
         xScale = d3.scale.linear()
-            .domain([0, 1])
+            .domain([0, 25])
             .range([0, width]);
         xAxis = d3.svg.axis()
             .orient('bottom')
@@ -79,18 +86,21 @@ var charting = charting || {};
 
 
     function update(data) {
-        var byWeek = d3.nest()
-            .key(d => d.week)
+        var byPerson = d3.nest()
+            .key(d => d.name)
             .entries(data);
-
-        xScale.domain([0, d3.max(byWeek, w => +w.key)]);
+        var count = byPerson.map(d => d.values.length);
+        var byCount = d3.nest()
+            .key(d => d)
+            .entries(count);
+        xScale.domain([0, d3.max(byCount, d => +d.key)]);
         xAxisGroup.call(xAxis);
 
-        yScale.domain([0, d3.max(byWeek, w => +w.values.length)]);
+        yScale.domain([0, d3.max(byCount, d => d.values.length)]).nice();
         yAxisGroup.call(yAxis);
-
+        colorScale.domain(d3.extent(byCount, d => d.values.length));
         var dataBound = seriesGroup.selectAll('.data')
-            .data(byWeek);
+            .data(byCount);
         dataBound
             .exit()
             .remove();
@@ -99,12 +109,14 @@ var charting = charting || {};
             .append('g')
             .classed('data', true)
             .attr('transform', d => `translate(${xScale(+d.key)},${yScale(d.values.length)})`);
-        enterSelection.append('circle')
+        enterSelection.append('rect')
             .attr({
-                'cx': 0,
-                'cy': 0,
-                'r': 2
-            });
+                'x': -10,
+                'y': 0,
+                'width': 20,
+                'height': d => plotHeight - yScale(d.values.length)
+            })
+            .style('fill', d => colorScale(d.values.length));
     }
 
 } ());
