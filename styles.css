@@ -20,3 +20,17 @@ body{
   fill-opacity: .125;
   shape-rendering: crispEdges;
 }
+.miniature{
+    float: left;
+    width: 150px;
+    height: 150px;
+    font-size: smaller;
+    border: 1px solid darkgray;
+    margin: 5px;
+    padding: 5px;
+}
+.thumbnail{
+    height:120px;
+    background-size: cover;
+    margin-top:5px;
+}

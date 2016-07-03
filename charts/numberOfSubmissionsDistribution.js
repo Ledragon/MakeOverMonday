@@ -17,7 +17,7 @@ var charting = charting || {};
     charting.numberOfSubmissionsDistribution = (container, width, height) => {
         _width = width;
         _height = height;
-        
+
         var chartMargins = {
             top: 50,
             left: 50,

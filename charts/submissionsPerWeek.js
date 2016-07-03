@@ -9,6 +9,8 @@ var charting = charting || {};
     var yScale, yAxis, yAxisGroup;
 
     var seriesGroup;
+    var dispatch = d3.dispatch('clicked');
+
     charting.submissionsPerWeek = (container, width, height) => {
         _width = width;
         _height = height;
@@ -21,17 +23,22 @@ var charting = charting || {};
 
         var chartContainer = charting.chartContainer(container, width, height, chartMargins,
             'chart');
-        
+
         var chartGroup = chartContainer.group();
         var chartWidth = chartContainer.width();
         var chartHeight = chartContainer.height();
-
         initPlot(chartGroup, chartWidth, chartHeight);
-        initTitle(chartGroup, chartWidth, chartHeight)
+        initTitle(chartGroup, chartWidth, chartHeight);
 
         return {
-            update: update
+            update: update,
+            dispatch: dispatch
         }
+    }
+
+    function initTitle(container, width, height) {
+        var title = charting.title(container, width, height);
+        title.text('Number of submissions per week');
     }
 
     function initPlot(container, width, height) {
@@ -48,15 +55,9 @@ var charting = charting || {};
 
         initxScale(plotGroup, plotWidth, plotHeight);
         inityScale(plotGroup, plotWidth, plotHeight);
-        
+
         seriesGroup = plotGroup.append('g')
             .classed('series', true);
-
-    }
-
-    function initTitle(container, width, height) {
-        var title = charting.title(container, width, height);
-        title.text('Number of submissions per week');
     }
 
     function initxScale(container, width, height) {
@@ -75,7 +76,6 @@ var charting = charting || {};
             .call(yAxis);
     }
 
-
     function update(data) {
         var byWeek = d3.nest()
             .key(d => d.week)
@@ -87,7 +87,8 @@ var charting = charting || {};
         yScale.domain([0, d3.max(byWeek, w => +w.values.length)]);
         yAxisGroup.call(yAxis);
 
-        var dataBound = seriesGroup.selectAll('.data')
+        var dataBound = seriesGroup
+            .selectAll('.data')
             .data(byWeek);
         dataBound
             .exit()
@@ -101,7 +102,20 @@ var charting = charting || {};
             .attr({
                 'cx': 0,
                 'cy': 0,
-                'r': 2
+                'r': 4
+            })
+            .style('fill', '#2ca25f')
+            .on('click', d => {
+                dataBound.select('circle').style({
+                    'fill': '#2ca25f',
+                    'stroke':'none'
+                })
+                d3.select(d3.event.currentTarget).style({
+                    'fill': '#e5f5f9',
+                    'stroke': '#2ca25f'
+                })
+                dispatch.clicked(d);
+
             });
     }
 
