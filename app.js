@@ -1,6 +1,6 @@
 (function () {
     'use strict';
-    var chart = d3.chart(d3.select('#container'), 600, 600);
+    var chart = d3.chart(d3.select('#container'),850, 600);
 
     d3.csv('Theft in Japan.csv',
         function (d) {

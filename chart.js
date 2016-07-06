@@ -64,37 +64,37 @@
                     .style('fill', d => colorScale(d.data.percentage));//d => colorScale(d.data.category));
                 // arcGroup.select('#Bicycle')
                 //     .style('fill', 'lightblue');
-                // var legendGroup = chartGroup.append('g')
-                //     .classed('legend', true)
-                //     .attr('transform', `translate(${470},${50})`);
-                // var rect = legendGroup.append('rect')
-                //     .attr({
-                //         'x': 0,
-                //         'y': 0,
-                //         'width': 200,
-                //         'height': 400,
-                //     })
-                //     .style('fill', 'transparent')
-                //     .style('stroke', 'lightgray');
-                // var itemsGroup = legendGroup.append('g')
-                //   .attr('transform', `translate(${5},${10})`)
-                // var dataBound = itemsGroup.selectAll('.item')
-                //     .data(data)
-                //     .enter()
-                //     .append('g')
-                //     .classed('item', true)
-                //     .attr('transform', (d, i) => `translate(${0},${i * 20})`);
-                // dataBound.append('rect')
-                //     .attr({
-                //         'x': 0,
-                //         'y': 0,
-                //         'width': 10,
-                //         'height': 10
-                //     })
-                //     // .style('fill', d => colorScale(d.category));
-                // dataBound.append('text')
-                //       .attr('transform', `translate(${15},${10})`)
-                //     .text(d => d.category);
+                var legendGroup = chartGroup.append('g')
+                    .classed('legend', true)
+                    .attr('transform', `translate(${470},${50})`);
+                var rect = legendGroup.append('rect')
+                    .attr({
+                        'x': 0,
+                        'y': 0,
+                        'width': 260,
+                        'height': 400,
+                    })
+                    .style('fill', 'transparent')
+                    .style('stroke', 'lightgray');
+                var itemsGroup = legendGroup.append('g')
+                  .attr('transform', `translate(${5},${10})`)
+                var dataBound = itemsGroup.selectAll('.item')
+                    .data(data)
+                    .enter()
+                    .append('g')
+                    .classed('item', true)
+                    .attr('transform', (d, i) => `translate(${0},${i * 20})`);
+                dataBound.append('rect')
+                    .attr({
+                        'x': 0,
+                        'y': 0,
+                        'width': 10,
+                        'height': 10
+                    })
+                    .style('fill', d => colorScale(d.percentage));
+                dataBound.append('text')
+                      .attr('transform', `translate(${15},${10})`)
+                    .text(d => d.category);
             }
         }
     }
