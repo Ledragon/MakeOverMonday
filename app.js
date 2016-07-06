@@ -1,9 +1,13 @@
 (function () {
     'use strict';
-    var width = 800;
+    var width = 750;
     var height = 600;
 
-    var container = d3.select('svg');
+    var container = d3.select('svg')
+        .attr({
+            'width': width,
+            'height': height
+        });
     var submissionsPerWeek = charting.submissionsPerWeek(container, width, height);
 
     var nd = d3.select('#global')
@@ -14,7 +18,9 @@
         });
     var distribution = charting.numberOfSubmissionsDistribution(nd, width, height);
 
-
+    var statistics = d3.select('#statistics')
+        .style('width', '300px')
+        .append('div')
 
 
 
@@ -39,9 +45,22 @@
                 submissionsPerWeek.update(data);
                 distribution.update(data);
 
+                statistics.append('h2')
+                    .text('submissions');
+                statistics.append('span')
+                    .text(data.length);
+
+                statistics.append('h2')
+                    .text('Participants');
+                var byName = d3.nest()
+                    .key(d => d.name)
+                    .entries(data);                
+                statistics.append('span')
+                    .text(byName.length);
+
                 submissionsPerWeek.dispatch.on('clicked', d => {
                     d3.select('#weekNumber').select('h4').text(`Week ${d.key}`)
-                    var sorted = d.values.sort((a, b) => a - b);
+                    var sorted = d.values.sort((a, b) => d3.ascending(a.name, b.name));
                     var bound = d3.select('#weeks')
                         .selectAll('div')
                         .data(sorted);
