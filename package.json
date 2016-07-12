@@ -1,28 +1,29 @@
 {
-    "name": "28",
-    "version": "1.0.0",
-    "description": "",
-    "main": "index.js",
-    "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1",
-        "build": "cd src && tsc",
-        "serve": "cd src && live-server",
-        "watch": "cd src  && tsc -w"
+  "name": "28",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "cd src && tsc",
+    "serve": "cd src && live-server",
+    "watch": "cd src  && tsc -w"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "live-server": "^1.0.0",
+    "typescript": "^1.8.10"
+  },
+  "dependencies": {},
+  "jspm": {
+    "directories": {
+      "baseURL": "src"
     },
-    "author": "",
-    "license": "ISC",
-    "devDependencies": {
-        "live-server": "^1.0.0",
-        "typescript": "^1.8.10"
+    "dependencies": {
+      "d3": "npm:d3@^4.1.1",
+      "d3-selection": "npm:d3-selection@^1.0.0"
     },
-    "dependencies": {},
-    "jspm": {
-        "directories": {
-            "baseURL": "src"
-        },
-        "dependencies": {
-            "d3-selection": "npm:d3-selection@^1.0.0"
-        },
-        "devDependencies": {}
-    }
+    "devDependencies": {}
+  }
 }

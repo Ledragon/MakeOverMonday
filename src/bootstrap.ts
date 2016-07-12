@@ -1,7 +1,6 @@
-import { select, selectAll } from 'd3-selection/index';
+import {select, selectAll} from 'd3-selection';
 export function bootstrap() {
-    select('body')
+    select('#container')
         .append('div')
-        .text('hello world')
-
+        .text('hello world');
 }

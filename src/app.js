@@ -12,14 +12,3 @@ System.register(['./bootstrap'], function(exports_1, context_1) {
         }
     }
 });
-// import { select, selectAll } from 'd3-selection/index';
-// export class app {
-//     constructor() {
-//         console.log('hello world');
-//         select('body')
-//             .append('svg')
-//             .attr('width', 800)
-//             .attr('height', 800)
-//     }
-// }
-// var appli = new app()
