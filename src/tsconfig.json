@@ -1,0 +1,11 @@
+{
+    "compilerOptions": {
+        "module": "system",
+        "target": "es6"
+    },
+    "exclude": [
+        "typings/main",
+        "typings/browser",
+        "typings/main.d.ts"
+    ]
+}
