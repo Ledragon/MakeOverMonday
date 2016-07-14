@@ -9,6 +9,7 @@ System.config({
 
   map: {
     "d3": "npm:d3@4.1.1",
+    "d3-request": "npm:d3-request@1.0.1",
     "d3-selection": "npm:d3-selection@1.0.0",
     "github:jspm/nodelibs-assert@0.1.0": {
       "assert": "npm:assert@1.4.1"
