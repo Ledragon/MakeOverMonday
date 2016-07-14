@@ -9,8 +9,11 @@ System.config({
 
   map: {
     "d3": "npm:d3@4.1.1",
+    "d3-axis": "npm:d3-axis@1.0.0",
     "d3-request": "npm:d3-request@1.0.1",
+    "d3-scale": "npm:d3-scale@1.0.1",
     "d3-selection": "npm:d3-selection@1.0.0",
+    "d3-selection-multi": "npm:d3-selection-multi@0.4.1",
     "github:jspm/nodelibs-assert@0.1.0": {
       "assert": "npm:assert@1.4.1"
     },
@@ -109,6 +112,10 @@ System.config({
       "d3-interpolate": "npm:d3-interpolate@1.1.0",
       "d3-time": "npm:d3-time@1.0.0",
       "d3-time-format": "npm:d3-time-format@2.0.0"
+    },
+    "npm:d3-selection-multi@0.4.1": {
+      "d3-selection": "npm:d3-selection@1.0.0",
+      "d3-transition": "npm:d3-transition@1.0.0"
     },
     "npm:d3-shape@1.0.0": {
       "d3-path": "npm:d3-path@1.0.0"
