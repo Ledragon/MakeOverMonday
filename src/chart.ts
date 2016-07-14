@@ -1,7 +1,7 @@
 import {select, selectAll, Selection} from 'd3-selection';
 import { scaleLinear, scaleTime } from 'd3-scale';
 import { axisBottom, axisLeft } from 'd3-axis';
-
+import { xAxis } from './xAxis';
 export class chart {
     private _chartMargins = {
         top: 10,
@@ -17,6 +17,8 @@ export class chart {
         right: 20
     };
 
+    private _xAxis: xAxis;
+    
     constructor(container: Selection, private _width: number, private _height: number) {
         var chartGroup = container.append('g')
             .classed('chart-group', true)
@@ -33,16 +35,21 @@ export class chart {
         var plotHeight = chartHeight - this._plotMargins.top - this._plotMargins.bottom;
 
         this.initxAxis(plotGroup, plotWidth, plotHeight);
+        this.inityAxis(plotGroup, plotWidth, plotHeight);
     }
 
     private initxAxis(container: Selection, width: number, height: number) {
-        var xScale = scaleTime()
-            .domain([new Date(2016, 7, 1), new Date(2016, 7, 2)])
-            .range([0, width]);
-        var xAxis = axisBottom(xScale);
-        var xAxisGroup = container.append('g')
-            .classed('horizontal axis', true)
-            .attr('transform', `translate(${0},${height})`)
-            .call(xAxis);
+        this._xAxis = new xAxis(container, width, height);
+    }
+
+    private inityAxis(container: Selection, width: number, height: number) {
+        var scale = scaleLinear()
+            .domain([0, 1])
+            .range([height, 0]);
+        var axis = axisLeft(scale);
+        var axisGroup = container.append('g')
+            .classed('vertical axis', true)
+            .attr('transform', `translate(${0},${0})`)
+            .call(axis);
     }
 }
