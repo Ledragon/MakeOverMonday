@@ -1,7 +1,11 @@
 import {select, selectAll, Selection} from 'd3-selection';
 import { scaleLinear, scaleTime } from 'd3-scale';
 import { axisBottom, axisLeft } from 'd3-axis';
+import {nest, Nest } from 'd3-collection';
 import { xAxis } from './xAxis';
+import { yAxis } from './yAxis';
+import { dataFormat } from './models/dataFormat'
+
 export class chart {
     private _chartMargins = {
         top: 10,
@@ -18,7 +22,10 @@ export class chart {
     };
 
     private _xAxis: xAxis;
-    
+    private _yAxis: yAxis;
+
+    private _seriesGroup: Selection;
+
     constructor(container: Selection, private _width: number, private _height: number) {
         var chartGroup = container.append('g')
             .classed('chart-group', true)
@@ -36,6 +43,9 @@ export class chart {
 
         this.initxAxis(plotGroup, plotWidth, plotHeight);
         this.inityAxis(plotGroup, plotWidth, plotHeight);
+
+        this._seriesGroup = plotGroup.append('g')
+            .classed('series-group', true);
     }
 
     private initxAxis(container: Selection, width: number, height: number) {
@@ -43,13 +53,26 @@ export class chart {
     }
 
     private inityAxis(container: Selection, width: number, height: number) {
-        var scale = scaleLinear()
-            .domain([0, 1])
-            .range([height, 0]);
-        var axis = axisLeft(scale);
-        var axisGroup = container.append('g')
-            .classed('vertical axis', true)
-            .attr('transform', `translate(${0},${0})`)
-            .call(axis);
+        this._yAxis = new yAxis(container, width, height);
+    }
+
+    update(data: Array<dataFormat>) {
+        this._xAxis.update(data);
+        this._yAxis.update(data);
+        var byTopic = nest<dataFormat>()
+            .key(d => d.Topic)
+            .entries(data);
+        
+
+        var dataBound = this._seriesGroup.selectAll('.series')
+            .data(byTopic);
+        dataBound
+            .exit()
+            .remove();
+        dataBound
+            .enter()
+            .append('g')
+            .classed('series', true)
+            .attr('transform', d => `translate(${this._xAxis.scale()(d.key)},${0})`);
     }
 }

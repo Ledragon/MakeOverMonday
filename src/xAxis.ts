@@ -1,15 +1,16 @@
 import {Selection} from 'd3-selection';
-import { scaleLinear, Linear} from 'd3-scale';
+import {  scaleBand, Band} from 'd3-scale';
 import { axisBottom, Axis } from 'd3-axis';
+import { dataFormat } from './models/dataFormat';
+
 
 export class xAxis {
-    private _scale: Linear<any>;
+    private _scale: Band<string>;
     private _group: Selection;
     private _axis: Axis;
 
     constructor(container: Selection, private _width: number, private _height: number) {
-        var xScale = scaleLinear()
-            .domain([0, 1])
+        var xScale = scaleBand<string>()
             .range([0, this._width]);
         var xAxis = axisBottom(xScale);
         var xAxisGroup = container.append('g')
@@ -22,8 +23,13 @@ export class xAxis {
         this._axis = xAxis;
     }
 
-    update(domain: [number, number]): void{
+    update(data: Array<dataFormat>): void {
+        var domain = data.map(d => d.Topic);
         this._scale.domain(domain);
         this._group.call(this._axis);
+    }
+
+    scale(): Band<string> {
+        return this._scale;
     }
 }

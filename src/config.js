@@ -9,7 +9,9 @@ System.config({
 
   map: {
     "d3": "npm:d3@4.1.1",
+    "d3-array": "npm:d3-array@1.0.0",
     "d3-axis": "npm:d3-axis@1.0.0",
+    "d3-collection": "npm:d3-collection@1.0.0",
     "d3-request": "npm:d3-request@1.0.1",
     "d3-scale": "npm:d3-scale@1.0.1",
     "d3-selection": "npm:d3-selection@1.0.0",
