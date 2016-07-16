@@ -3,7 +3,7 @@ System.register(['d3-selection', 'd3-request', './chart'], function(exports_1, c
     var __moduleName = context_1 && context_1.id;
     var d3_selection_1, d3_request_1, chart_1;
     function bootstrap() {
-        var width = 1200;
+        var width = 1400;
         var height = 600;
         var div = d3_selection_1.select('#container');
         var container = div.append('svg')

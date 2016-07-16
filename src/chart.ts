@@ -37,8 +37,8 @@ export class chart {
 
         chartGroup.append('text')
             .classed('title', true)
-              .attr('transform', `translate(${chartWidth/2},${0})`)
-            .text('What they said');        
+              .attr('transform', `translate(${chartWidth/2},${15})`)
+            .text('Number of lawnmakers taking about topics');        
 
         var plotGroup = chartGroup.append('g')
             .classed('plot-group', true)

@@ -4,7 +4,7 @@ import { chart } from './chart';
 import { dataFormat } from './models/dataFormat';
 
 export function bootstrap() {
-    var width = 1200;
+    var width = 1400;
     var height = 600;
     var div = select('#container');
     var container = div.append('svg')
