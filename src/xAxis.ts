@@ -11,7 +11,9 @@ export class xAxis {
 
     constructor(container: Selection, private _width: number, private _height: number) {
         var xScale = scaleBand<string>()
-            .range([0, this._width]);
+            .range([0, this._width])
+            .paddingInner(.5)
+            .paddingOuter(0.3);
         var xAxis = axisBottom(xScale);
         var xAxisGroup = container.append('g')
             .classed('horizontal axis', true)
