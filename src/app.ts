@@ -1,11 +1,12 @@
 import { csv } from 'd3-request';
 import { dataFormat } from './typings-custom/dataFormat';
 import { countByRace } from './charts/countByRace';
+import { map } from './charts/map';
 import {select} from 'd3-selection';
 
 function app() {
     var byRace = createCountByRace();
-
+    var bycountry = createMap();
     csv<any, dataFormat>('data/The Next To Die.csv', d => {
         return {
             age: +d.Age,
@@ -40,6 +41,17 @@ function createCountByRace(): countByRace {
         .attr('height', height);
     var byRace = new countByRace(byRaceContainer, width, height);
     return byRace;
+}
+
+function createMap(): map {
+    var width = 600;
+    var height = 3 / 4 * width;
+    var container = select('#map')
+        .append('svg')
+        .attr('width', width)
+        .attr('height', height);
+    var result = new map(container, width, height);
+    return result;
 }
 
 

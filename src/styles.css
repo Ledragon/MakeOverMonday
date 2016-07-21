@@ -1,9 +1,6 @@
 body{
     font-family: 'Karla', sans-serif;
 }
-.axis .tick text{
-    /*font-size:.8em;*/
-}
 .tick line{
     stroke:darkgray;
 }
@@ -20,6 +17,6 @@ h1, h2{
     font-weight: normal;
     text-transform: uppercase;
 }
-svg{
-    /*border: 1px solid darkgray;*/
+.country{
+    fill: lightblue;
 }
