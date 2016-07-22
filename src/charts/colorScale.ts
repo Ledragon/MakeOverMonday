@@ -5,7 +5,7 @@ export class colorScale {
     private _colorScale: Sequential;
 
     constructor() {
-        this._colorScale = scaleSequential(interpolateGreens);
+        this._colorScale = scaleSequential(interpolateReds);
     }
     domain(domain: [number, number]): void {
         this._colorScale.domain(domain);
