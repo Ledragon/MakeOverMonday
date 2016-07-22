@@ -6,3 +6,4 @@ src/**/*.js
 *.log
 *.xlsx
 src/data/cb_2015_us_county_20m
+src/data/gz_2010_us_050_00_20m

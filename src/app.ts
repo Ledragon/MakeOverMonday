@@ -7,7 +7,7 @@ import {select} from 'd3-selection';
 function app() {
     var byRace = createCountByRace();
     var bycountry = createMap();
-    csv<any, dataFormat>('data/The Next To Die.csv', d => {
+    csv<any, dataFormat>('data/The Next To Die2.csv', d => {
         return {
             age: +d.Age,
             date: d.Date,
@@ -19,7 +19,7 @@ function app() {
             method: d.Method,
             race: d.Race,
             sex: d.Sex,
-            state: d.State,
+            state: d.StateLong,
             region: d.Region
         };
     }, (error, data) => {
@@ -28,6 +28,11 @@ function app() {
         }
         else {
             byRace.update(data);
+            bycountry.update(data);
+
+            bycountry.dispatch().on('loaded', () => {
+                bycountry.update(data);
+            });
         }
     })
 }
