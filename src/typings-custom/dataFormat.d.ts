@@ -1,6 +1,6 @@
 export interface dataFormat {
     age: number;
-    date: string;
+    date: Date;
     name: string;
     race: string;
     sex: string;

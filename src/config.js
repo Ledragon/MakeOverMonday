@@ -20,6 +20,8 @@ System.config({
     "d3-scale": "npm:d3-scale@1.0.1",
     "d3-scale-chromatic": "npm:d3-scale-chromatic@1.0.1",
     "d3-selection": "npm:d3-selection@1.0.0",
+    "d3-time": "npm:d3-time@1.0.0",
+    "d3-time-format": "npm:d3-time-format@2.0.0",
     "moment": "npm:moment@2.14.1",
     "github:jspm/nodelibs-assert@0.1.0": {
       "assert": "npm:assert@1.4.1"

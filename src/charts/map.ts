@@ -26,7 +26,7 @@ export class map {
         this._colorScale = new colorScale();
         this._colorScaleLegend = this._group.append('g')
             .classed('color-legend', true)
-            .attr('transform', `translate(${0},${20})`);
+            .attr('transform', `translate(${70},${this._height-70})`);
         this._colorScaleLegend.append('text')
             .attr('transform', `translate(${0},${12})`)
             .text('0');
