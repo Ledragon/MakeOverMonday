@@ -33,6 +33,8 @@ function app() {
             bycountry.dispatch().on('loaded', () => {
                 bycountry.update(data);
             });
+            select('#count')
+                .text(data.length.toString());
         }
     })
 }
@@ -49,7 +51,7 @@ function createCountByRace(): countByRace {
 }
 
 function createMap(): map {
-    var width = 600;
+    var width = 800;
     var height = 3 / 4 * width;
     var container = select('#map')
         .append('svg')

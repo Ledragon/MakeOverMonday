@@ -4,6 +4,7 @@ import { D3Nest, nest } from 'd3-collection';
 import { Axis, axisLeft } from 'd3-axis';
 import { extent } from 'd3-array';
 import { dataFormat } from '../typings-custom/dataFormat';
+import { colorScale } from './colorScale';
 
 export class countByRace {
     private _chartMargins = {
@@ -28,6 +29,8 @@ export class countByRace {
 
     private _seriesGroup: Selection;
     private _plotHeight: number;
+
+    private _colorScale: colorScale;
 
     constructor(container: Selection, private _width: number, private _height: number) {
         const chartGroup = container.append('g')
@@ -60,6 +63,8 @@ export class countByRace {
 
 
         this._plotHeight = plotHeight;
+
+        this._colorScale = new colorScale();
     }
 
     update(data: Array<dataFormat>) {
@@ -70,8 +75,9 @@ export class countByRace {
 
         this._yScale.domain(byRace.map(d => d.key));
         this._yAxisGroup.call(this._yAxis);
-        this._xScale.domain(extent(byRace, d => d.values.length));
-
+        var domain = extent(byRace, d => d.values.length)
+        this._xScale.domain(domain);
+        this._colorScale.domain(domain);
         var dataBound = this._seriesGroup.selectAll('.series')
             .data(byRace);
         dataBound
@@ -87,9 +93,9 @@ export class countByRace {
             .attr('y', 0)
             .attr('width', d => this._xScale(d.values.length))
             .attr('height', bandWidth)
-            .style('fill', 'lightblue');
+            .style('fill', d => this._colorScale.color(d.values.length));
         enterSelection.append('text')
-            .attr('x', d => this._xScale(d.values.length)+5)
+            .attr('x', d => this._xScale(d.values.length) + 5)
             .attr('y', 11)
             .text(d => d.values.length)
             .style('font-size', '10px')
