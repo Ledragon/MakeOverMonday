@@ -9,7 +9,7 @@ body{
     fill:transparent;
     stroke:darkgray;
 }
-.title{
+.title, .chart-title{
     text-anchor: middle;
     font-size: 1.2em;
     text-transform: uppercase;
@@ -25,8 +25,21 @@ h3{
     text-align: center;
     background: lightgray;
     padding: 15px;
+    height:150px;
 }
-
+#menu{
+    border: 1px solid darkgray;
+    /*position: absolute;
+    top:0px;
+    padding-top:180px;
+    height:100%;*/
+}
+.menu-item{
+    margin: 10px;
+    padding: 5px;
+    border: 1px solid darkgray;
+    font-size:12px; 
+}
 .country{
     stroke: lightgray;
 }
@@ -39,6 +52,9 @@ h3{
 }
 .line-data.female{
     stroke: pink;
+}
+.title-sm{
+    font-size: 12px;
 }
 .row{
     /*float: right;*/

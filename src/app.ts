@@ -7,9 +7,9 @@ import { dataFormat } from './typings-custom/dataFormat';
 import { evolution } from './charts/evolution';
 
 function app() {
-    // var census = createChart('census', 800, 600, true);
+    var census = createChart('chart', 800, 600, true);
     // var birth = createChart('birth', 800, 600, true);
-    var row = select('div.row');
+    var menuContainer = select('#menu');
     csv<any, dataFormat>('data/Bermuda-Digest-of-Statistics.csv', d => {
         return {
             category: d['Category'],
@@ -26,18 +26,22 @@ function app() {
             var byCategory = nest<dataFormat>()
                 .key(d => d.category)
                 .entries(data);
-            byCategory.forEach((d, i) => {
-                var name = `number${i}`;
-                var div = row.append('div')
-                    .classed('col-4', true)
-                    .attr('id', name);
-                var chart = createChart(name, 400, 300, false);
-                chart.update(d.values);
-            });
-            // var censusData = byCategory.filter(d => d.key === 'Census')[0].values;
-            // census.update(censusData);
-            // var birthData = byCategory.filter(d => d.key === 'Live Births')[0].values;
-            // birth.update(birthData);
+            var menuItems = menuContainer.selectAll('.menu-item')
+                .data(byCategory);
+            menuItems
+                .exit()
+                .remove();
+            var enterSelection = menuItems
+                .enter()
+                .append('div')
+                .classed('menu-item', true)
+                .on('click', function (d, i) {
+                    select(this).style('background','beige')
+                    census.titleText(d.key);
+                    census.update(d.values);
+                });
+            enterSelection.append('span')
+                .text(d => d.key);
         }
     })
 }

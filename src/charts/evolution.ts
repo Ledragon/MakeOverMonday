@@ -5,6 +5,7 @@ import { line } from 'd3-shape';
 
 import { xAxis } from './xAxis';
 import { yAxis } from './yAxis';
+import { title } from './title';
 import { colorScale } from './colorScale';
 import { dataFormat } from '../typings-custom/dataFormat';
 
@@ -29,6 +30,7 @@ export class evolution {
     private _seriesGroup: Selection;
     private _plotHeight: number;
     private _showGender: boolean;
+    private _title: title;
     constructor(container: Selection, private _width: number, private _height: number) {
         var chartGroup = container.append('g')
             .classed('chart-group', true)
@@ -36,6 +38,12 @@ export class evolution {
 
         var chartWidth = this._width - this._chartMargins.left - this._chartMargins.right;
         var chartHeight = this._height - this._chartMargins.top - this._chartMargins.bottom;
+
+        let titleGroup = chartGroup.append('g')
+            .classed('title-sm', true)
+            .attr('transform', `translate(${0},${20})`);
+
+        this._title = new title(titleGroup, chartWidth, chartHeight);
 
         var plotGroup = chartGroup.append('g')
             .classed('plot-group', true)
@@ -46,10 +54,8 @@ export class evolution {
         this._plotHeight = plotHeight;
         this.initxAxis(plotGroup, plotWidth, plotHeight);
         this.inityAxis(plotGroup, plotWidth, plotHeight);
-
-        this._seriesGroup = plotGroup.append('g')
-            .classed('series-group', true);
         this._showGender = false;
+        this.initSeries(plotGroup, plotWidth, plotHeight);
     }
 
     private initxAxis(container: Selection, width: number, height: number) {
@@ -59,6 +65,27 @@ export class evolution {
     private inityAxis(container: Selection, width: number, height: number) {
         this._yAxis = new yAxis(container, width, height);
     }
+
+    private initSeries(container: Selection, width: number, height: number) {
+        var cs = new colorScale();
+        this._seriesGroup = container.append('g')
+            .classed('series-group', true);
+        this._seriesGroup
+            .append('path')
+            .classed('line-data total', true)
+            .style('stroke', cs.color(1))
+        this._seriesGroup
+            .append('path')
+            .classed('line-data male', true)
+        //         .attr('d', lineGenerator(data));
+        //     lineGenerator
+        //         .y(d => yScale(d.female));
+        this._seriesGroup
+            .append('path')
+            .classed('line-data female', true)
+        //         .attr('d', lineGenerator(data));
+    }
+
     showGender(value?: boolean): boolean | evolution {
         if (arguments.length > 0) {
             this._showGender = value;
@@ -67,33 +94,42 @@ export class evolution {
             return this._showGender;
         }
     }
+
+    titleText(value: string): void {
+        this._title.text(value);
+    }
+
     update(data: Array<dataFormat>) {
         this._xAxis.update(data);
         this._yAxis.update(data);
         var xScale = this._xAxis.scale();
         var yScale = this._yAxis.scale();
-        var cs = new colorScale();
         var lineGenerator = line<dataFormat>()
             .x(d => xScale(d.year))
             .y(d => yScale(d.total));
         this._seriesGroup
-            .append('path')
-            .classed('line-data', true)
-            .attr('d', lineGenerator(data))
-            .style('stroke', cs.color(1));
+            .select('path.total')
+            .attr('d', lineGenerator(data));
         if (this._showGender) {
             lineGenerator
                 .y(d => yScale(d.male));
             this._seriesGroup
-                .append('path')
-                .classed('line-data male', true)
+                .select('path.male')
+                .style('visibility', 'visible')
                 .attr('d', lineGenerator(data));
             lineGenerator
                 .y(d => yScale(d.female));
             this._seriesGroup
-                .append('path')
-                .classed('line-data female', true)
+                .select('path.female')
+                .style('visibility', 'visible')
                 .attr('d', lineGenerator(data));
+        } else {
+            this._seriesGroup
+                .select('path.male')
+                .style('visibility', 'hidden')
+            this._seriesGroup
+                .select('path.female')
+                .style('visibility', 'hidden')
         }
     }
 }
