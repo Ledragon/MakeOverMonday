@@ -1,5 +1,5 @@
 import { csv } from 'd3-request';
-import {select} from 'd3-selection';
+import {select,selectAll} from 'd3-selection';
 import { timeParse } from 'd3-time-format';
 import { nest } from 'd3-collection';
 
@@ -36,6 +36,7 @@ function app() {
                 .append('div')
                 .classed('menu-item', true)
                 .on('click', function (d, i) {
+                    selectAll('.menu-item').style('background', '');
                     select(this).style('background','beige')
                     census.titleText(d.key);
                     census.update(d.values);
