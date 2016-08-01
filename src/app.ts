@@ -101,6 +101,12 @@ function app() {
                 .attr('transform', (d, i) => {
                     return `translate(${0},${yScale(d.key)})`
                 });
+            enterSelection.append('line')
+                .classed('gridline', true)
+                .attr('x1', 0)
+                .attr('x2', plotWidth)
+                .attr('y1', yScale.bandwidth() / 2)
+                .attr('y2', yScale.bandwidth() / 2)
             enterSelection
                 .selectAll('g')
                 .data(d => d.values)

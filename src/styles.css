@@ -53,6 +53,9 @@ h3{
 .line-data.female{
     stroke: pink;
 }
+.gridline{
+    stroke: #ccC;
+}
 .title-sm{
     font-size: 12px;
 }
