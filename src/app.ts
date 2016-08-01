@@ -55,7 +55,7 @@ function app() {
     let yAxisGroup = plotGroup.append('g');
 
     let seriesScale = scaleLinear<number>()
-        .range([1, 10]);
+        .range([2, 20]);
     let seriesGroup = plotGroup.append('g');
     csv<any>('data/Not Saying Groin.csv', (error, data: any) => {
         if (error) {
