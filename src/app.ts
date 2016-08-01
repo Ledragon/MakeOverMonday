@@ -99,14 +99,14 @@ function app() {
                 .append('g')
                 .classed('seriesGroup', true)
                 .attr('transform', (d, i) => {
-                    return `translate(${0},${yScale(d.key)})`
+                    return `translate(${0},${yScale(d.key)+yScale.bandwidth() / 2})`
                 });
             enterSelection.append('line')
                 .classed('gridline', true)
                 .attr('x1', 0)
                 .attr('x2', plotWidth)
-                .attr('y1', yScale.bandwidth() / 2)
-                .attr('y2', yScale.bandwidth() / 2)
+                // .attr('y1', yScale.bandwidth() / 2)
+                // .attr('y2', yScale.bandwidth() / 2)
             enterSelection
                 .selectAll('g')
                 .data(d => d.values)
@@ -114,7 +114,7 @@ function app() {
                 .append('circle')
                 .style('fill', '#824670')
                 .attr('cx', d => xScale(d.key) + xScale.bandwidth() / 2)
-                .attr('cy', yScale.bandwidth() / 2)
+                // .attr('cy', yScale.bandwidth() / 2)
                 .attr('r', d => seriesScale(d.value))
         }
     })

@@ -55,6 +55,7 @@ h3{
 }
 .gridline{
     stroke: #ccC;
+    fill:#ccc;
 }
 .title-sm{
     font-size: 12px;
