@@ -9,8 +9,8 @@ import { dataFormat } from './typings-custom/dataFormat';
 import { evolution } from './charts/evolution';
 
 function app() {
-    const _width = 1600;
-    const _height = 800;
+    const _width = 1000;
+    const _height = 400;
     const _chartMargins = {
         top: 10,
         bottom: 10,
@@ -55,7 +55,7 @@ function app() {
     let yAxisGroup = plotGroup.append('g');
 
     let seriesScale = scaleLinear<number>()
-        .range([2, 20]);
+        .range([0, 15]);
     let seriesGroup = plotGroup.append('g');
     csv<any>('data/Not Saying Groin.csv', (error, data: any) => {
         if (error) {
