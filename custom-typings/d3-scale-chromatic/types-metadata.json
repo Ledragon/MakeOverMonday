@@ -1,0 +1,23 @@
+{
+    "authors": "Alex Ford <https://github.com/gustavderdrache>, Boris Yankov <https://github.com/borisyankov>, Tom Wanzek <https://github.com/tomwanzek>",
+    "definitionFilename": "index.d.ts",
+    "libraryDependencies": [],
+    "moduleDependencies": [],
+    "libraryMajorVersion": "0",
+    "libraryMinorVersion": "0",
+    "libraryName": "D3JS d3-scale-chromatic module 1.0.0",
+    "typingsPackageName": "d3-scale-chromatic",
+    "projectName": "https://github.com/d3/d3-scale-chromatic/",
+    "sourceRepoURL": "https://www.github.com/DefinitelyTyped/DefinitelyTyped",
+    "sourceBranch": "types-2.0",
+    "kind": "ProperModule",
+    "globals": [],
+    "declaredModules": [
+        "d3-scale-chromatic"
+    ],
+    "files": [
+        "index.d.ts"
+    ],
+    "hasPackageJson": false,
+    "contentHash": "toto"
+}

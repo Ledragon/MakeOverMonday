@@ -1,5 +1,5 @@
 System.config({
-  baseURL: "./src",
+  baseURL: "./",
   defaultJSExtensions: true,
   transpiler: false,
   paths: {
@@ -8,10 +8,14 @@ System.config({
   },
 
   map: {
+    "d3-array": "npm:d3-array@1.0.1",
     "d3-axis": "npm:d3-axis@1.0.3",
+    "d3-collection": "npm:d3-collection@1.0.1",
     "d3-request": "npm:d3-request@1.0.2",
     "d3-scale": "npm:d3-scale@1.0.3",
+    "d3-scale-chromatic": "npm:d3-scale-chromatic@1.0.2",
     "d3-selection": "npm:d3-selection@1.0.2",
+    "d3-shape": "npm:d3-shape@1.0.2",
     "github:jspm/nodelibs-assert@0.1.0": {
       "assert": "npm:assert@1.4.1"
     },
@@ -76,6 +80,9 @@ System.config({
       "d3-dsv": "npm:d3-dsv@1.0.1",
       "xmlhttprequest": "npm:xmlhttprequest@1.8.0"
     },
+    "npm:d3-scale-chromatic@1.0.2": {
+      "d3-interpolate": "npm:d3-interpolate@1.1.1"
+    },
     "npm:d3-scale@1.0.3": {
       "d3-array": "npm:d3-array@1.0.1",
       "d3-collection": "npm:d3-collection@1.0.1",
@@ -84,6 +91,9 @@ System.config({
       "d3-interpolate": "npm:d3-interpolate@1.1.1",
       "d3-time": "npm:d3-time@1.0.2",
       "d3-time-format": "npm:d3-time-format@2.0.2"
+    },
+    "npm:d3-shape@1.0.2": {
+      "d3-path": "npm:d3-path@1.0.1"
     },
     "npm:d3-time-format@2.0.2": {
       "d3-time": "npm:d3-time@1.0.2"
