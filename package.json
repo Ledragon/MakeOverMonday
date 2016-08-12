@@ -6,6 +6,7 @@
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
         "build": "tsc",
+        "watch": "tsc -w",
         "serve": "live-server --open=\"src\" --ignorePattern=\"src/*.ts\""
     },
     "author": "",
