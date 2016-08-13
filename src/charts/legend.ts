@@ -18,6 +18,7 @@ export class legend {
             .classed('legend-group', true)
             .attr('transform', `translate(${this._margins.left},${this._margins.top})`);
         this._group.append('rect')
+            .classed('border', true)
             .attr('width', this._width)
             .attr('height', this._height)
             .style('fill', 'white')
@@ -28,24 +29,28 @@ export class legend {
     }
     height() {
         return this._height + this._margins.top + this._margins.bottom;
-    } 
-    
+    }
+
     update(data: Array<string>) {
         var dataBound = this._group.selectAll('.legend-item')
             .data(data);
         dataBound
-          .exit()
-          .remove();
+            .exit()
+            .remove();
         let enterSelection = dataBound
-          .enter()
-          .append('g')
+            .enter()
+            .append('g')
             .classed('legend-item', true)
-              .attr('transform', (d,i)=>`translate(${0},${i*20})`);
+            .attr('transform', (d, i) => `translate(${0},${i * 20})`);
         enterSelection.append('rect')
             .attr('transform', `translate(${5},${5})`)
             .attr('width', 10)
             .attr('height', 10)
             .style('fill', (d, i) => color(i));
+        enterSelection.append('text')
+            .attr('transform', (d, i) => `translate(${20},${15})`)
+            .text(d => d);
         this._height = data.length * 20;
+        this._group.select('.border').attr('height', this._height);
     }
 }

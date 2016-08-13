@@ -14,6 +14,7 @@ var legend = (function () {
             .classed('legend-group', true)
             .attr('transform', "translate(" + this._margins.left + "," + this._margins.top + ")");
         this._group.append('rect')
+            .classed('border', true)
             .attr('width', this._width)
             .attr('height', this._height)
             .style('fill', 'white')
@@ -41,7 +42,11 @@ var legend = (function () {
             .attr('width', 10)
             .attr('height', 10)
             .style('fill', function (d, i) { return colorScale_1.color(i); });
+        enterSelection.append('text')
+            .attr('transform', function (d, i) { return ("translate(" + 20 + "," + 15 + ")"); })
+            .text(function (d) { return d; });
         this._height = data.length * 20;
+        this._group.select('.border').attr('height', this._height);
     };
     return legend;
 }());

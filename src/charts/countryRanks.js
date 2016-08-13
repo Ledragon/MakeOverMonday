@@ -59,18 +59,7 @@ var countryRank = (function () {
             .classed('axis-group', true);
         this._seriesGroup = plotGroup.append('g')
             .classed('series-group', true);
-        // this.initLegend(chartGroup, chartWidth, chartHeight);
     }
-    // private initLegend(chartGroup: any, chartWidth: number, chartHeight: number) {
-    //     this._legendGroup = chartGroup.append('g')
-    //         .classed('legend-group', true)
-    //         .attr('transform', `translate(${chartWidth - this._legendWidth - this._legendMargins.left},${(chartHeight / 2 - this._legendHeight / 2 - (this._legendMargins.top) / 2)})`);
-    //     this._legendGroup.append('rect')
-    //         .attr('width', this._legendWidth)
-    //         .attr('height', this._legendHeight)
-    //         .style('fill', 'white')
-    //         .style('stroke', 'darkgray');
-    // }
     countryRank.prototype.width = function () {
         return this._width - this._chartMargins.left - this._chartMargins.right;
     };
@@ -116,6 +105,7 @@ var countryRank = (function () {
             .attr('d', function (d) { return areaGenerator(d.values); })
             .style('fill', function (d, i) { return colorScale_1.color(i); });
         this._legend.update(countryNames);
+        this._legendGroup.attr('transform', "translate(" + (this.width() - this._legend.width()) + "," + (this.height() / 2 - this._legend.height() / 2) + ")");
     };
     return countryRank;
 }());
