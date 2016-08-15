@@ -9,6 +9,13 @@ var countryRankSvg = d3_selection_1.select('#countryRank')
     .attr('width', 800)
     .attr('height', 600);
 var rank = new countryRanks_1.countryRank(countryRankSvg, w, h);
+// var w1 = 800;
+// var h1 = 40;
+// var selectorSvg = select('#selector')
+//     .append('svg')
+//     .attr('width', w1)
+//     .attr('height', h1);
+// var s = new selector(selectorSvg, w1, h1);
 d3_request_1.csv('data/Olympic Medal Table.csv', function (d) {
     return {
         edition: +d.Edition,

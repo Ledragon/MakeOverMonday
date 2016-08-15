@@ -94,7 +94,6 @@ var countryRank = (function () {
         var stackGenerator = d3_shape_1.stack()
             .keys(countryNames);
         var stacked = stackGenerator(toto);
-        console.log(stacked);
         this._yScale
             .domain([0, 450])
             .nice();

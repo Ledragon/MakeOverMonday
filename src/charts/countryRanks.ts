@@ -129,7 +129,6 @@ export class countryRank {
         let stackGenerator = stack<any, any, string>()
             .keys(countryNames);
         let stacked = stackGenerator(toto);
-        console.log(stacked)
         this._yScale
             // .domain([0, max(data, d => d.total)])
             .domain([0, 450])
