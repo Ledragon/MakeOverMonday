@@ -15,10 +15,10 @@ d3_request_1.csv('data/Olympic Medal Table.csv', function (d) {
         rank: +d.Rank,
         country: d.Country,
         countryGroup: d['Country Group'],
-        gold: +d.Gold,
-        silver: +d.Silver,
-        bronze: +d.Bronze,
-        total: +d.Total
+        // gold: +d.Gold,
+        // silver: +d.Silver,
+        // bronze: +d.Bronze,
+        total: d.Total ? +d.Total : 0
     };
 }, function (error, data) {
     if (error) {

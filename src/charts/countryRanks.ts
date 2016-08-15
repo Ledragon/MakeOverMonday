@@ -1,7 +1,7 @@
 import { select, Selection } from 'd3-selection';
 import { axisLeft, axisBottom, Axis } from 'd3-axis';
 import { scaleLinear, ScaleLinear } from 'd3-scale';
-import { extent, max, sum, p } from 'd3-array';
+import { extent, max, sum } from 'd3-array';
 import { nest } from 'd3-collection';
 import { line, area, stack } from 'd3-shape';
 // import { schemePaired, schemeAccent, interpolateBlues } from 'd3-scale-chromatic';
@@ -100,33 +100,58 @@ export class countryRank {
         this._xScale.domain(extent(data, d => d.edition));
         this._xAxisGroup.call(this._xAxis);
 
-        this._yScale
-            .domain([0, max(data, d => d.total)])
-            .nice();
-        this._yAxisGroup.call(this._yAxis);
 
         var byCountry = nest<any>()
             .key(d => d.country)
             .entries(data)
             .sort((a, b) => sum<any>(b.values, v => v.total) - sum<any>(a.values, v => v.total))
             .splice(0, 10);
+        var byYear = nest<any>()
+            .key(d => d.edition)
+            .entries(data);
         let lineGenerator = line<any>()
             .x(d => this._xScale(d.edition))
             .y(d => this._yScale(d.total));
 
-        let areaGenerator = area<any>()
-            .x(d => this._xScale(d.edition))
-            .y0(this._plotHeight)
-            .y1(d => this._yScale(d.total));
-        var countryNames = byCountry.map(d => d.key);
-        var filtered = data.filter(d => countryNames.indexOf(d.country) >= 0);
-        console.log(filtered)
+        var toto: any = [];
+        byYear.forEach((c, i) => {
+            var result: any = {};
+            result.edition = c.key;
+            c.values.forEach((v: any) => {
+                result[v.country] = v.total;
+            });
+            toto.push(result);
+        });
 
+        var countryNames = byCountry.map(d => d.key);
         let stackGenerator = stack<any, any, string>()
-            .keys(countryNames)
-            .value(d => d.values);
+            .keys(countryNames);
+        let stacked = stackGenerator(toto);
+        console.log(stacked)
+        this._yScale
+            // .domain([0, max(data, d => d.total)])
+            .domain([0, 450])
+            .nice();
+        this._yAxisGroup.call(this._yAxis);
+
+        // console.log(stackGenerator(filtered))
+
+        let areaGenerator = area<any>()
+            .x(d => {
+                let x = this._xScale(+d.data.edition);
+                return x;
+            })
+            .y0((d, i) => {
+                let y0 = isNaN(d[0]) ? this._yScale(0) : this._yScale(d[0]);
+                return y0;
+            })
+            .y1((d, i) => {
+                let y1: number = isNaN(d[1]) ? this._yScale(d[0]) : this._yScale(d[1]);
+                return y1;
+            });
+        // .y1(d => d[1]);
         var dataBound = this._seriesGroup.selectAll('.series')
-            .data(byCountry);
+            .data(stacked);
         dataBound
             .exit()
             .remove();
@@ -135,12 +160,13 @@ export class countryRank {
             .append('g')
             .classed('series', true)
             .append('path')
-            .attr('d', d => areaGenerator(d.values))
+            .attr('d', d => {
+                return areaGenerator(d);
+            })
             .style('fill', (d, i) => color(i));
 
         this._legend.update(countryNames);
         this._legendGroup.attr('transform', `translate(${this.width() - this._legend.width()},${this.height() / 2 - this._legend.height() / 2})`)
-
     }
 
 }

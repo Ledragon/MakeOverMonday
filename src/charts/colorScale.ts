@@ -1,4 +1,4 @@
-import { schemePaired, schemeAccent, interpolateBlues } from 'd3-scale-chromatic';
+import { schemePaired, schemeAccent, interpolateBlues, schemePastel1 } from 'd3-scale-chromatic';
 
 
 export function color(value:number): string{

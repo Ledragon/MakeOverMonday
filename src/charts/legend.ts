@@ -24,9 +24,11 @@ export class legend {
             .style('fill', 'white')
             .style('stroke', 'darkgray');
     }
+
     width() {
         return this._width + this._margins.left + this._margins.right;
     }
+    
     height() {
         return this._height + this._margins.top + this._margins.bottom;
     }

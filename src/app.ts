@@ -20,10 +20,10 @@ csv<any, any>('data/Olympic Medal Table.csv',
             rank: +d.Rank,
             country: d.Country,
             countryGroup: d['Country Group'],
-            gold: +d.Gold,
-            silver: +d.Silver,
-            bronze: +d.Bronze,
-            total: +d.Total
+            // gold: +d.Gold,
+            // silver: +d.Silver,
+            // bronze: +d.Bronze,
+            total: d.Total ? +d.Total : 0
         };
     }
     , (error, data) => {

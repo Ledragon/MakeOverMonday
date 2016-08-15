@@ -70,30 +70,52 @@ var countryRank = (function () {
         var _this = this;
         this._xScale.domain(d3_array_1.extent(data, function (d) { return d.edition; }));
         this._xAxisGroup.call(this._xAxis);
-        this._yScale
-            .domain([0, d3_array_1.max(data, function (d) { return d.total; })])
-            .nice();
-        this._yAxisGroup.call(this._yAxis);
         var byCountry = d3_collection_1.nest()
             .key(function (d) { return d.country; })
             .entries(data)
             .sort(function (a, b) { return d3_array_1.sum(b.values, function (v) { return v.total; }) - d3_array_1.sum(a.values, function (v) { return v.total; }); })
             .splice(0, 10);
+        var byYear = d3_collection_1.nest()
+            .key(function (d) { return d.edition; })
+            .entries(data);
         var lineGenerator = d3_shape_1.line()
             .x(function (d) { return _this._xScale(d.edition); })
             .y(function (d) { return _this._yScale(d.total); });
-        var areaGenerator = d3_shape_1.area()
-            .x(function (d) { return _this._xScale(d.edition); })
-            .y0(this._plotHeight)
-            .y1(function (d) { return _this._yScale(d.total); });
+        var toto = [];
+        byYear.forEach(function (c, i) {
+            var result = {};
+            result.edition = c.key;
+            c.values.forEach(function (v) {
+                result[v.country] = v.total;
+            });
+            toto.push(result);
+        });
         var countryNames = byCountry.map(function (d) { return d.key; });
-        var filtered = data.filter(function (d) { return countryNames.indexOf(d.country) >= 0; });
-        console.log(filtered);
         var stackGenerator = d3_shape_1.stack()
-            .keys(countryNames)
-            .value(function (d) { return d.values; });
+            .keys(countryNames);
+        var stacked = stackGenerator(toto);
+        console.log(stacked);
+        this._yScale
+            .domain([0, 450])
+            .nice();
+        this._yAxisGroup.call(this._yAxis);
+        // console.log(stackGenerator(filtered))
+        var areaGenerator = d3_shape_1.area()
+            .x(function (d) {
+            var x = _this._xScale(+d.data.edition);
+            return x;
+        })
+            .y0(function (d, i) {
+            var y0 = isNaN(d[0]) ? _this._yScale(0) : _this._yScale(d[0]);
+            return y0;
+        })
+            .y1(function (d, i) {
+            var y1 = isNaN(d[1]) ? _this._yScale(d[0]) : _this._yScale(d[1]);
+            return y1;
+        });
+        // .y1(d => d[1]);
         var dataBound = this._seriesGroup.selectAll('.series')
-            .data(byCountry);
+            .data(stacked);
         dataBound
             .exit()
             .remove();
@@ -102,7 +124,9 @@ var countryRank = (function () {
             .append('g')
             .classed('series', true)
             .append('path')
-            .attr('d', function (d) { return areaGenerator(d.values); })
+            .attr('d', function (d) {
+            return areaGenerator(d);
+        })
             .style('fill', function (d, i) { return colorScale_1.color(i); });
         this._legend.update(countryNames);
         this._legendGroup.attr('transform', "translate(" + (this.width() - this._legend.width()) + "," + (this.height() / 2 - this._legend.height() / 2) + ")");
