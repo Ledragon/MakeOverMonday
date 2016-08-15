@@ -8,6 +8,7 @@ import { line, area, stack } from 'd3-shape';
 
 import { color } from './colorScale';
 import { legend } from './legend';
+import { title } from './title';
 
 export class countryRank {
     private _chartMargins = {
@@ -57,13 +58,19 @@ export class countryRank {
         this._legendGroup = chartGroup.append('g')
             .classed('legendGroup-group', true);
         this._legend = new legend(this._legendGroup);
+        var titleGroup = chartGroup.append('g')
+            .classed('title-group', true);
+        var t = new title(titleGroup)
+            .text('Best performing countries');
 
         var plotGroup = chartGroup.append('g')
             .classed('plot-group', true)
-            .attr('transform', `translate(${this._plotMargins.left},${this._plotMargins.top})`);
+            .attr('transform', `translate(${this._plotMargins.left},${this._plotMargins.top + t.height()})`);
 
         var plotWidth = chartWidth - this._plotMargins.left - this._plotMargins.right - this._legend.width();
-        var plotHeight = chartHeight - this._plotMargins.top - this._plotMargins.bottom;
+        var plotHeight = chartHeight - this._plotMargins.top - this._plotMargins.bottom - t.height();
+        titleGroup
+          .attr('transform', `translate(${plotWidth/2},${20})`)
         // plotGroup.append('rect')
         //     .attr('width', plotWidth)
         //     .attr('height', plotHeight)

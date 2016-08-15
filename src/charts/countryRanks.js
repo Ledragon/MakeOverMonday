@@ -7,6 +7,7 @@ var d3_shape_1 = require('d3-shape');
 // import { schemePaired, schemeAccent, interpolateBlues } from 'd3-scale-chromatic';
 var colorScale_1 = require('./colorScale');
 var legend_1 = require('./legend');
+var title_1 = require('./title');
 var countryRank = (function () {
     function countryRank(container, width, height) {
         this._chartMargins = {
@@ -35,11 +36,17 @@ var countryRank = (function () {
         this._legendGroup = chartGroup.append('g')
             .classed('legendGroup-group', true);
         this._legend = new legend_1.legend(this._legendGroup);
+        var titleGroup = chartGroup.append('g')
+            .classed('title-group', true);
+        var t = new title_1.title(titleGroup)
+            .text('Best performing countries');
         var plotGroup = chartGroup.append('g')
             .classed('plot-group', true)
-            .attr('transform', "translate(" + this._plotMargins.left + "," + this._plotMargins.top + ")");
+            .attr('transform', "translate(" + this._plotMargins.left + "," + (this._plotMargins.top + t.height()) + ")");
         var plotWidth = chartWidth - this._plotMargins.left - this._plotMargins.right - this._legend.width();
-        var plotHeight = chartHeight - this._plotMargins.top - this._plotMargins.bottom;
+        var plotHeight = chartHeight - this._plotMargins.top - this._plotMargins.bottom - t.height();
+        titleGroup
+            .attr('transform', "translate(" + plotWidth / 2 + "," + 20 + ")");
         // plotGroup.append('rect')
         //     .attr('width', plotWidth)
         //     .attr('height', plotHeight)
