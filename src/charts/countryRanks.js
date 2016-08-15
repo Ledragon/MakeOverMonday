@@ -8,6 +8,7 @@ var d3_shape_1 = require('d3-shape');
 var colorScale_1 = require('./colorScale');
 var legend_1 = require('./legend');
 var title_1 = require('./title');
+var xAxis_1 = require('./xAxis');
 var countryRank = (function () {
     function countryRank(container, width, height) {
         this._chartMargins = {
@@ -53,12 +54,7 @@ var countryRank = (function () {
         //     .style('fill', 'lightblue');
         this._legendGroup.attr('transform', "translate(" + (chartWidth - this._legend.width()) + "," + (chartHeight / 2 - this._legend.height() / 2) + ")");
         this._plotHeight = plotHeight;
-        this._xScale = d3_scale_1.scaleLinear()
-            .range([0, plotWidth]);
-        this._xAxis = d3_axis_1.axisBottom(this._xScale);
-        this._xAxisGroup = plotGroup.append('g')
-            .classed('axis-group', true)
-            .attr('transform', "translate(" + 0 + "," + plotHeight + ")");
+        this._xAxis = new xAxis_1.horizontalLinearAxis(plotGroup, plotWidth, plotHeight);
         this._yScale = d3_scale_1.scaleLinear()
             .range([plotHeight, 0]);
         this._yAxis = d3_axis_1.axisLeft(this._yScale);
@@ -75,8 +71,8 @@ var countryRank = (function () {
     };
     countryRank.prototype.update = function (data) {
         var _this = this;
-        this._xScale.domain(d3_array_1.extent(data, function (d) { return d.edition; }));
-        this._xAxisGroup.call(this._xAxis);
+        var e = d3_array_1.extent(data, function (d) { return d.edition; });
+        this._xAxis.update(e);
         var byCountry = d3_collection_1.nest()
             .key(function (d) { return d.country; })
             .entries(data)
@@ -85,9 +81,6 @@ var countryRank = (function () {
         var byYear = d3_collection_1.nest()
             .key(function (d) { return d.edition; })
             .entries(data);
-        var lineGenerator = d3_shape_1.line()
-            .x(function (d) { return _this._xScale(d.edition); })
-            .y(function (d) { return _this._yScale(d.total); });
         var toto = [];
         byYear.forEach(function (c, i) {
             var result = {};
@@ -109,7 +102,7 @@ var countryRank = (function () {
         // console.log(stackGenerator(filtered))
         var areaGenerator = d3_shape_1.area()
             .x(function (d) {
-            var x = _this._xScale(+d.data.edition);
+            var x = _this._xAxis.scale(+d.data.edition);
             return x;
         })
             .y0(function (d, i) {

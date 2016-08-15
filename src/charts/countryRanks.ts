@@ -9,6 +9,7 @@ import { line, area, stack } from 'd3-shape';
 import { color } from './colorScale';
 import { legend } from './legend';
 import { title } from './title';
+import { horizontalLinearAxis } from './xAxis';
 
 export class countryRank {
     private _chartMargins = {
@@ -26,9 +27,11 @@ export class countryRank {
 
 
     private _plotHeight: number;
-    private _xScale: ScaleLinear<number, number>;
-    private _xAxis: Axis<any>;
-    private _xAxisGroup: Selection<any, any, any, any>;
+    // private _xScale: ScaleLinear<number, number>;
+    // private _xAxis: Axis<any>;
+    // private _xAxisGroup: Selection<any, any, any, any>;
+
+    private _xAxis: horizontalLinearAxis;
 
     private _yScale: ScaleLinear<number, number>;
     private _yAxis: Axis<any>;
@@ -70,20 +73,16 @@ export class countryRank {
         var plotWidth = chartWidth - this._plotMargins.left - this._plotMargins.right - this._legend.width();
         var plotHeight = chartHeight - this._plotMargins.top - this._plotMargins.bottom - t.height();
         titleGroup
-          .attr('transform', `translate(${plotWidth/2},${20})`)
+            .attr('transform', `translate(${plotWidth / 2},${20})`)
         // plotGroup.append('rect')
         //     .attr('width', plotWidth)
         //     .attr('height', plotHeight)
         //     .style('fill', 'lightblue');
         this._legendGroup.attr('transform', `translate(${chartWidth - this._legend.width()},${chartHeight / 2 - this._legend.height() / 2})`)
         this._plotHeight = plotHeight;
-        this._xScale = scaleLinear()
-            .range([0, plotWidth]);
-        this._xAxis = axisBottom(this._xScale);
-        this._xAxisGroup = plotGroup.append('g')
-            .classed('axis-group', true)
-            .attr('transform', `translate(${0},${plotHeight})`);
 
+        this._xAxis = new horizontalLinearAxis(plotGroup, plotWidth, plotHeight);
+       
         this._yScale = scaleLinear()
             .range([plotHeight, 0]);
         this._yAxis = axisLeft(this._yScale);
@@ -104,9 +103,8 @@ export class countryRank {
     }
 
     update(data: Array<any>): void {
-        this._xScale.domain(extent(data, d => d.edition));
-        this._xAxisGroup.call(this._xAxis);
-
+        var e = extent(data, d => d.edition);
+        this._xAxis.update(e);
 
         var byCountry = nest<any>()
             .key(d => d.country)
@@ -116,9 +114,6 @@ export class countryRank {
         var byYear = nest<any>()
             .key(d => d.edition)
             .entries(data);
-        let lineGenerator = line<any>()
-            .x(d => this._xScale(d.edition))
-            .y(d => this._yScale(d.total));
 
         var toto: any = [];
         byYear.forEach((c, i) => {
@@ -145,7 +140,7 @@ export class countryRank {
 
         let areaGenerator = area<any>()
             .x(d => {
-                let x = this._xScale(+d.data.edition);
+                let x = this._xAxis.scale(+d.data.edition);
                 return x;
             })
             .y0((d, i) => {
