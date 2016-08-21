@@ -1,9 +1,11 @@
 import { select, Selection } from 'd3-selection';
 import { axisLeft, axisBottom, Axis } from 'd3-axis';
 import { scaleLinear, ScaleLinear, scaleOrdinal, scaleBand } from 'd3-scale';
-import { pairs, sum } from 'd3-array';
+import { pairs, sum, extent } from 'd3-array';
+import { nest, Nest } from 'd3-collection';
 
 import { color } from './colorScale';
+import { dataFormat } from './dataFormat';
 
 export class chart {
     private _chartMargins = {
@@ -65,18 +67,25 @@ export class chart {
         return this._height - this._chartMargins.top - this._chartMargins.bottom;
     }
 
-    update(data: Array<any>) {
-        let c = data.map(d => d.key);
-        console.log(c);
+    update(data: Array<dataFormat>) {
+
+        var byCategory = nest<dataFormat, string>()
+            .key(d => d.category)
+            .entries(data);
+        let c = byCategory.map(d => d.key);
         let tmpScale = scaleBand<string>()
             .domain(c)
             .range([0, c.length]);
-        let h = this.height() / data.length;
+        let h = this.height() / byCategory.length;
         let w = 20;
         let that = this;
-        let paired = pairs(data);
+
+        let yScale = scaleLinear()
+            .domain(extent(data, d => d.change))
+            .range([this.height(), 0]);
+
         var dataBound = this._group.selectAll('.pane')
-            .data(data);
+            .data(byCategory);
         dataBound
             .exit()
             .remove();
@@ -84,7 +93,7 @@ export class chart {
             .enter()
             .append('g')
             .classed('pane', true)
-            .attr('transform', (d, i) => `translate(${sum(data.filter((dd, j) => j < i),d=>d.values.length) * w},${0})`);
+            .attr('transform', (d, i) => `translate(${sum(byCategory.filter((dd, j) => j < i), d => d.values.length) * w},${0})`);
         enterSelection.append('rect')
             .classed('background-rect', true)
             .attr('width', d => d.values.length * w)
@@ -92,8 +101,15 @@ export class chart {
             .style('fill', (d, i) => {
                 return color(tmpScale(d.key));
             });
-        enterSelection.append('rect')
-            .attr('width', 15);
+        enterSelection
+            .selectAll('rect')
+            .data(d => d.values)
+            .enter()
+            .append('rect')
+            .attr('x', (d, i) => i * w)
+            .attr('width', 15)
+            .attr('height', (d: dataFormat) => yScale(d.change));
+
         // .each(function (d) {
         //     let p = new pane(select(this), that.width(), h);
         //     p.update(d.values);

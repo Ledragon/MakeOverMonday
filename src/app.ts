@@ -27,11 +27,6 @@ csv<any, dataFormat>('data/data.csv',
         if (error) {
             console.error(error)
         } else {
-            console.log(data)
-            var byCategory = nest<any, any>()
-                .key(d => d.category)
-                .entries(data);
-            c.update(byCategory);
-
+            c.update(data);
         }
     });

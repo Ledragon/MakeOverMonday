@@ -1,6 +1,7 @@
 "use strict";
 var d3_scale_1 = require('d3-scale');
 var d3_array_1 = require('d3-array');
+var d3_collection_1 = require('d3-collection');
 var colorScale_1 = require('./colorScale');
 var chart = (function () {
     function chart(container, width, height) {
@@ -41,17 +42,21 @@ var chart = (function () {
         return this._height - this._chartMargins.top - this._chartMargins.bottom;
     };
     chart.prototype.update = function (data) {
-        var c = data.map(function (d) { return d.key; });
-        console.log(c);
+        var byCategory = d3_collection_1.nest()
+            .key(function (d) { return d.category; })
+            .entries(data);
+        var c = byCategory.map(function (d) { return d.key; });
         var tmpScale = d3_scale_1.scaleBand()
             .domain(c)
             .range([0, c.length]);
-        var h = this.height() / data.length;
+        var h = this.height() / byCategory.length;
         var w = 20;
         var that = this;
-        var paired = d3_array_1.pairs(data);
+        var yScale = d3_scale_1.scaleLinear()
+            .domain(d3_array_1.extent(data, function (d) { return d.change; }))
+            .range([this.height(), 0]);
         var dataBound = this._group.selectAll('.pane')
-            .data(data);
+            .data(byCategory);
         dataBound
             .exit()
             .remove();
@@ -59,7 +64,7 @@ var chart = (function () {
             .enter()
             .append('g')
             .classed('pane', true)
-            .attr('transform', function (d, i) { return ("translate(" + d3_array_1.sum(data.filter(function (dd, j) { return j < i; }), function (d) { return d.values.length; }) * w + "," + 0 + ")"); });
+            .attr('transform', function (d, i) { return ("translate(" + d3_array_1.sum(byCategory.filter(function (dd, j) { return j < i; }), function (d) { return d.values.length; }) * w + "," + 0 + ")"); });
         enterSelection.append('rect')
             .classed('background-rect', true)
             .attr('width', function (d) { return d.values.length * w; })
@@ -67,8 +72,14 @@ var chart = (function () {
             .style('fill', function (d, i) {
             return colorScale_1.color(tmpScale(d.key));
         });
-        enterSelection.append('rect')
-            .attr('width', 15);
+        enterSelection
+            .selectAll('rect')
+            .data(function (d) { return d.values; })
+            .enter()
+            .append('rect')
+            .attr('x', function (d, i) { return i * w; })
+            .attr('width', 15)
+            .attr('height', function (d) { return yScale(d.change); });
         // .each(function (d) {
         //     let p = new pane(select(this), that.width(), h);
         //     p.update(d.values);

@@ -1,7 +1,6 @@
 "use strict";
 var d3_selection_1 = require('d3-selection');
 var d3_request_1 = require('d3-request');
-var d3_collection_1 = require('d3-collection');
 var chart_1 = require('./chart');
 var w = 800;
 var h = 600;
@@ -23,11 +22,7 @@ d3_request_1.csv('data/data.csv', function (d) {
         console.error(error);
     }
     else {
-        console.log(data);
-        var byCategory = d3_collection_1.nest()
-            .key(function (d) { return d.category; })
-            .entries(data);
-        c.update(byCategory);
+        c.update(data);
     }
 });
 //# sourceMappingURL=app.js.map
