@@ -20,13 +20,14 @@ csv<any, dataFormat>('data/data.csv',
             product: d.Product,
             current: d['2014'],
             previous: d['2013'],
-            'change': d['% Change']
+            'change': parseFloat(d['% Change'])/100
         };
     }
     , (error: any, data: Array<dataFormat>) => {
         if (error) {
             console.error(error)
         } else {
+            console.log(data)
             var byCategory = nest<any, any>()
                 .key(d => d.category)
                 .entries(data);

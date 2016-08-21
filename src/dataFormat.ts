@@ -3,5 +3,5 @@ export interface dataFormat{
     product: string;
     current: string;
     previous: string;
-    change: string;
+    change: number;
 }

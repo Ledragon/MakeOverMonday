@@ -16,13 +16,14 @@ d3_request_1.csv('data/data.csv', function (d) {
         product: d.Product,
         current: d['2014'],
         previous: d['2013'],
-        'change': d['% Change']
+        'change': parseFloat(d['% Change']) / 100
     };
 }, function (error, data) {
     if (error) {
         console.error(error);
     }
     else {
+        console.log(data);
         var byCategory = d3_collection_1.nest()
             .key(function (d) { return d.category; })
             .entries(data);

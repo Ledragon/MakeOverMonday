@@ -13,8 +13,8 @@ export class pane {
     }
     private _plotMargins = {
         top: 10,
-        bottom: 25,
-        left: 50,
+        bottom: 10,
+        left: 120,
         right: 10
     }
 
@@ -26,6 +26,8 @@ export class pane {
 
     private _width: number;
     private _height: number;
+    private _plotWidth:number;
+    private _plotHeight: number;
 
     constructor(container: Selection<any, any, any, any>, width: number, height: number) {
         this._width = width;
@@ -42,11 +44,17 @@ export class pane {
             .classed('plot-group', true)
             .attr('transform', `translate(${this._plotMargins.left},${this._plotMargins.top})`);
 
-        var plotWidth = chartWidth - this._plotMargins.left - this._plotMargins.right;// - this._legend.width();
-        var plotHeight = chartHeight - this._plotMargins.top - this._plotMargins.bottom;// - t.height();
-        
+        this._plotWidth = chartWidth - this._plotMargins.left - this._plotMargins.right;// - this._legend.width();
+        this._plotHeight = chartHeight - this._plotMargins.top - this._plotMargins.bottom;// - t.height();
+
         this._seriesGroup = plotGroup.append('g')
             .classed('series-group', true);
+        
+        this._yScale = scaleBand()
+            .range([this._plotHeight, 0]);
+        this._yAxis = axisLeft(this._yScale);
+        this._yAxisGroup = plotGroup.append('g')
+            .classed('y-axis', true);
     }
 
     private width(): number {
@@ -59,16 +67,19 @@ export class pane {
     }
 
     update(data: Array<dataFormat>) {
+        let height = this._plotHeight / data.length;
+        this._yScale.domain(data.map(d => d.product));
+        this._yAxisGroup.call(this._yAxis);
         var dataBound = this._seriesGroup.selectAll('.series')
             .data(data);
         dataBound
-          .exit()
-          .remove();
+            .exit()
+            .remove();
         let enterSelection = dataBound
-          .enter()
-          .append('g')
+            .enter()
+            .append('g')
             .classed('series', true)
-              .attr('transform', (d,i)=>`translate(${0},${i*20})`);
-        
+            .attr('transform', (d, i) => `translate(${0},${this._yScale(d.product)})`);
+
     }
 }
