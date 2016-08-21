@@ -1,23 +1,36 @@
 import { select } from 'd3-selection';
 import { csv } from 'd3-request';
+import { nest } from 'd3-collection';
+
+import { chart } from './chart';
+import { dataFormat } from './dataFormat';
 
 var w = 800;
 var h = 600;
-var countryRankSvg = select('#countryRank')
-    .append('svg')
-    .attr('width', 800)
-    .attr('height', 600);
 
-csv<any, any>('data/Olympic Medal Table.csv',
+let svg = select('#chart')
+    .append('svg')
+    .attr('width', w)
+    .attr('height', h);
+let c = new chart(svg, w, h);
+csv<any, dataFormat>('data/data.csv',
     (d) => {
         return {
-            
+            category: d.Category,
+            product: d.Product,
+            current: d['2014'],
+            previous: d['2013'],
+            'change': d['% Change']
         };
     }
-    , (error, data) => {
+    , (error: any, data: Array<dataFormat>) => {
         if (error) {
             console.error(error)
         } else {
-            console.log(data)
+            var byCategory = nest<any, any>()
+                .key(d => d.category)
+                .entries(data);
+            c.update(byCategory);
+
         }
     });
