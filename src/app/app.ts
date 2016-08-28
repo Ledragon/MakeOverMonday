@@ -11,12 +11,19 @@ let map = select('#map')
     .attr('width', w)
     .attr('height', h);
 
-draw(map, w, h);
+let mapChart = draw(map, w, h);
 
 const filePath = 'data/Malaria.csv';
 read(filePath, update);
 
 /******************************************************* */
 function update(data: Array<rawData>) {
-    console.log(data);
+    var mapped = data.map(d => {
+        return {
+            name: d.Country,
+            value: +d['2014']
+        }
+    })
+    console.log(mapped)
+    mapChart.update(mapped);
 }
