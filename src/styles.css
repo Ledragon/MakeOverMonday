@@ -55,3 +55,6 @@ svg{
 .background-rect{
     opacity: 0.4;
 }
+.country path{
+    fill: lightgray;
+}

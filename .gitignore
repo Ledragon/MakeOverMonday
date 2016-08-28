@@ -45,3 +45,4 @@ jspm_packages
 *.xlsx
 src/app/**/*.js
 src/app/**/*.js.map
+src/data/build
