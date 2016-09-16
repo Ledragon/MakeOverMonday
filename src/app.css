@@ -7,7 +7,7 @@ body{
     padding: 15px;
     height:150px;
 }
-.main-title h1{
+.main-title{
     color: rgba(241, 232, 184, 1);
 }
 .series path{
@@ -32,3 +32,6 @@ svg{
     background-size: cover;
     border-radius: 50%;
 }
+/*.time-axis line{
+    stroke: rgba(241, 232, 184, 1);
+}*/

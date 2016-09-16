@@ -1,4 +1,7 @@
+import * as d3 from '../d3';
+
 import { read } from './services/dataService';
+import { movies } from './charts/movies';
 
 read('data/Alan Rickman.csv', data => {
     let parsed: Array<any> = [];
@@ -18,7 +21,12 @@ read('data/Alan Rickman.csv', data => {
             audienceScore: +d['AudienceScore'],
         });
     });
-
-    console.log(parsed);
-
+    var width = 800;
+    var height = 800;
+    var container = d3.select('#chart')
+        .append('svg')
+        .attr('width', width)
+        .attr('height', height);
+    movies(container, width, height, parsed);
+    
 })

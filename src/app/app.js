@@ -1,5 +1,7 @@
 "use strict";
+var d3 = require('../d3');
 var dataService_1 = require('./services/dataService');
+var movies_1 = require('./charts/movies');
 dataService_1.read('data/Alan Rickman.csv', function (data) {
     var parsed = [];
     data.forEach(function (d) {
@@ -18,6 +20,12 @@ dataService_1.read('data/Alan Rickman.csv', function (data) {
             audienceScore: +d['AudienceScore'],
         });
     });
-    console.log(parsed);
+    var width = 800;
+    var height = 800;
+    var container = d3.select('#chart')
+        .append('svg')
+        .attr('width', width)
+        .attr('height', height);
+    movies_1.movies(container, width, height, parsed);
 });
 //# sourceMappingURL=app.js.map
