@@ -12,6 +12,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@types/angular": "^1.5.13",
     "@types/d3-array": "0.0.1",
     "@types/d3-axis": "0.0.1",
     "@types/d3-collection": "0.0.1",
@@ -27,6 +28,7 @@
       "baseURL": "src"
     },
     "dependencies": {
+      "angular": "npm:angular@^1.5.8",
       "d3-array": "npm:d3-array@^1.0.1",
       "d3-axis": "npm:d3-axis@^1.0.3",
       "d3-collection": "npm:d3-collection@^1.0.1",

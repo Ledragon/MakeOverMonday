@@ -4,7 +4,7 @@ function search(parsed) {
     var queue = d3.queue();
     parsed.forEach(function (p) {
         var result = [];
-        queue.defer(d3.json, "http://www.omdbapi.com/?s=" + p.title);
+        queue.defer(d3.json, "http://www.omdbapi.com/?s=" + p.title + "&type=movie");
     });
     queue.awaitAll(function (error, data) {
         if (error) {

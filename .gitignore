@@ -43,3 +43,6 @@ jspm_packages
 
 **/*.js.map
 *.xlsx
+
+src/**/*.js
+src/**/*.js.map

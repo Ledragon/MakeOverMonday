@@ -13,15 +13,13 @@
             "cameo": "N",
             "tomatometerScore": 0.92,
             "audienceScore": 0.94,
-            "searchResults": [
-                {
-                    "Title": "Die Hard",
-                    "Year": "1988",
-                    "imdbID": "tt0095016",
-                    "Type": "movie",
-                    "Poster": "http://ia.media-imdb.com/images/M/MV5BYmY2ZGEwMTYtNjBmZS00OGE4LWEyMmUtNjAwMWUxZjVmZTRiXkEyXkFqcGdeQXVyNjU0OTQ0OTY@._V1_SX300.jpg"
-                }
-            ]
+            "searchResults": {
+                "Title": "Die Hard",
+                "Year": "1988",
+                "imdbID": "tt0095016",
+                "Type": "movie",
+                "Poster": "http://ia.media-imdb.com/images/M/MV5BYmY2ZGEwMTYtNjBmZS00OGE4LWEyMmUtNjAwMWUxZjVmZTRiXkEyXkFqcGdeQXVyNjU0OTQ0OTY@._V1_SX300.jpg"
+            }
         },
         {
             "date": "1989-01-12T23:00:00.000Z",
@@ -36,15 +34,13 @@
             "cameo": "Y",
             "tomatometerScore": 0.21,
             "audienceScore": 0.28,
-            "searchResults": [
-                {
-                    "Title": "The January Man",
-                    "Year": "1989",
-                    "imdbID": "tt0097613",
-                    "Type": "movie",
-                    "Poster": "http://ia.media-imdb.com/images/M/MV5BMTk3NzUwNTYzM15BMl5BanBnXkFtZTcwNDYxODg0NA@@._V1_SX300.jpg"
-                }
-            ]
+            "searchResults": {
+                "Title": "The January Man",
+                "Year": "1989",
+                "imdbID": "tt0097613",
+                "Type": "movie",
+                "Poster": "http://ia.media-imdb.com/images/M/MV5BMTk3NzUwNTYzM15BMl5BanBnXkFtZTcwNDYxODg0NA@@._V1_SX300.jpg"
+            }
         },
         {
             "date": "1990-10-18T22:00:00.000Z",
@@ -59,15 +55,13 @@
             "cameo": "N",
             "tomatometerScore": 0.56,
             "audienceScore": 0.73,
-            "searchResults": [
-                {
-                    "Title": "Quigley Down Under",
-                    "Year": "1990",
-                    "imdbID": "tt0102744",
-                    "Type": "movie",
-                    "Poster": "http://ia.media-imdb.com/images/M/MV5BMTM0NjA0NTEyMF5BMl5BanBnXkFtZTcwODMwMzg4NA@@._V1_SX300.jpg"
-                }
-            ]
+            "searchResults": {
+                "Title": "Quigley Down Under",
+                "Year": "1990",
+                "imdbID": "tt0102744",
+                "Type": "movie",
+                "Poster": "http://ia.media-imdb.com/images/M/MV5BMTM0NjA0NTEyMF5BMl5BanBnXkFtZTcwODMwMzg4NA@@._V1_SX300.jpg"
+            }
         },
         {
             "date": "1991-03-05T23:00:00.000Z",
@@ -82,15 +76,13 @@
             "cameo": "N",
             "tomatometerScore": 0.44,
             "audienceScore": 0.86,
-            "searchResults": [
-                {
-                    "Title": "Closet Land",
-                    "Year": "1991",
-                    "imdbID": "tt0101597",
-                    "Type": "movie",
-                    "Poster": "http://ia.media-imdb.com/images/M/MV5BMTM1MjMxOTQ4N15BMl5BanBnXkFtZTcwNzI1MzMzMQ@@._V1_SX300.jpg"
-                }
-            ]
+            "searchResults": {
+                "Title": "Closet Land",
+                "Year": "1991",
+                "imdbID": "tt0101597",
+                "Type": "movie",
+                "Poster": "http://ia.media-imdb.com/images/M/MV5BMTM1MjMxOTQ4N15BMl5BanBnXkFtZTcwNzI1MzMzMQ@@._V1_SX300.jpg"
+            }
         },
         {
             "date": "1991-05-02T22:00:00.000Z",
@@ -104,7 +96,14 @@
             "rank": 19,
             "cameo": "N",
             "tomatometerScore": 0.72,
-            "audienceScore": 0.88
+            "audienceScore": 0.88,
+            "searchResults": {
+                "Title": "Truly Madly Deeply",
+                "Year": "1990",
+                "imdbID": "tt0103129",
+                "Type": "movie",
+                "Poster": "http://ia.media-imdb.com/images/M/MV5BMTI3MDI1NTQ4M15BMl5BanBnXkFtZTYwNjIxOTg4._V1_SX300.jpg"
+            }
         },
         {
             "date": "1991-06-13T22:00:00.000Z",
@@ -119,22 +118,13 @@
             "cameo": "N",
             "tomatometerScore": 0.5,
             "audienceScore": 0.72,
-            "searchResults": [
-                {
-                    "Title": "Robin Hood: Prince of Thieves",
-                    "Year": "1991",
-                    "imdbID": "tt0102798",
-                    "Type": "movie",
-                    "Poster": "http://ia.media-imdb.com/images/M/MV5BMTg0OTg5MjExN15BMl5BanBnXkFtZTgwMjg3OTgzMTE@._V1_SX300.jpg"
-                },
-                {
-                    "Title": "One-On-One with the Cast of 'Robin Hood: Prince of Thieves'",
-                    "Year": "1991",
-                    "imdbID": "tt5420068",
-                    "Type": "movie",
-                    "Poster": "N/A"
-                }
-            ]
+            "searchResults": {
+                "Title": "Robin Hood: Prince of Thieves",
+                "Year": "1991",
+                "imdbID": "tt0102798",
+                "Type": "movie",
+                "Poster": "http://ia.media-imdb.com/images/M/MV5BMTg0OTg5MjExN15BMl5BanBnXkFtZTgwMjg3OTgzMTE@._V1_SX300.jpg"
+            }
         },
         {
             "date": "1991-11-07T23:00:00.000Z",
@@ -149,15 +139,13 @@
             "cameo": "N",
             "tomatometerScore": 0.6,
             "audienceScore": 0.55,
-            "searchResults": [
-                {
-                    "Title": "Close My Eyes",
-                    "Year": "1991",
-                    "imdbID": "tt0101595",
-                    "Type": "movie",
-                    "Poster": "http://ia.media-imdb.com/images/M/MV5BMTc3MTUzNzU0OV5BMl5BanBnXkFtZTcwODE2NDUyMQ@@._V1_SX300.jpg"
-                }
-            ]
+            "searchResults": {
+                "Title": "Close My Eyes",
+                "Year": "1991",
+                "imdbID": "tt0101595",
+                "Type": "movie",
+                "Poster": "http://ia.media-imdb.com/images/M/MV5BMTc3MTUzNzU0OV5BMl5BanBnXkFtZTcwODE2NDUyMQ@@._V1_SX300.jpg"
+            }
         },
         {
             "date": "1992-09-03T22:00:00.000Z",
@@ -172,15 +160,13 @@
             "cameo": "N",
             "tomatometerScore": 1,
             "audienceScore": 0.79,
-            "searchResults": [
-                {
-                    "Title": "Bob Roberts",
-                    "Year": "1992",
-                    "imdbID": "tt0103850",
-                    "Type": "movie",
-                    "Poster": "http://ia.media-imdb.com/images/M/MV5BMTY1NzI0Mjg3MV5BMl5BanBnXkFtZTcwMTQ4MjAyMQ@@._V1_SX300.jpg"
-                }
-            ]
+            "searchResults": {
+                "Title": "Bob Roberts",
+                "Year": "1992",
+                "imdbID": "tt0103850",
+                "Type": "movie",
+                "Poster": "http://ia.media-imdb.com/images/M/MV5BMTY1NzI0Mjg3MV5BMl5BanBnXkFtZTcwMTQ4MjAyMQ@@._V1_SX300.jpg"
+            }
         },
         {
             "date": "1995-07-20T22:00:00.000Z",
@@ -195,15 +181,13 @@
             "cameo": "N",
             "tomatometerScore": 0.33,
             "audienceScore": 0.56,
-            "searchResults": [
-                {
-                    "Title": "An Awfully Big Adventure",
-                    "Year": "1995",
-                    "imdbID": "tt0112427",
-                    "Type": "movie",
-                    "Poster": "http://ia.media-imdb.com/images/M/MV5BMTI0NzUwMzM1NF5BMl5BanBnXkFtZTcwNDc5ODgyMQ@@._V1_SX300.jpg"
-                }
-            ]
+            "searchResults": {
+                "Title": "An Awfully Big Adventure",
+                "Year": "1995",
+                "imdbID": "tt0112427",
+                "Type": "movie",
+                "Poster": "http://ia.media-imdb.com/images/M/MV5BMTI0NzUwMzM1NF5BMl5BanBnXkFtZTcwNDc5ODgyMQ@@._V1_SX300.jpg"
+            }
         },
         {
             "date": "1995-12-14T23:00:00.000Z",
@@ -218,15 +202,13 @@
             "cameo": "N",
             "tomatometerScore": 0.98,
             "audienceScore": 0.9,
-            "searchResults": [
-                {
-                    "Title": "Sense and Sensibility",
-                    "Year": "1995",
-                    "imdbID": "tt0114388",
-                    "Type": "movie",
-                    "Poster": "http://ia.media-imdb.com/images/M/MV5BNzk1MjU3MDQyMl5BMl5BanBnXkFtZTcwNjc1OTM2MQ@@._V1_SX300.jpg"
-                }
-            ]
+            "searchResults": {
+                "Title": "Sense and Sensibility",
+                "Year": "1995",
+                "imdbID": "tt0114388",
+                "Type": "movie",
+                "Poster": "http://ia.media-imdb.com/images/M/MV5BNzk1MjU3MDQyMl5BMl5BanBnXkFtZTcwNjc1OTM2MQ@@._V1_SX300.jpg"
+            }
         },
         {
             "date": "1996-10-10T22:00:00.000Z",
@@ -241,15 +223,13 @@
             "cameo": "N",
             "tomatometerScore": 0.78,
             "audienceScore": 0.84,
-            "searchResults": [
-                {
-                    "Title": "Michael Collins",
-                    "Year": "1996",
-                    "imdbID": "tt0117039",
-                    "Type": "movie",
-                    "Poster": "N/A"
-                }
-            ]
+            "searchResults": {
+                "Title": "Michael Collins",
+                "Year": "1996",
+                "imdbID": "tt0117039",
+                "Type": "movie",
+                "Poster": "N/A"
+            }
         },
         {
             "date": "1999-11-11T23:00:00.000Z",
@@ -264,15 +244,13 @@
             "cameo": "N",
             "tomatometerScore": 0.67,
             "audienceScore": 0.85,
-            "searchResults": [
-                {
-                    "Title": "Dogma",
-                    "Year": "1999",
-                    "imdbID": "tt0120655",
-                    "Type": "movie",
-                    "Poster": "http://ia.media-imdb.com/images/M/MV5BMTYwMzkzNDQ1MV5BMl5BanBnXkFtZTcwMjAxNTEzMQ@@._V1_SX300.jpg"
-                }
-            ]
+            "searchResults": {
+                "Title": "Dogma",
+                "Year": "1999",
+                "imdbID": "tt0120655",
+                "Type": "movie",
+                "Poster": "http://ia.media-imdb.com/images/M/MV5BMTYwMzkzNDQ1MV5BMl5BanBnXkFtZTcwMjAxNTEzMQ@@._V1_SX300.jpg"
+            }
         },
         {
             "date": "1999-12-24T23:00:00.000Z",
@@ -287,15 +265,13 @@
             "cameo": "N",
             "tomatometerScore": 0.9,
             "audienceScore": 0.78,
-            "searchResults": [
-                {
-                    "Title": "Galaxy Quest",
-                    "Year": "1999",
-                    "imdbID": "tt0177789",
-                    "Type": "movie",
-                    "Poster": "http://ia.media-imdb.com/images/M/MV5BMjA0NjM1ODkyMl5BMl5BanBnXkFtZTcwODY0NDMzMg@@._V1_SX300.jpg"
-                }
-            ]
+            "searchResults": {
+                "Title": "Galaxy Quest",
+                "Year": "1999",
+                "imdbID": "tt0177789",
+                "Type": "movie",
+                "Poster": "http://ia.media-imdb.com/images/M/MV5BMjA0NjM1ODkyMl5BMl5BanBnXkFtZTcwODY0NDMzMg@@._V1_SX300.jpg"
+            }
         },
         {
             "date": "2001-03-08T23:00:00.000Z",
@@ -310,15 +286,13 @@
             "cameo": "N",
             "tomatometerScore": 0.19,
             "audienceScore": 0.55,
-            "searchResults": [
-                {
-                    "Title": "Blow Dry",
-                    "Year": "2001",
-                    "imdbID": "tt0212380",
-                    "Type": "movie",
-                    "Poster": "http://ia.media-imdb.com/images/M/MV5BMTI0MDM0NjI5NV5BMl5BanBnXkFtZTcwNDIwNTEzMQ@@._V1_SX300.jpg"
-                }
-            ]
+            "searchResults": {
+                "Title": "Blow Dry",
+                "Year": "2001",
+                "imdbID": "tt0212380",
+                "Type": "movie",
+                "Poster": "http://ia.media-imdb.com/images/M/MV5BMTI0MDM0NjI5NV5BMl5BanBnXkFtZTcwNDIwNTEzMQ@@._V1_SX300.jpg"
+            }
         },
         {
             "date": "2001-11-15T23:00:00.000Z",
@@ -333,22 +307,13 @@
             "cameo": "Y",
             "tomatometerScore": 0.8,
             "audienceScore": 0.82,
-            "searchResults": [
-                {
-                    "Title": "Harry Potter and the Sorcerer's Stone",
-                    "Year": "2001",
-                    "imdbID": "tt0241527",
-                    "Type": "movie",
-                    "Poster": "http://ia.media-imdb.com/images/M/MV5BMTYwNTM5NDkzNV5BMl5BanBnXkFtZTYwODQ4MzY5._V1_SX300.jpg"
-                },
-                {
-                    "Title": "Harry Potter and the Sorcerer's Stone",
-                    "Year": "2001",
-                    "imdbID": "tt0304142",
-                    "Type": "game",
-                    "Poster": "http://ia.media-imdb.com/images/M/MV5BMWVhMzA3NDAtMDZmZC00OWJlLTg1NmYtMTI4MTVkOTJlNmNjXkEyXkFqcGdeQXVyNTEwNDY2MjU@._V1_SX300.jpg"
-                }
-            ]
+            "searchResults": {
+                "Title": "Harry Potter and the Sorcerer's Stone",
+                "Year": "2001",
+                "imdbID": "tt0241527",
+                "Type": "movie",
+                "Poster": "http://ia.media-imdb.com/images/M/MV5BMTYwNTM5NDkzNV5BMl5BanBnXkFtZTYwODQ4MzY5._V1_SX300.jpg"
+            }
         },
         {
             "date": "2002-11-14T23:00:00.000Z",
@@ -363,29 +328,13 @@
             "cameo": "Y",
             "tomatometerScore": 0.82,
             "audienceScore": 0.8,
-            "searchResults": [
-                {
-                    "Title": "Harry Potter and the Chamber of Secrets",
-                    "Year": "2002",
-                    "imdbID": "tt0295297",
-                    "Type": "movie",
-                    "Poster": "http://ia.media-imdb.com/images/M/MV5BMTcxODgwMDkxNV5BMl5BanBnXkFtZTYwMDk2MDg3._V1_SX300.jpg"
-                },
-                {
-                    "Title": "Harry Potter and the Chamber of Secrets",
-                    "Year": "2002",
-                    "imdbID": "tt0304140",
-                    "Type": "game",
-                    "Poster": "http://ia.media-imdb.com/images/M/MV5BNTM4NzQ2NjA4NV5BMl5BanBnXkFtZTgwODAwMjE4MDE@._V1_SX300.jpg"
-                },
-                {
-                    "Title": "Lego Creator: Harry Potter and the Chamber of Secrets",
-                    "Year": "2002",
-                    "imdbID": "tt1454622",
-                    "Type": "game",
-                    "Poster": "N/A"
-                }
-            ]
+            "searchResults": {
+                "Title": "Harry Potter and the Chamber of Secrets",
+                "Year": "2002",
+                "imdbID": "tt0295297",
+                "Type": "movie",
+                "Poster": "http://ia.media-imdb.com/images/M/MV5BMTcxODgwMDkxNV5BMl5BanBnXkFtZTYwMDk2MDg3._V1_SX300.jpg"
+            }
         },
         {
             "date": "2003-11-06T23:00:00.000Z",
@@ -400,15 +349,13 @@
             "cameo": "N",
             "tomatometerScore": 0.63,
             "audienceScore": 0.72,
-            "searchResults": [
-                {
-                    "Title": "Love Actually",
-                    "Year": "2003",
-                    "imdbID": "tt0314331",
-                    "Type": "movie",
-                    "Poster": "http://ia.media-imdb.com/images/M/MV5BMTY4NjQ5NDc0Nl5BMl5BanBnXkFtZTYwNjk5NDM3._V1_SX300.jpg"
-                }
-            ]
+            "searchResults": {
+                "Title": "Love Actually",
+                "Year": "2003",
+                "imdbID": "tt0314331",
+                "Type": "movie",
+                "Poster": "http://ia.media-imdb.com/images/M/MV5BMTY4NjQ5NDc0Nl5BMl5BanBnXkFtZTYwNjk5NDM3._V1_SX300.jpg"
+            }
         },
         {
             "date": "2004-06-03T22:00:00.000Z",
@@ -423,22 +370,13 @@
             "cameo": "Y",
             "tomatometerScore": 0.91,
             "audienceScore": 0.86,
-            "searchResults": [
-                {
-                    "Title": "Harry Potter and the Prisoner of Azkaban",
-                    "Year": "2004",
-                    "imdbID": "tt0304141",
-                    "Type": "movie",
-                    "Poster": "http://ia.media-imdb.com/images/M/MV5BMTY4NTIwODg0N15BMl5BanBnXkFtZTcwOTc0MjEzMw@@._V1_SX300.jpg"
-                },
-                {
-                    "Title": "Harry Potter and the Prisoner of Azkaban",
-                    "Year": "2004",
-                    "imdbID": "tt0414084",
-                    "Type": "game",
-                    "Poster": "http://ia.media-imdb.com/images/M/MV5BMjA3MDM2NTAzNl5BMl5BanBnXkFtZTcwMDkzMjYyMQ@@._V1_SX300.jpg"
-                }
-            ]
+            "searchResults": {
+                "Title": "Harry Potter and the Prisoner of Azkaban",
+                "Year": "2004",
+                "imdbID": "tt0304141",
+                "Type": "movie",
+                "Poster": "http://ia.media-imdb.com/images/M/MV5BMTY4NTIwODg0N15BMl5BanBnXkFtZTcwOTc0MjEzMw@@._V1_SX300.jpg"
+            }
         },
         {
             "date": "2005-04-28T22:00:00.000Z",
@@ -452,7 +390,14 @@
             "rank": null,
             "cameo": "Y",
             "tomatometerScore": 0.6,
-            "audienceScore": 0.65
+            "audienceScore": 0.65,
+            "searchResults": {
+                "Title": "The Hitchhiker's Guide to the Galaxy",
+                "Year": "2005",
+                "imdbID": "tt0371724",
+                "Type": "movie",
+                "Poster": "http://ia.media-imdb.com/images/M/MV5BMjEwOTk4NjU2MF5BMl5BanBnXkFtZTYwMDA3NzI3._V1_SX300.jpg"
+            }
         },
         {
             "date": "2005-11-17T23:00:00.000Z",
@@ -467,29 +412,13 @@
             "cameo": "Y",
             "tomatometerScore": 0.88,
             "audienceScore": 0.74,
-            "searchResults": [
-                {
-                    "Title": "Harry Potter and the Goblet of Fire",
-                    "Year": "2005",
-                    "imdbID": "tt0330373",
-                    "Type": "movie",
-                    "Poster": "http://ia.media-imdb.com/images/M/MV5BMTI1NDMyMjExOF5BMl5BanBnXkFtZTcwOTc4MjQzMQ@@._V1_SX300.jpg"
-                },
-                {
-                    "Title": "Harry Potter and the Goblet of Fire",
-                    "Year": "2005",
-                    "imdbID": "tt0764644",
-                    "Type": "game",
-                    "Poster": "N/A"
-                },
-                {
-                    "Title": "Inside 'Harry Potter and the Goblet of Fire'",
-                    "Year": "2005",
-                    "imdbID": "tt0491721",
-                    "Type": "movie",
-                    "Poster": "N/A"
-                }
-            ]
+            "searchResults": {
+                "Title": "Harry Potter and the Goblet of Fire",
+                "Year": "2005",
+                "imdbID": "tt0330373",
+                "Type": "movie",
+                "Poster": "http://ia.media-imdb.com/images/M/MV5BMTI1NDMyMjExOF5BMl5BanBnXkFtZTcwOTc4MjQzMQ@@._V1_SX300.jpg"
+            }
         },
         {
             "date": "2006-12-26T23:00:00.000Z",
@@ -503,7 +432,14 @@
             "rank": 18,
             "cameo": "N",
             "tomatometerScore": 0.58,
-            "audienceScore": 0.74
+            "audienceScore": 0.74,
+            "searchResults": {
+                "Title": "Perfume: The Story of a Murderer",
+                "Year": "2006",
+                "imdbID": "tt0396171",
+                "Type": "movie",
+                "Poster": "http://ia.media-imdb.com/images/M/MV5BMTI0NjUyMTk3Nl5BMl5BanBnXkFtZTcwOTA5MzkzMQ@@._V1_SX300.jpg"
+            }
         },
         {
             "date": "2007-04-26T22:00:00.000Z",
@@ -518,22 +454,13 @@
             "cameo": "N",
             "tomatometerScore": 0.65,
             "audienceScore": 0.86,
-            "searchResults": [
-                {
-                    "Title": "Snow Cake: Behind the Scenes",
-                    "Year": "2007",
-                    "imdbID": "tt1084657",
-                    "Type": "movie",
-                    "Poster": "N/A"
-                },
-                {
-                    "Title": "Snow Cake: Autism Awareness",
-                    "Year": "2007",
-                    "imdbID": "tt1084656",
-                    "Type": "movie",
-                    "Poster": "N/A"
-                }
-            ]
+            "searchResults": {
+                "Title": "Snow Cake: Autism Awareness",
+                "Year": "2007",
+                "imdbID": "tt1084656",
+                "Type": "movie",
+                "Poster": "N/A"
+            }
         },
         {
             "date": "2007-07-10T22:00:00.000Z",
@@ -548,36 +475,13 @@
             "cameo": "Y",
             "tomatometerScore": 0.78,
             "audienceScore": 0.81,
-            "searchResults": [
-                {
-                    "Title": "Harry Potter and the Order of the Phoenix",
-                    "Year": "2007",
-                    "imdbID": "tt0373889",
-                    "Type": "movie",
-                    "Poster": "http://ia.media-imdb.com/images/M/MV5BMTM0NTczMTUzOV5BMl5BanBnXkFtZTYwMzIxNTg3._V1_SX300.jpg"
-                },
-                {
-                    "Title": "Harry Potter and the Order of the Phoenix",
-                    "Year": "2007",
-                    "imdbID": "tt0944836",
-                    "Type": "game",
-                    "Poster": "http://ia.media-imdb.com/images/M/MV5BN2VhOGI0OTItZjVhMC00MThmLWI5YzEtYTk5ZTFhMjEzOGEzXkEyXkFqcGdeQXVyNzg5OTk2OA@@._V1_SX300.jpg"
-                },
-                {
-                    "Title": "Harry Potter and the Order of the Phoenix: T4 Movie Special",
-                    "Year": "2007",
-                    "imdbID": "tt1068770",
-                    "Type": "movie",
-                    "Poster": "N/A"
-                },
-                {
-                    "Title": "An Exclusive Inside Look at 'Harry Potter and the Order of the Phoenix'",
-                    "Year": "2007",
-                    "imdbID": "tt1098206",
-                    "Type": "movie",
-                    "Poster": "N/A"
-                }
-            ]
+            "searchResults": {
+                "Title": "Harry Potter and the Order of the Phoenix",
+                "Year": "2007",
+                "imdbID": "tt0373889",
+                "Type": "movie",
+                "Poster": "http://ia.media-imdb.com/images/M/MV5BMTM0NTczMTUzOV5BMl5BanBnXkFtZTYwMzIxNTg3._V1_SX300.jpg"
+            }
         },
         {
             "date": "2007-12-20T23:00:00.000Z",
@@ -592,22 +496,13 @@
             "cameo": "N",
             "tomatometerScore": 0.86,
             "audienceScore": 0.81,
-            "searchResults": [
-                {
-                    "Title": "Sweeney Todd: The Demon Barber of Fleet Street",
-                    "Year": "2007",
-                    "imdbID": "tt0408236",
-                    "Type": "movie",
-                    "Poster": "http://ia.media-imdb.com/images/M/MV5BMTg3NjUxMzM5NV5BMl5BanBnXkFtZTcwMzQ1NjQzMw@@._V1_SX300.jpg"
-                },
-                {
-                    "Title": "Sweeney Todd: The Demon Barber of Fleet Street Movie Special",
-                    "Year": "2007",
-                    "imdbID": "tt1160341",
-                    "Type": "movie",
-                    "Poster": "N/A"
-                }
-            ]
+            "searchResults": {
+                "Title": "Sweeney Todd: The Demon Barber of Fleet Street",
+                "Year": "2007",
+                "imdbID": "tt0408236",
+                "Type": "movie",
+                "Poster": "http://ia.media-imdb.com/images/M/MV5BMTg3NjUxMzM5NV5BMl5BanBnXkFtZTcwMzQ1NjQzMw@@._V1_SX300.jpg"
+            }
         },
         {
             "date": "2008-08-05T22:00:00.000Z",
@@ -622,15 +517,13 @@
             "cameo": "N",
             "tomatometerScore": 0.48,
             "audienceScore": 0.58,
-            "searchResults": [
-                {
-                    "Title": "Bottle Shock",
-                    "Year": "2008",
-                    "imdbID": "tt0914797",
-                    "Type": "movie",
-                    "Poster": "http://ia.media-imdb.com/images/M/MV5BMTI5NjgzMzI0MV5BMl5BanBnXkFtZTcwMTI3MTc3MQ@@._V1_SX300.jpg"
-                }
-            ]
+            "searchResults": {
+                "Title": "Bottle Shock",
+                "Year": "2008",
+                "imdbID": "tt0914797",
+                "Type": "movie",
+                "Poster": "http://ia.media-imdb.com/images/M/MV5BMTI5NjgzMzI0MV5BMl5BanBnXkFtZTcwMTI3MTc3MQ@@._V1_SX300.jpg"
+            }
         },
         {
             "date": "2008-12-04T23:00:00.000Z",
@@ -644,7 +537,14 @@
             "rank": 22,
             "cameo": "N",
             "tomatometerScore": 0.25,
-            "audienceScore": 0.45
+            "audienceScore": 0.45,
+            "searchResults": {
+                "Title": "Nobel Son",
+                "Year": "2007",
+                "imdbID": "tt0483756",
+                "Type": "movie",
+                "Poster": "http://ia.media-imdb.com/images/M/MV5BODI4OTc2MDY1NF5BMl5BanBnXkFtZTcwNTM0NDIwMg@@._V1_SX300.jpg"
+            }
         },
         {
             "date": "2009-07-14T22:00:00.000Z",
@@ -658,7 +558,14 @@
             "rank": 3,
             "cameo": "N",
             "tomatometerScore": 0.84,
-            "audienceScore": 0.77
+            "audienceScore": 0.77,
+            "searchResults": {
+                "Title": "Harry Potter and the Half-Blood Prince",
+                "Year": "2009",
+                "imdbID": "tt0417741",
+                "Type": "movie",
+                "Poster": "http://ia.media-imdb.com/images/M/MV5BNzU3NDg4NTAyNV5BMl5BanBnXkFtZTcwOTg2ODg1Mg@@._V1_SX300.jpg"
+            }
         },
         {
             "date": "2010-03-04T23:00:00.000Z",
@@ -672,7 +579,14 @@
             "rank": 2,
             "cameo": "N",
             "tomatometerScore": 0.52,
-            "audienceScore": 0.55
+            "audienceScore": 0.55,
+            "searchResults": {
+                "Title": "Alice in Wonderland",
+                "Year": "2010",
+                "imdbID": "tt1014759",
+                "Type": "movie",
+                "Poster": "http://ia.media-imdb.com/images/M/MV5BMTMwNjAxMTc0Nl5BMl5BanBnXkFtZTcwODc3ODk5Mg@@._V1_SX300.jpg"
+            }
         },
         {
             "date": "2010-11-18T23:00:00.000Z",
@@ -687,15 +601,13 @@
             "cameo": "Y",
             "tomatometerScore": 0.78,
             "audienceScore": 0.85,
-            "searchResults": [
-                {
-                    "Title": "Harry Potter and the Deathly Hallows: Part 1",
-                    "Year": "2010",
-                    "imdbID": "tt0926084",
-                    "Type": "movie",
-                    "Poster": "http://ia.media-imdb.com/images/M/MV5BMTQ2OTE1Mjk0N15BMl5BanBnXkFtZTcwODE3MDAwNA@@._V1_SX300.jpg"
-                }
-            ]
+            "searchResults": {
+                "Title": "Harry Potter and the Deathly Hallows: Part 1",
+                "Year": "2010",
+                "imdbID": "tt0926084",
+                "Type": "movie",
+                "Poster": "http://ia.media-imdb.com/images/M/MV5BMTQ2OTE1Mjk0N15BMl5BanBnXkFtZTcwODE3MDAwNA@@._V1_SX300.jpg"
+            }
         },
         {
             "date": "2011-07-14T22:00:00.000Z",
@@ -710,15 +622,13 @@
             "cameo": "N",
             "tomatometerScore": 0.96,
             "audienceScore": 0.89,
-            "searchResults": [
-                {
-                    "Title": "Harry Potter and the Deathly Hallows: Part 2",
-                    "Year": "2011",
-                    "imdbID": "tt1201607",
-                    "Type": "movie",
-                    "Poster": "http://ia.media-imdb.com/images/M/MV5BMTY2MTk3MDQ1N15BMl5BanBnXkFtZTcwMzI4NzA2NQ@@._V1_SX300.jpg"
-                }
-            ]
+            "searchResults": {
+                "Title": "Harry Potter and the Deathly Hallows: Part 2",
+                "Year": "2011",
+                "imdbID": "tt1201607",
+                "Type": "movie",
+                "Poster": "http://ia.media-imdb.com/images/M/MV5BMTY2MTk3MDQ1N15BMl5BanBnXkFtZTcwMzI4NzA2NQ@@._V1_SX300.jpg"
+            }
         },
         {
             "date": "2013-08-15T22:00:00.000Z",
@@ -733,15 +643,13 @@
             "cameo": "N",
             "tomatometerScore": 0.71,
             "audienceScore": 0.78,
-            "searchResults": [
-                {
-                    "Title": "Lee Daniels' The Butler",
-                    "Year": "2013",
-                    "imdbID": "tt1327773",
-                    "Type": "movie",
-                    "Poster": "http://ia.media-imdb.com/images/M/MV5BMjM2NDY3MjkyMF5BMl5BanBnXkFtZTcwMDM5Nzg5OQ@@._V1_SX300.jpg"
-                }
-            ]
+            "searchResults": {
+                "Title": "Lee Daniels' The Butler",
+                "Year": "2013",
+                "imdbID": "tt1327773",
+                "Type": "movie",
+                "Poster": "http://ia.media-imdb.com/images/M/MV5BMjM2NDY3MjkyMF5BMl5BanBnXkFtZTcwMDM5Nzg5OQ@@._V1_SX300.jpg"
+            }
         },
         {
             "date": "2013-10-03T22:00:00.000Z",
@@ -756,15 +664,13 @@
             "cameo": "N",
             "tomatometerScore": 0.08,
             "audienceScore": 0.42,
-            "searchResults": [
-                {
-                    "Title": "CBGB",
-                    "Year": "2013",
-                    "imdbID": "tt1786751",
-                    "Type": "movie",
-                    "Poster": "http://ia.media-imdb.com/images/M/MV5BMTg1NDcxODY0OV5BMl5BanBnXkFtZTgwOTgwMzQxMDE@._V1_SX300.jpg"
-                }
-            ]
+            "searchResults": {
+                "Title": "CBGB",
+                "Year": "2013",
+                "imdbID": "tt1786751",
+                "Type": "movie",
+                "Poster": "http://ia.media-imdb.com/images/M/MV5BMTg1NDcxODY0OV5BMl5BanBnXkFtZTgwOTgwMzQxMDE@._V1_SX300.jpg"
+            }
         },
         {
             "date": "2015-06-25T22:00:00.000Z",
@@ -778,7 +684,14 @@
             "rank": 21,
             "cameo": "N",
             "tomatometerScore": 0.45,
-            "audienceScore": 0.48
+            "audienceScore": 0.48,
+            "searchResults": {
+                "Title": "A Little Chaos",
+                "Year": "2014",
+                "imdbID": "tt2639254",
+                "Type": "movie",
+                "Poster": "http://ia.media-imdb.com/images/M/MV5BMjI3Mzg5ODkwM15BMl5BanBnXkFtZTgwNjc3MDMzNTE@._V1_SX300.jpg"
+            }
         },
         {
             "date": "2016-03-10T23:00:00.000Z",
@@ -793,29 +706,13 @@
             "cameo": "N",
             "tomatometerScore": 0.95,
             "audienceScore": 0.83,
-            "searchResults": [
-                {
-                    "Title": "And the Whole Sky Fit in the Dead Cow's Eye",
-                    "Year": "2016",
-                    "imdbID": "tt5715760",
-                    "Type": "movie",
-                    "Poster": "N/A"
-                },
-                {
-                    "Title": "Eye in the Sky: Perspectives",
-                    "Year": "2016",
-                    "imdbID": "tt5916886",
-                    "Type": "movie",
-                    "Poster": "N/A"
-                },
-                {
-                    "Title": "Eye in the Sky: Morals",
-                    "Year": "2016",
-                    "imdbID": "tt5916892",
-                    "Type": "movie",
-                    "Poster": "N/A"
-                }
-            ]
+            "searchResults": {
+                "Title": "Eye in the Sky: Perspectives",
+                "Year": "2016",
+                "imdbID": "tt5916886",
+                "Type": "movie",
+                "Poster": "N/A"
+            }
         },
         {
             "date": "2016-05-26T22:00:00.000Z",
@@ -830,15 +727,13 @@
             "cameo": "N",
             "tomatometerScore": 0.3,
             "audienceScore": 0.53,
-            "searchResults": [
-                {
-                    "Title": "Alice Through the Looking Glass",
-                    "Year": "2016",
-                    "imdbID": "tt2567026",
-                    "Type": "movie",
-                    "Poster": "http://ia.media-imdb.com/images/M/MV5BMTc2NjExMTIyN15BMl5BanBnXkFtZTgwMjg0OTIwODE@._V1_SX300.jpg"
-                }
-            ]
+            "searchResults": {
+                "Title": "Alice Through the Looking Glass",
+                "Year": "2016",
+                "imdbID": "tt2567026",
+                "Type": "movie",
+                "Poster": "http://ia.media-imdb.com/images/M/MV5BMTc2NjExMTIyN15BMl5BanBnXkFtZTgwMjg0OTIwODE@._V1_SX300.jpg"
+            }
         }
     ]
 }

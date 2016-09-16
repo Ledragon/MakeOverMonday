@@ -4,7 +4,7 @@ export function search(parsed: Array<any>) {
     var queue = d3.queue();
     parsed.forEach(p => {
         var result: Array<any> = [];
-        queue.defer(d3.json, `http://www.omdbapi.com/?s=${p.title}`);
+        queue.defer(d3.json, `http://www.omdbapi.com/?s=${p.title}&type=movie`);
     })
     queue.awaitAll((error: any, data: Array<any>) => {
         if (error) {

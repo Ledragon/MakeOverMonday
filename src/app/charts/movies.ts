@@ -6,16 +6,16 @@ import { group } from './group';
 export function movies(selection: d3.Selection<any, any, any, any>, width: number, height: number, data: Array<any>) {
     var byDate = data.sort((a, b) => d3.ascending(a.date, b.date));
 
-    var chartMargins: IMargins = { top: 10, bottom: 10, left: 10, right: 10 };
-    var chart = new group(selection, width, height, chartMargins, 'chart-group');
-    var plotMargins: IMargins = { top: 0, bottom: 0, left: 0, right: 0 };
-    var plot = new group(chart.group(), chart.width(), chart.height(), plotMargins, 'plot-group');
+    // var chartMargins: IMargins = { top: 10, bottom: 10, left: 10, right: 10 };
+    // var chart = new group(selection, width, height, chartMargins, 'chart-group');
+    // var plotMargins: IMargins = { top: 0, bottom: 0, left: 0, right: 0 };
+    // var plot = new group(chart.group(), chart.width(), chart.height(), plotMargins, 'plot-group');
 
-    var timeScale = d3.scaleTime()
-        .domain(d3.extent(byDate, d => d.date))
-        .range([0, plot.height()]);
+    // var timeScale = d3.scaleTime()
+    //     .domain(d3.extent(byDate, d => d.date))
+    //     .range([0, plot.height()]);
 
-    
+
     // var timeAxis = d3.axisLeft(timeScale);
     // var timeAxisGroup = plot.group()
     //     .append('g')
