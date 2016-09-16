@@ -1,7 +1,6 @@
 import { read } from './services/dataService';
 
 read('data/Alan Rickman.csv', data => {
-    console.log(data.columns)
     let parsed: Array<any> = [];
     data.forEach((d: any) => {
         parsed.push({

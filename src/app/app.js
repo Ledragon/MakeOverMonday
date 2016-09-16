@@ -1,7 +1,6 @@
 "use strict";
 var dataService_1 = require('./services/dataService');
 dataService_1.read('data/Alan Rickman.csv', function (data) {
-    console.log(data.columns);
     var parsed = [];
     data.forEach(function (d) {
         parsed.push({

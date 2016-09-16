@@ -2,7 +2,6 @@ body{
     font-family: 'Karla', sans-serif;
     margin: 0;
     height:100vh;
-    background-color: #191919;
 }
 h1,h2{
     font-weight: normal;
@@ -36,27 +35,5 @@ h1,h2{
 .col-12{
     width:100%;
 }
-.main-title{
-    /*text-align: center;*/
-    /*background: lightgray;*/
-    padding: 15px;
-    height:150px;
-}
-.main-title h1{
-    color: rgba(241, 232, 184, 1);
-}
+
 /************************************************************/
-.series path{
-    fill:none;
-    stroke: gray;
-}
-svg{
-    /*background-color: red;*/
-    border: 1px solid darkgray;
-}
-.legend-item text{
-    font-size:11px;
-}
-.background-rect{
-    opacity: 0.4;
-}
