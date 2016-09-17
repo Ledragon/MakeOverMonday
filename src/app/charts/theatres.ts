@@ -6,8 +6,8 @@ import { colors } from './colors';
 
 var _marginTop = 50;
 
-export function scores(selection: d3.Selection<any, any, any, any>, width: number, height: number, data: Array<any>) {
-    var byDate = data.sort((a, b) => d3.descending(a.audienceScore, b.audienceScore));
+export function chart(selection: d3.Selection<any, any, any, any>, width: number, height: number, data: Array<any>) {
+    var byDate = data.sort((a, b) => d3.descending(a.theatre, b.theatre));
 
     var chartMargins: IMargins = { top: 10, bottom: 10, left: 10, right: 10 };
     var chart = new group(selection, width, height, chartMargins, 'chart-group');
@@ -34,20 +34,20 @@ export function scores(selection: d3.Selection<any, any, any, any>, width: numbe
         .attr('stroke', color);
     ticks.select('text')
         .attr('fill', color);
-    drawScores(plot.group(), plot.width(), plot.height(), moviesScale, data);
+    drawProfits(plot.group(), plot.width(), plot.height(), moviesScale, data);
 
-    var fmt = d3.format('2.2f');    
+    var fmt = d3.format('2.0f');    
     chart.group()
         .append('g')
         .classed('title', true)
         .attr('transform', `translate(${plotMargins.left + plot.width() / 2},${30})`)
         .append('text')
-        .text(`Scores (tomato:${fmt(d3.mean(byDate, d=>d.tomatometerScore))}, audience:${fmt(d3.mean(byDate, d=>d.audienceScore))})`)
+        .text(`Theatres (average: ${fmt(d3.mean(byDate, d=>d.theatre))})`)
         .attr('text-anchor', 'middle')
         .attr('fill', color)
 }
 
-function drawScores(selection: d3.Selection<any, any, any, any>, width: number, height: number, scale: d3.ScaleBand<string>, data: Array<any>) {
+function drawProfits(selection: d3.Selection<any, any, any, any>, width: number, height: number, scale: d3.ScaleBand<string>, data: Array<any>) {
     var group = selection.append('g')
         .classed('series', true)
         .attr('transform', `translate(${0},${0})`);
@@ -57,22 +57,15 @@ function drawScores(selection: d3.Selection<any, any, any, any>, width: number, 
         .exit()
         .remove();
     var scoreScale = d3.scaleLinear()
-        .domain([0, 1])
+        .domain([0, d3.max(data, d => d.theatre)])
         .range([0, width]);
     var enterSelection = dataBound
         .enter()
         .append('g')
         .classed('item', true)
         .attr('transform', d => `translate(${0},${scale(d.title)})`);
-    let bandHeight = scale.bandwidth() / 2;
     enterSelection.append('rect')
-        .attr('y', bandHeight)
-        .attr('width', d => scoreScale(d.tomatometerScore))
-        .attr('height', bandHeight)
+        .attr('width', d => scoreScale(d.theatre))
+        .attr('height', scale.bandwidth())
         .style('fill', colors[3]);
-    enterSelection.append('rect')
-        // .attr('x', d => -scoreScale(d.audienceScore))
-        .attr('width', d => scoreScale(d.audienceScore))
-        .attr('height', bandHeight)
-        .style('fill', colors[0]);
 }

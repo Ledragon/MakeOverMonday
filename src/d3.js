@@ -16,6 +16,7 @@ exports.max = d3_array_1.max;
 exports.ascending = d3_array_1.ascending;
 exports.descending = d3_array_1.descending;
 exports.mean = d3_array_1.mean;
+exports.sum = d3_array_1.sum;
 var d3_format_1 = require('d3-format');
 exports.format = d3_format_1.format;
 var d3_collection_1 = require('d3-collection');
