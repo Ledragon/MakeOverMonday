@@ -7,7 +7,7 @@ import { colors } from './colors';
 var _marginTop = 50;
 
 export function chart(selection: d3.Selection<any, any, any, any>, width: number, height: number, data: Array<any>) {
-    var byDate = data.sort((a, b) => d3.descending(a.theatre, b.theatre));
+    var byDate = data.sort((a, b) => d3.descending(a.theatres, b.theatres));
 
     var chartMargins: IMargins = { top: 10, bottom: 10, left: 10, right: 10 };
     var chart = new group(selection, width, height, chartMargins, 'chart-group');
@@ -42,7 +42,7 @@ export function chart(selection: d3.Selection<any, any, any, any>, width: number
         .classed('title', true)
         .attr('transform', `translate(${plotMargins.left + plot.width() / 2},${30})`)
         .append('text')
-        .text(`Theatres (average: ${fmt(d3.mean(byDate, d=>d.theatre))})`)
+        .text(`Theatres (average: ${fmt(d3.mean(byDate, d=>d.theatres))})`)
         .attr('text-anchor', 'middle')
         .attr('fill', color)
 }
@@ -57,7 +57,7 @@ function drawProfits(selection: d3.Selection<any, any, any, any>, width: number,
         .exit()
         .remove();
     var scoreScale = d3.scaleLinear()
-        .domain([0, d3.max(data, d => d.theatre)])
+        .domain([0, d3.max(data, d => d.theatres)])
         .range([0, width]);
     var enterSelection = dataBound
         .enter()
@@ -65,7 +65,7 @@ function drawProfits(selection: d3.Selection<any, any, any, any>, width: number,
         .classed('item', true)
         .attr('transform', d => `translate(${0},${scale(d.title)})`);
     enterSelection.append('rect')
-        .attr('width', d => scoreScale(d.theatre))
+        .attr('width', d => scoreScale(d.theatres))
         .attr('height', scale.bandwidth())
         .style('fill', colors[3]);
 }
