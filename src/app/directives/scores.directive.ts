@@ -3,7 +3,7 @@ import * as d3 from '../../d3';
 
 import { scores } from '../charts/scores';
 
-var _width = 1600;
+var _width = 600;
 var _height = 800;
 
 interface IscoresScope extends angular.IScope {
