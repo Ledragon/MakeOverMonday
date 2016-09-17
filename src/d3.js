@@ -5,6 +5,7 @@ exports.selectAll = d3_selection_1.selectAll;
 var d3_scale_1 = require('d3-scale');
 exports.scaleLinear = d3_scale_1.scaleLinear;
 exports.scaleTime = d3_scale_1.scaleTime;
+exports.scaleBand = d3_scale_1.scaleBand;
 var d3_axis_1 = require('d3-axis');
 exports.axisLeft = d3_axis_1.axisLeft;
 exports.axisBottom = d3_axis_1.axisBottom;
