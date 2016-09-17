@@ -44,7 +44,7 @@ export function scores(selection: d3.Selection<any, any, any, any>, width: numbe
             selector: (d: any) => d.adjustedGross
         }
     ]
-    // drawScores(plot.group(), plot.width(), plot.height(), moviesScale, data);
+    drawScores(plot.group(), plot.width(), plot.height(), moviesScale, data);
 
     // chart.group()
     //     .append('g')
@@ -54,11 +54,11 @@ export function scores(selection: d3.Selection<any, any, any, any>, width: numbe
     //     .text('Scores')
     //     .attr('text-anchor', 'middle')
     //     .attr('fill', color)
-    var plotWidth = 400;
+    // var plotWidth = 400;
 
-    var plot2Margins: IMargins = { top: 0, bottom: 0, left: 0, right: 0 };
-    var plot2 = new group(plot.group(), plot.width(), plot.height(), plot2Margins, 'plot-group');
-    draw(plot2, moviesScale, data, 'Adjusted gross', d => d.adjustedGross)
+    // var plot2Margins: IMargins = { top: 0, bottom: 0, left: 0, right: 0 };
+    // var plot2 = new group(plot.group(), plot.width(), plot.height(), plot2Margins, 'plot-group');
+    // draw(plot2, moviesScale, data, 'Adjusted gross', d => d.adjustedGross)
 }
 
 function draw(g: group, scale: d3.ScaleBand<string>, data: Array<any>, title: string, selector: (d: any) => number) {

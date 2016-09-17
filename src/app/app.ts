@@ -7,3 +7,4 @@ import { init as vsInit } from './directives/tomatoVSaudience.directive';
 
 angular.module('app', []);
 vsInit();
+scoresInit();
