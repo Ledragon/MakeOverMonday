@@ -34,6 +34,14 @@
       "d3-scale-chromatic": "npm:d3-scale-chromatic@^1.0.2",
       "d3-selection": "npm:d3-selection@^1.0.2",
       "d3-shape": "npm:d3-shape@^1.0.2"
+    },
+    "devDependencies": {
+      "babel": "npm:babel-core@^5.8.24",
+      "babel-runtime": "npm:babel-runtime@^5.8.24",
+      "core-js": "npm:core-js@^1.1.4"
     }
+  },
+  "devDependencies": {
+    "@types/d3-request": "^1.0.1"
   }
 }
