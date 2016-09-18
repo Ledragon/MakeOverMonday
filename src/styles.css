@@ -47,11 +47,14 @@ h1,h2{
 }
 svg{
     /*background-color: red;*/
-    border: 1px solid darkgray;
+    /*border: 1px solid darkgray;*/
 }
 .legend-item text{
     font-size:11px;
 }
 .background-rect{
     opacity: 0.4;
+}
+a{
+    color: #26408B
 }

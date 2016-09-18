@@ -19,6 +19,8 @@ System.config({
     "d3-array": "npm:d3-array@1.0.1",
     "d3-axis": "npm:d3-axis@1.0.3",
     "d3-collection": "npm:d3-collection@1.0.1",
+    "d3-hierarchy": "npm:d3-hierarchy@1.0.2",
+    "d3-interpolate": "npm:d3-interpolate@1.1.1",
     "d3-request": "npm:d3-request@1.0.2",
     "d3-scale": "npm:d3-scale@1.0.3",
     "d3-scale-chromatic": "npm:d3-scale-chromatic@1.0.2",
