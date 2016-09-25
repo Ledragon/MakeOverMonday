@@ -49,9 +49,10 @@ svg{
     /*background-color: red;*/
     border: 1px solid darkgray;
 }
-.legend-item text{
-    font-size:11px;
+.statistics{
+    padding:15px; 
 }
-.background-rect{
-    opacity: 0.4;
+.data-point circle{
+    fill: rgba(200,200,200,0.5);
+    stroke: rgb(55,55,55);
 }

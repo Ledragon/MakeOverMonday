@@ -1,6 +1,8 @@
 "use strict";
 var d3_request_1 = require('d3-request');
-var d3_collection_1 = require('d3-collection');
+var d3_selection_1 = require('d3-selection');
+var statistics_1 = require('../charts/statistics');
+var chart_1 = require('../charts/chart');
 d3_request_1.csv('data/Data Breaches.csv', function (d) {
     return {
         year: +d.Year,
@@ -13,13 +15,14 @@ d3_request_1.csv('data/Data Breaches.csv', function (d) {
         console.error(error);
     }
     else {
-        console.log(data);
-        // var desc = descending((a,b)=>a.
-        var byCompany = d3_collection_1.nest()
-            .key(function (d) { return d.year.toString(); })
-            .entries(data)
-            .sort(function (a, b) { return b.values.length - a.values.length; });
-        console.log(byCompany);
+        var stats = new statistics_1.statistics(d3_selection_1.select('#statistics'), 200, 500);
+        stats.update(data);
+        var chartSelection = d3_selection_1.select('#chart')
+            .append('svg')
+            .attr('width', 1200)
+            .attr('height', 600);
+        var ch = new chart_1.chart(chartSelection, 1200, 600);
+        ch.update(data);
     }
 });
 //# sourceMappingURL=app.js.map
