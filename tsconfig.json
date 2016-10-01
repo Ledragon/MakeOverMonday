@@ -1,0 +1,14 @@
+{
+    "compilerOptions": {
+        "target": "es5",
+        "noImplicitAny": true,
+        "module": "commonjs",
+        "moduleResolution": "node",
+        "sourceMap": true
+    },
+    "exclude": [
+        "node_modules",
+        "!node_modules/@types",
+        "jspm_packages"
+    ]
+}
