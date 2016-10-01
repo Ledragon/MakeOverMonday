@@ -19,6 +19,8 @@ System.config({
     "d3-array": "npm:d3-array@1.0.1",
     "d3-axis": "npm:d3-axis@1.0.3",
     "d3-collection": "npm:d3-collection@1.0.1",
+    "d3-geo": "npm:d3-geo@1.2.5",
+    "d3-queue": "npm:d3-queue@3.0.3",
     "d3-request": "npm:d3-request@1.0.2",
     "d3-scale": "npm:d3-scale@1.0.3",
     "d3-scale-chromatic": "npm:d3-scale-chromatic@1.0.2",
@@ -103,6 +105,10 @@ System.config({
       "commander": "npm:commander@2.9.0",
       "iconv-lite": "npm:iconv-lite@0.4.13",
       "rw": "npm:rw@1.3.2"
+    },
+    "npm:d3-geo@1.2.5": {
+      "buffer": "github:jspm/nodelibs-buffer@0.1.0",
+      "d3-array": "npm:d3-array@1.0.1"
     },
     "npm:d3-interpolate@1.1.1": {
       "d3-color": "npm:d3-color@1.0.1"

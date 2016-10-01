@@ -29,6 +29,8 @@
       "d3-array": "npm:d3-array@^1.0.1",
       "d3-axis": "npm:d3-axis@^1.0.3",
       "d3-collection": "npm:d3-collection@^1.0.1",
+      "d3-geo": "npm:d3-geo@^1.2.5",
+      "d3-queue": "npm:d3-queue@^3.0.3",
       "d3-request": "npm:d3-request@^1.0.2",
       "d3-scale": "npm:d3-scale@^1.0.3",
       "d3-scale-chromatic": "npm:d3-scale-chromatic@^1.0.2",
@@ -40,5 +42,9 @@
       "babel-runtime": "npm:babel-runtime@^5.8.24",
       "core-js": "npm:core-js@^1.1.4"
     }
+  },
+  "devDependencies": {
+    "@types/d3-geo": "^1.2.3",
+    "@types/d3-queue": "^3.0.4"
   }
 }
