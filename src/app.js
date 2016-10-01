@@ -7,20 +7,18 @@ d3_request_1.csv('data/Global Peach Index.csv', function (error, data) {
     }
     else {
         var countries = data.map(function (d) { return d.Country; });
-        d3_selection_1.select('#countries')
+        d3_selection_1.select('.left-menu')
             .selectAll('.country')
             .data(countries)
             .enter()
             .append('div')
+            .classed('country', true)
             .on('click', function (d) {
             var sel = d3_selection_1.select(this);
             var hasClass = sel.classed('highlight');
             sel.classed('highlight', !hasClass);
         })
             .text(function (d) { return d; });
-        d3_request_1.json('data/world.json', function (e, d) {
-            console.log(d);
-        });
     }
 });
 //# sourceMappingURL=app.js.map

@@ -51,7 +51,9 @@ svg{
     opacity: 0.4;
 }
 .highlight{
-    background: #ccc;
+    background: lightcoral;
+    /*background: #ccc;*/
+    /*border: 1px #ccc solid;*/
 }
 .page{
     display: flex;
@@ -62,4 +64,16 @@ svg{
     flex: 0 0 120px;
     background: lightgray;
     padding: 15px;
+}
+.main-content{
+    flex-grow: 1;
+    display: flex;
+}
+.left-menu{
+    flex: 0 0 300px;
+    overflow-y: auto;
+}
+.country{
+    padding: 8px;
+    margin: 5px ;
 }

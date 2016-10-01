@@ -7,20 +7,18 @@ csv('data/Global Peach Index.csv', function (error: any, data: any) {
     }
     else {
         let countries = data.map(d => d.Country);
-        select('#countries')
+        select('.left-menu')
             .selectAll('.country')
             .data(countries)
             .enter()
             .append('div')
+            .classed('country', true)
             .on('click', function (d) {
                 let sel = select(this);
                 let hasClass = sel.classed('highlight');
                 sel.classed('highlight', !hasClass);
             })
             .text(d => d);
-        
-        json('data/world.json', function (e, d) {
-            console.log(d)
-        })
+
     }
 })
