@@ -77,3 +77,10 @@ svg{
     padding: 8px;
     margin: 5px ;
 }
+.content{
+    flex-grow: 1;
+}
+.legend>rect{
+    fill: white;
+    stroke: darkgray;
+}
