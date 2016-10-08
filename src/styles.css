@@ -90,3 +90,6 @@ svg{
     fill:transparent;
     stroke: #999;
 }
+.legend text{
+    font-size:10px;
+}
