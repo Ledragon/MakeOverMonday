@@ -86,3 +86,7 @@ svg{
     fill: white;
     stroke: darkgray;
 }
+.country{
+    fill:transparent;
+    stroke: #999;
+}
