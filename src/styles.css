@@ -41,8 +41,7 @@ h1,h2{
     stroke: gray;
 }
 svg{
-    /*background-color: red;*/
-    border: 1px solid darkgray;
+    /*border: 1px solid darkgray;*/
 }
 .legend-item text{
     font-size:11px;
@@ -68,6 +67,7 @@ svg{
 .main-content{
     flex-grow: 1;
     display: flex;
+    /*overflow: hidden;*/
 }
 .left-menu{
     flex: 0 0 300px;
@@ -79,6 +79,8 @@ svg{
 }
 .content{
     flex-grow: 1;
+    flex-shrink:0;
+    display: flex;
 }
 .legend>rect{
     fill: white;

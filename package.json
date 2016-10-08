@@ -46,6 +46,7 @@
   "devDependencies": {
     "@types/d3-geo": "^1.2.3",
     "@types/d3-queue": "^3.0.4",
+    "@types/d3-request": "^1.0.1",
     "@types/d3-scale-chromatic": "^1.0.1",
     "@types/d3-shape": "^1.0.5"
   }
