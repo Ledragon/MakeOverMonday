@@ -4,24 +4,34 @@ import { csv, json } from 'd3-request';
 import { geoAlbersUsa } from 'd3-geo';
 import { nest } from 'd3-collection';
 import { scaleBand, scaleTime, scaleLinear } from 'd3-scale';
-import { axisLeft, axisTop } from 'd3-axis';
-import { line, area } from 'd3-shape';
+import { axisLeft, axisTop, axisBottom } from 'd3-axis';
+import { line, area, stack } from 'd3-shape';
 import { timeParse } from 'd3-time-format';
-import { extent } from 'd3-array';
+import { extent, sum, mean } from 'd3-array';
 
 let width = 1900;
 let height = 780;
+let margins = {
+    top: 50,
+    bottom: 50,
+    left: 50,
+    right: 50
+};
+
 let container = select('#chart')
     .append('svg')
     .attr('width', width)
     .attr('height', height)
+let plotGroup = container.append('g')
+    .classed('container', true)
+    .attr('transform', `translate(${margins.left},${margins.top})`);
 
-let margins = {
-    top: 120,
-    bottom: 20,
-    left: 20,
-    right: 20
-};
+let plotWidth = width - margins.left - margins.right;
+let plotHeight = height - margins.top - margins.bottom;
+
+let seriesGroup = plotGroup.append('g')
+    .classed('series', true);
+
 
 let colors = ['red', 'blue', 'green', 'gray'];
 let timeParser = timeParse('%d-%m-%y')
@@ -44,71 +54,53 @@ q.awaitAll((error, responses) => {
                     date: timeParser(d.Date)
                 }
             })
-        // console.log(mapped);
-        let byCountry = nest()
-            .key(d => d.state)
-            .entries(mapped);
 
-        let scale = scaleBand()
-            // .range([0, height - margins.top - margins.bottom])
-            .range([0, width - margins.left - margins.right])
-            .domain(byCountry.map(d => d.key));
-        let leftAxis = axisTop(scale);
-        let plotGroup = container.append('g')
-            .classed('container', true)
-            .attr('transform', `translate(${margins.left},${margins.top})`);
-        let axis = plotGroup.append('g')
-            .classed('top-axis', true)
-            .call(leftAxis);
-        axis.selectAll('.tick')
-            .select('text')
-            .style('text-anchor', 'start')
-            .attr('transform', `rotate(${-90}) translate(10,${10})`);
-        let bandWidth = scale.bandwidth()*.75;
-        let seriesGroup = plotGroup.append('g')
-            .classed('series', true);
-        let enterSelection = seriesGroup.selectAll('g.country')
-            .data(byCountry)
-            .enter()
-            .append('g')
-            .classed('country', true)
-            .attr('transform', (d, i) => `translate(${scale(d.key) },${0})`);
+        let byDate = nest()
+            .key(d => d.date)
+            .entries(mapped)
+            .map(d => {
+                return {
+                    date: new Date(d.key),
+                    clinton: mean(d.values, v => v.clinton),
+                    trump: mean(d.values, v => v.trump),
+                    other: mean(d.values, v => v.other),
+                    undecided: mean(d.values, v => v.undecided),
+                }
+            });
+
         let timeScale = scaleTime()
-            .domain(extent(mapped, d => d.date))
-            .range([0, height - margins.top - margins.bottom]);
-        let xScale = scaleLinear()
+            .domain(extent(byDate, d => d.date))
+            .range([0, plotWidth]);
+
+        let yScale = scaleLinear()
             .domain([0, 1])
-            .range([0, bandWidth]);
-        let lineGenerator = line()
-            .x(d => {
-                // console.log(xScale(d.clinton))
-                return xScale(d.clinton)
-            })
-            .y(d => {
-                console.log(timeScale(d.date));
-                return timeScale(d.date);
-            })
-        // dataBound.append('path')
-        //     .attr('d', d => {
-        //         // console.log(d.values);
-        //         return lineGenerator(d.values);
-        //     });
-        enterSelection.selectAll('circle.clinton')
-            .data(d => d.values)
-            .enter()
-            .append('circle')
-            .classed('clinton', true)
-            .attr('r', 2)
-            .attr('cx', d => xScale(d.clinton))
-            .attr('cy', d => timeScale(d.date));
-        enterSelection.selectAll('circle.trump')
-            .data(d => d.values)
-            .enter()
-            .append('circle')
-            .classed('trump', true)
-            .attr('r', 2)
-            .attr('cx', d => xScale(d.clinton)+xScale(d.trump))
-            .attr('cy', d => timeScale(d.date));
+            .range([plotHeight, 0]);
+
+        let timeAxis = axisBottom(timeScale);
+        let timeAxisGroup = plotGroup.append('g')
+            .classed('time-axis', true)
+            .attr('transform', `translate(${0},${plotHeight})`)
+            .call(timeAxis);
+        let stackGenerator = stack()
+            .keys(byDate.map(d => d.date));
+        let stacked = stackGenerator(byDate);
+        console.log(stacked);
+        // seriesGroup.selectAll('circle.clinton')
+        //     .data(byDate)
+        //     .enter()
+        //     .append('circle')
+        //     .classed('clinton', true)
+        //     .attr('r', 2)
+        //     .attr('cx', d => timeScale(d.date))
+        //     .attr('cy', d => yScale(d.clinton))
+        // seriesGroup.selectAll('circle.trump')
+        //     .data(byDate)
+        //     .enter()
+        //     .append('circle')
+        //     .classed('trump', true)
+        //     .attr('r', 2)
+        //     .attr('cx', d => timeScale(d.date))
+        //     .attr('cy', d => yScale(d.trump) - yScale(d.clinton))
 
     }
 })

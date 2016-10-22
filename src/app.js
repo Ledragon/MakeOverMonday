@@ -10,16 +10,23 @@ var d3_time_format_1 = require('d3-time-format');
 var d3_array_1 = require('d3-array');
 var width = 1900;
 var height = 780;
+var margins = {
+    top: 50,
+    bottom: 50,
+    left: 50,
+    right: 50
+};
 var container = d3_selection_1.select('#chart')
     .append('svg')
     .attr('width', width)
     .attr('height', height);
-var margins = {
-    top: 120,
-    bottom: 20,
-    left: 20,
-    right: 20
-};
+var plotGroup = container.append('g')
+    .classed('container', true)
+    .attr('transform', "translate(" + margins.left + "," + margins.top + ")");
+var plotWidth = width - margins.left - margins.right;
+var plotHeight = height - margins.top - margins.bottom;
+var seriesGroup = plotGroup.append('g')
+    .classed('series', true);
 var colors = ['red', 'blue', 'green', 'gray'];
 var timeParser = d3_time_format_1.timeParse('%d-%m-%y');
 var q = d3_queue_1.queue()
@@ -41,69 +48,33 @@ q.awaitAll(function (error, responses) {
                 date: timeParser(d.Date)
             };
         });
-        // console.log(mapped);
-        var byCountry = d3_collection_1.nest()
-            .key(function (d) { return d.state; })
-            .entries(mapped);
-        var scale_1 = d3_scale_1.scaleBand()
-            .range([0, width - margins.left - margins.right])
-            .domain(byCountry.map(function (d) { return d.key; }));
-        var leftAxis = d3_axis_1.axisTop(scale_1);
-        var plotGroup = container.append('g')
-            .classed('container', true)
-            .attr('transform', "translate(" + margins.left + "," + margins.top + ")");
-        var axis = plotGroup.append('g')
-            .classed('top-axis', true)
-            .call(leftAxis);
-        axis.selectAll('.tick')
-            .select('text')
-            .style('text-anchor', 'start')
-            .attr('transform', "rotate(" + -90 + ") translate(10," + 10 + ")");
-        var bandWidth = scale_1.bandwidth() * .75;
-        var seriesGroup = plotGroup.append('g')
-            .classed('series', true);
-        var enterSelection = seriesGroup.selectAll('g.country')
-            .data(byCountry)
-            .enter()
-            .append('g')
-            .classed('country', true)
-            .attr('transform', function (d, i) { return ("translate(" + scale_1(d.key) + "," + 0 + ")"); });
-        var timeScale_1 = d3_scale_1.scaleTime()
-            .domain(d3_array_1.extent(mapped, function (d) { return d.date; }))
-            .range([0, height - margins.top - margins.bottom]);
-        var xScale_1 = d3_scale_1.scaleLinear()
-            .domain([0, 1])
-            .range([0, bandWidth]);
-        var lineGenerator = d3_shape_1.line()
-            .x(function (d) {
-            // console.log(xScale(d.clinton))
-            return xScale_1(d.clinton);
-        })
-            .y(function (d) {
-            console.log(timeScale_1(d.date));
-            return timeScale_1(d.date);
+        var byDate = d3_collection_1.nest()
+            .key(function (d) { return d.date; })
+            .entries(mapped)
+            .map(function (d) {
+            return {
+                date: new Date(d.key),
+                clinton: d3_array_1.mean(d.values, function (v) { return v.clinton; }),
+                trump: d3_array_1.mean(d.values, function (v) { return v.trump; }),
+                other: d3_array_1.mean(d.values, function (v) { return v.other; }),
+                undecided: d3_array_1.mean(d.values, function (v) { return v.undecided; }),
+            };
         });
-        // dataBound.append('path')
-        //     .attr('d', d => {
-        //         // console.log(d.values);
-        //         return lineGenerator(d.values);
-        //     });
-        enterSelection.selectAll('circle.clinton')
-            .data(function (d) { return d.values; })
-            .enter()
-            .append('circle')
-            .classed('clinton', true)
-            .attr('r', 2)
-            .attr('cx', function (d) { return xScale_1(d.clinton); })
-            .attr('cy', function (d) { return timeScale_1(d.date); });
-        enterSelection.selectAll('circle.trump')
-            .data(function (d) { return d.values; })
-            .enter()
-            .append('circle')
-            .classed('trump', true)
-            .attr('r', 2)
-            .attr('cx', function (d) { return xScale_1(d.clinton) + xScale_1(d.trump); })
-            .attr('cy', function (d) { return timeScale_1(d.date); });
+        var timeScale = d3_scale_1.scaleTime()
+            .domain(d3_array_1.extent(byDate, function (d) { return d.date; }))
+            .range([0, plotWidth]);
+        var yScale = d3_scale_1.scaleLinear()
+            .domain([0, 1])
+            .range([plotHeight, 0]);
+        var timeAxis = d3_axis_1.axisBottom(timeScale);
+        var timeAxisGroup = plotGroup.append('g')
+            .classed('time-axis', true)
+            .attr('transform', "translate(" + 0 + "," + plotHeight + ")")
+            .call(timeAxis);
+        var stackGenerator = d3_shape_1.stack()
+            .keys(byDate.map(function (d) { return d.date; }));
+        var stacked = stackGenerator(byDate);
+        console.log(stacked);
     }
 });
 //# sourceMappingURL=app.js.map
