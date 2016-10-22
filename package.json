@@ -35,7 +35,8 @@
       "d3-scale": "npm:d3-scale@^1.0.3",
       "d3-scale-chromatic": "npm:d3-scale-chromatic@^1.0.2",
       "d3-selection": "npm:d3-selection@^1.0.2",
-      "d3-shape": "npm:d3-shape@^1.0.2"
+      "d3-shape": "npm:d3-shape@^1.0.2",
+      "d3-time-format": "npm:d3-time-format@^2.0.2"
     },
     "devDependencies": {
       "babel": "npm:babel-core@^5.8.24",
@@ -48,6 +49,7 @@
     "@types/d3-queue": "^3.0.4",
     "@types/d3-request": "^1.0.1",
     "@types/d3-scale-chromatic": "^1.0.1",
-    "@types/d3-shape": "^1.0.5"
+    "@types/d3-shape": "^1.0.5",
+    "@types/d3-time-format": "^2.0.4"
   }
 }

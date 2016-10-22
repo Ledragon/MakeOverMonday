@@ -26,6 +26,7 @@ System.config({
     "d3-scale-chromatic": "npm:d3-scale-chromatic@1.0.2",
     "d3-selection": "npm:d3-selection@1.0.2",
     "d3-shape": "npm:d3-shape@1.0.3",
+    "d3-time-format": "npm:d3-time-format@2.0.2",
     "github:jspm/nodelibs-assert@0.1.0": {
       "assert": "npm:assert@1.4.1"
     },
