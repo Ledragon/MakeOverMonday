@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Make over monday 29</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="jspm_packages/system.js"></script>
+    <script src="config.js"></script>
+</head>
+
+<body>
+    <div class="main-container">
+        <div>
+            <h1>Make over Monday 29</h1>
+            <h2><a href="https://www.themarshallproject.org/next-to-die" target="_blank">The Next To Die </a></h2>
+        </div>
+        <div id="container">
+            <div class="row">
+                <div class="map col-3" id="stats">
+                    <h3>Death sentences since 1977: </h3>
+                    <span id="count"></span>
+                    <div id="countByRace"></div>
+                </div>
+                <div class="map col-4" id="map"></div>
+            </div>
+            <div class="row">
+                <div class="col-9" id="evolution"></div>
+            </div>
+        </div>
+    </div>
+    <script>
+        System.import('app.js')
+    </script>
+</body>
+
+</html>

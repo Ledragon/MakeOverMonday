@@ -1,0 +1,12 @@
+{
+    "compilerOptions": {
+        "module": "system",
+        "target": "es5"
+    },
+    "exclude": [
+        "typings/main",
+        "typings/browser",
+        "typings/main.d.ts",
+        "jspm_packages"
+    ]
+}
