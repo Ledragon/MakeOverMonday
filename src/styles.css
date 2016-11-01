@@ -8,6 +8,7 @@ h1,h2{
 }
 .col-1,.col-2, .col-3, .col-4, .col-5, .col-6, .col-7, .col-8, .col-9, .col-10, .col-11, .col-12{
     float:left;
+    margin: 15px;
 }
 .col-2{
     width:16.67%;
@@ -55,7 +56,16 @@ svg{
 .background-rect{
     opacity: 0.4;
 }
+#map svg{
+    background-color: #d4ebfb;
+}
 .country path{
-    fill: none;
+    fill: white;
     stroke: lightgray;
+}
+.year{
+    border: 1px solid lightgray;
+    padding: 10px;
+    margin-bottom: 5px;
+    background-color: white;
 }

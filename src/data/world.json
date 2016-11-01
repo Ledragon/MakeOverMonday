@@ -1876,7 +1876,7 @@
         ]
       },
       "properties": {
-        "name": "Bahamas, The",
+        "name": "Bahamas",
         "continent": "North America"
       },
       "id": "BS"
@@ -3875,7 +3875,7 @@
         ]
       },
       "properties": {
-        "name": "Burma",
+        "name": "Myanmar",
         "continent": "Asia"
       },
       "id": "MM"
@@ -8219,7 +8219,7 @@
         ]
       },
       "properties": {
-        "name": "Cape Verde",
+        "name": "Cabo Verde",
         "continent": "Africa"
       },
       "id": "CV"
@@ -11150,7 +11150,7 @@
         ]
       },
       "properties": {
-        "name": "Congo, Republic of the",
+        "name": "Congo",
         "continent": "Africa"
       },
       "id": "CG"
@@ -11375,7 +11375,7 @@
         ]
       },
       "properties": {
-        "name": "Congo, Democratic Republic of the",
+        "name": "Democratic Republic of the Congo",
         "continent": "Africa"
       },
       "id": "CD"
@@ -13977,7 +13977,7 @@
         ]
       },
       "properties": {
-        "name": "Gambia, The",
+        "name": "Gambia",
         "continent": "Africa"
       },
       "id": "GM"
@@ -20381,7 +20381,7 @@
         ]
       },
       "properties": {
-        "name": "Korea, North",
+        "name": "Democratic People's Republic of Korea",
         "continent": "Asia"
       },
       "id": "KP"
@@ -20442,7 +20442,7 @@
         ]
       },
       "properties": {
-        "name": "Korea, South",
+        "name": "Republic of Korea",
         "continent": "Asia"
       },
       "id": "KR"
@@ -29599,7 +29599,7 @@
         ]
       },
       "properties": {
-        "name": "Russia",
+        "name": "Russian Federation",
         "continent": "Asia"
       },
       "id": "RU"
@@ -30754,7 +30754,7 @@
         ]
       },
       "properties": {
-        "name": "Vietnam",
+        "name": "Viet Nam",
         "continent": "Asia"
       },
       "id": "VN"
@@ -32489,7 +32489,7 @@
         ]
       },
       "properties": {
-        "name": "Syria",
+        "name": "Syrian Arab Republic",
         "continent": "Asia"
       },
       "id": "SY"
@@ -34634,7 +34634,7 @@
         ]
       },
       "properties": {
-        "name": "Tanzania",
+        "name": "United Republic of Tanzania",
         "continent": "Africa"
       },
       "id": "TZ"
