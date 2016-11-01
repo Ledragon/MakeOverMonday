@@ -42,6 +42,7 @@ var chart = (function () {
         return this._height - this._chartMargins.top - this._chartMargins.bottom;
     };
     chart.prototype.update = function (data) {
+        var _this = this;
         var byCategory = d3_collection_1.nest()
             .key(function (d) { return d.category; })
             .entries(data);
@@ -54,7 +55,7 @@ var chart = (function () {
         var that = this;
         var yScale = d3_scale_1.scaleLinear()
             .domain(d3_array_1.extent(data, function (d) { return d.change; }))
-            .range([this.height(), 0]);
+            .range([this.height() / 2, 0]);
         var dataBound = this._group.selectAll('.pane')
             .data(byCategory);
         dataBound
@@ -72,14 +73,27 @@ var chart = (function () {
             .style('fill', function (d, i) {
             return colorScale_1.color(tmpScale(d.key));
         });
-        enterSelection
-            .selectAll('rect')
+        enterSelection.append('text')
+            .style('text-anchor', 'middle')
+            .attr('transform', function (d) { return ("translate(" + d.values.length * w / 2 + "," + 20 + ")"); })
+            .text(function (d) { return d.key; });
+        var bandEnter = enterSelection
+            .selectAll('.band')
             .data(function (d) { return d.values; })
-            .enter()
-            .append('rect')
-            .attr('x', function (d, i) { return i * w; })
+            .enter();
+        var bandGroups = bandEnter
+            .append('g')
+            .classed('band', true)
+            .attr('transform', function (d, i) { return ("translate(" + i * w + "," + (_this.height() / 2 - (d.change >= 0 ? yScale(d.change) : 0)) + ")"); });
+        bandGroups.append('rect')
             .attr('width', 15)
-            .attr('height', function (d) { return yScale(d.change); });
+            .attr('height', function (d) { return yScale(d.change); })
+            .style('fill', function (d) { return d.change >= 0 ? colorScale_1.green : colorScale_1.red; });
+        bandGroups.append('text')
+            .attr('transform', function (d) { return ("translate(" + 3 + "," + 2 + ") rotate(90)"); })
+            .style('font-size', '13px')
+            .style('fill', function (d) { return d.change >= 0 ? '' : 'white'; })
+            .text(function (d) { return ("" + d.product); });
         // .each(function (d) {
         //     let p = new pane(select(this), that.width(), h);
         //     p.update(d.values);

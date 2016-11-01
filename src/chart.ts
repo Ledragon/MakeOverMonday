@@ -4,7 +4,7 @@ import { scaleLinear, ScaleLinear, scaleOrdinal, scaleBand } from 'd3-scale';
 import { pairs, sum, extent } from 'd3-array';
 import { nest, Nest } from 'd3-collection';
 
-import { color } from './colorScale';
+import { color, red, green } from './colorScale';
 import { dataFormat } from './dataFormat';
 
 export class chart {
@@ -82,7 +82,7 @@ export class chart {
 
         let yScale = scaleLinear()
             .domain(extent(data, d => d.change))
-            .range([this.height(), 0]);
+            .range([this.height() / 2, 0]);
 
         var dataBound = this._group.selectAll('.pane')
             .data(byCategory);
@@ -101,14 +101,28 @@ export class chart {
             .style('fill', (d, i) => {
                 return color(tmpScale(d.key));
             });
-        enterSelection
-            .selectAll('rect')
+        enterSelection.append('text')
+            .style('text-anchor', 'middle')
+            .attr('transform', d => `translate(${d.values.length * w / 2},${20})`)
+            .text(d => d.key)
+        var bandEnter = enterSelection
+            .selectAll('.band')
             .data(d => d.values)
-            .enter()
-            .append('rect')
-            .attr('x', (d, i) => i * w)
+            .enter();
+        const bandGroups = bandEnter
+            .append('g')
+            .classed('band', true)
+            .attr('transform', (d, i) => `translate(${i * w},${this.height() / 2 - (d.change >= 0 ? yScale(d.change) : 0)})`);
+        bandGroups.append('rect')
+            // .attr('x', (d, i) => i * w)
             .attr('width', 15)
-            .attr('height', (d: dataFormat) => yScale(d.change));
+            .attr('height', (d: dataFormat) => yScale(d.change))
+            .style('fill', d => d.change >= 0 ? green : red);
+        bandGroups.append('text')
+            .attr('transform', d => `translate(${3},${2}) rotate(90)`)
+            .style('font-size', '13px')
+            .style('fill', d => d.change >= 0 ? '' : 'white')
+            .text(d => `${d.product}`);
 
         // .each(function (d) {
         //     let p = new pane(select(this), that.width(), h);
