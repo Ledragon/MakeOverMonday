@@ -121,6 +121,15 @@ module app {
                         return c;
                     });
             }
+            var dataBound = container.selectAll('.classed')
+                .data(data);
+            dataBound
+              .exit()
+              .remove();
+            dataBound
+              .enter()
+              .append('g')
+                .classed('classed', true);
         }
     }
 }
