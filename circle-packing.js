@@ -21,7 +21,7 @@
     function draw(data) {
 
         var pack = d3.layout.pack()
-            .padding(2)
+            .padding(10)
             .size([600, 600])
             .value(d => d.amount);
         var byYear = d3.nest()
@@ -69,7 +69,7 @@
         node.append('text')
             .attr({
                 'x': 30,
-                'y':50
+                'y':55
             })
             .text(d => d.children ? d.name : '');
     }
