@@ -1,0 +1,47 @@
+import { csv } from 'd3-request';
+import { arc, pie } from 'd3-shape';
+import { select } from 'd3-selection';
+let width = 400;
+let height = 400;
+let radius = 130;
+csv('data/US debt.csv', (error, data) => {
+    console.log(data);
+    let mapped = data.map(d => parseFloat(d.Debt));
+    console.log(mapped)
+    let p = pie()(mapped);
+    console.log(p);
+    let arcGenerator = arc()
+        .innerRadius(0)
+        .outerRadius(radius);
+    let colors = ['#2ca25f', '#99d8c9']
+    let svg = select('#chart')
+        .append('svg')
+        .attr('width', width)
+        .attr('height', height);
+    svg.append('g')
+        .attr('transform', `translate(${width / 2},${height / 2})`)
+        .selectAll('.arc')
+        .data(p)
+        .enter()
+        .append('path')
+        .classed('arc', true)
+        .attr('d', d => arcGenerator.startAngle(d.startAngle).endAngle(d.endAngle)())
+        .style('fill', (d, i) => colors[i]);
+    let items = svg.append('g')
+        .classed('legend', true)
+        .attr('transform', `translate(${280},${350})`)
+        .selectAll('.legend-item')
+        .data(['US', 'Rest of the world'])
+        .enter()
+        .append('g')
+        .classed('legend-item', true)
+          .attr('transform', (d,i)=>`translate(${0},${i*20})`);
+    items.append('text')
+        .attr('x', 15)
+        .text(d => d)
+    items.append('rect')
+        .attr('y', -8)
+        .attr('width', 10)
+        .attr('height', 10)
+        .style('fill', (d, i) => colors[i]);
+})
