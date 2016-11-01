@@ -1,0 +1,47 @@
+{
+  "name": "29",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "cd src && tsc",
+    "serve": "cd src && live-server",
+    "watch": "cd src  && tsc -w"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "jspm": "^0.16.39",
+    "live-server": "^1.0.0",
+    "typescript": "^1.8.10"
+  },
+  "jspm": {
+    "directories": {
+      "baseURL": "src"
+    },
+    "dependencies": {
+      "d3-array": "npm:d3-array@^1.0.0",
+      "d3-axis": "npm:d3-axis@^1.0.0",
+      "d3-collection": "npm:d3-collection@^1.0.0",
+      "d3-color": "npm:d3-color@^1.0.0",
+      "d3-dispatch": "npm:d3-dispatch@^1.0.0",
+      "d3-format": "npm:d3-format@^1.0.0",
+      "d3-geo": "npm:d3-geo@^1.1.1",
+      "d3-geo-projection": "npm:d3-geo-projection@^1.0.2",
+      "d3-interpolate": "npm:d3-interpolate@^1.1.0",
+      "d3-request": "npm:d3-request@^1.0.1",
+      "d3-scale": "npm:d3-scale@^1.0.1",
+      "d3-scale-chromatic": "npm:d3-scale-chromatic@^1.0.1",
+      "d3-selection": "npm:d3-selection@^1.0.0",
+      "d3-shape": "npm:d3-shape@^1.0.0",
+      "d3-time": "npm:d3-time@^1.0.0",
+      "d3-time-format": "npm:d3-time-format@^2.0.0",
+      "moment": "npm:moment@^2.14.1"
+    },
+    "devDependencies": {}
+  },
+  "dependencies": {
+    "topojson": "^1.6.26"
+  }
+}
