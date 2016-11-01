@@ -47,3 +47,4 @@ jspm_packages
 !**/config.js
 merge.bat
 merge.ps1
+src/data/build
