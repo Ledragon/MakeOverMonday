@@ -1,8 +1,5 @@
-import { Selection, select, selectAll } from 'd3-selection';
-import { scaleBand, scaleLinear, Band, Linear } from 'd3-scale';
-import { D3Nest, nest } from 'd3-collection';
-import { Axis, axisLeft } from 'd3-axis';
-import { extent } from 'd3-array';
+import { Selection, selectAll } from 'd3-selection';
+import { nest } from 'd3-collection';
 import { xAxis } from './xAxis';
 import { yAxis } from './yAxis';
 import { colorScale } from './colorScale';
