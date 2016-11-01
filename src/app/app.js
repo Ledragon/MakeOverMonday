@@ -8,7 +8,16 @@ var subsidiariesSvg = d3_selection_1.select('#chart')
     .append('svg')
     .attr('width', w)
     .attr('height', h);
-var sub = bySubsidiariesCount_1.bySubsidiariesCount(subsidiariesSvg, w, h);
+var sub = bySubsidiariesCount_1.bySubsidiariesCount(subsidiariesSvg, w, h)
+    .valueFn(function (d) { return d.subsidiariesCount; })
+    .title('Tax haven subsidiaries');
+var byAmountSvg = d3_selection_1.select('#byAmount')
+    .append('svg')
+    .attr('width', w)
+    .attr('height', h);
+var byAmount = bySubsidiariesCount_1.bySubsidiariesCount(byAmountSvg, w, h)
+    .valueFn(function (d) { return d.amount; })
+    .title('Amount (Million $)');
 dataService_1.read('data/Corporate Tax Havens.csv', function (data) {
     var mapped = data.map(function (d) {
         return {
@@ -19,5 +28,6 @@ dataService_1.read('data/Corporate Tax Havens.csv', function (data) {
         };
     });
     sub.update(mapped);
+    byAmount.update(mapped);
 });
 //# sourceMappingURL=app.js.map

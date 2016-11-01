@@ -8,11 +8,21 @@ import { bySubsidiariesCount } from './charts/bySubsidiariesCount';
 var w = 800;
 var h = 800;
 var subsidiariesSvg = select('#chart')
-.append('svg')    
+    .append('svg')
     .attr('width', w)
     .attr('height', h);
 
-var sub = bySubsidiariesCount(subsidiariesSvg, w, h);
+var sub = bySubsidiariesCount(subsidiariesSvg, w, h)
+    .valueFn(d => d.subsidiariesCount)
+    .title('Tax haven subsidiaries');
+var byAmountSvg = select('#byAmount')
+    .append('svg')
+    .attr('width', w)
+    .attr('height', h)
+
+var byAmount = bySubsidiariesCount(byAmountSvg, w, h)
+    .valueFn(d => d.amount)
+    .title('Amount (Million $)');
 
 
 read('data/Corporate Tax Havens.csv', (data: Array<any>) => {
@@ -25,4 +35,5 @@ read('data/Corporate Tax Havens.csv', (data: Array<any>) => {
         }
     });
     sub.update(mapped);
+    byAmount.update(mapped);
 });

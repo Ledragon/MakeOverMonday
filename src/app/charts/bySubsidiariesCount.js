@@ -3,21 +3,23 @@ var d3_scale_1 = require('d3-scale');
 var d3_axis_1 = require('d3-axis');
 var d3_array_1 = require('d3-array');
 var colorScale_1 = require('./colorScale');
-var _container;
-var _margins = {
-    top: 30,
-    right: 10,
-    bottom: 10,
-    left: 160
-};
-var _xScale;
-var _yScale;
-var _yAxis;
-var _yAxisGroup;
-var _seriesGroup;
-var _legendGroup;
 function bySubsidiariesCount(container, width, height) {
     var _chartMargin = 10;
+    var _container;
+    var _margins = {
+        top: 30,
+        right: 10,
+        bottom: 10,
+        left: 160
+    };
+    var _xScale;
+    var _yScale;
+    var _yAxis;
+    var _yAxisGroup;
+    var _seriesGroup;
+    var _legendGroup;
+    var _valueFn;
+    var _titleGroup;
     var gradient = container.append('defs')
         .append('linearGradient')
         .attr('id', 'gradient')
@@ -51,18 +53,17 @@ function bySubsidiariesCount(container, width, height) {
     _yAxis = d3_axis_1.axisLeft(_yScale);
     _seriesGroup = _container.append('g')
         .classed('series-group', true);
-    chartGroup.append('g')
+    _titleGroup = chartGroup.append('g')
         .classed('title', true)
         .style('text-anchor', 'middle')
         .attr('transform', "translate(" + width / 2 + "," + 15 + ")")
-        .append('text')
-        .text('Number of haven subsidiaries');
+        .append('text');
     var legendHeight = 15;
     var legendWidth = 150;
     var textWidth = 15;
     var legendGroup = chartGroup.append('g')
         .classed('legend', true)
-        .attr('transform', "translate(" + (plotWidth - legendWidth) + "," + (plotHeight - legendHeight) + ")");
+        .attr('transform', "translate(" + (plotWidth - legendWidth - textWidth) + "," + (height - legendHeight - _margins.top) + ")");
     legendGroup.append('text')
         .classed('min', true)
         .text('0');
@@ -76,37 +77,47 @@ function bySubsidiariesCount(container, width, height) {
         .classed('max', true)
         .text('1');
     _legendGroup = legendGroup;
+    function title(value) {
+        _titleGroup.text(value);
+        return this;
+    }
+    function value(value) {
+        _valueFn = value;
+        return this;
+    }
+    function update(data) {
+        var sorted = data.sort(function (a, b) { return _valueFn(b) - _valueFn(a); }).slice(0, 30);
+        var domain = sorted.map(function (d) { return d.company; });
+        _yScale.domain(domain);
+        _yAxisGroup.call(_yAxis);
+        var xDomain = [0, d3_array_1.max(sorted, _valueFn)];
+        _xScale.domain(xDomain);
+        var dataBound = _seriesGroup.selectAll('.series')
+            .data(sorted);
+        dataBound
+            .exit()
+            .remove();
+        var enterSelection = dataBound
+            .enter()
+            .append('g')
+            .classed('series', true)
+            .attr('transform', function (d) { return ("translate(" + 0 + "," + _yScale(d.company) + ")"); });
+        var cs = d3_scale_1.scaleLinear()
+            .domain(xDomain)
+            .range([0, 1]);
+        enterSelection
+            .append('rect')
+            .attr('width', function (d) { return _xScale(_valueFn(d)); })
+            .attr('height', _yScale.bandwidth())
+            .style('fill', function (d) { return colorScale_1.blueScale()(cs(_valueFn(d))); });
+        _legendGroup.select('.max')
+            .text(xDomain[1]);
+    }
     return {
-        update: update
+        update: update,
+        valueFn: value,
+        title: title
     };
 }
 exports.bySubsidiariesCount = bySubsidiariesCount;
-function update(data) {
-    var sorted = data.sort(function (a, b) { return b.subsidiariesCount - a.subsidiariesCount; }).slice(0, 30);
-    var domain = sorted.map(function (d) { return d.company; });
-    _yScale.domain(domain);
-    _yAxisGroup.call(_yAxis);
-    var xDomain = [0, d3_array_1.max(sorted, function (s) { return s.subsidiariesCount; })];
-    _xScale.domain(xDomain);
-    var dataBound = _seriesGroup.selectAll('.series')
-        .data(sorted);
-    dataBound
-        .exit()
-        .remove();
-    var enterSelection = dataBound
-        .enter()
-        .append('g')
-        .classed('series', true)
-        .attr('transform', function (d) { return ("translate(" + 0 + "," + _yScale(d.company) + ")"); });
-    var cs = d3_scale_1.scaleLinear()
-        .domain(xDomain)
-        .range([0, 1]);
-    enterSelection
-        .append('rect')
-        .attr('width', function (d) { return _xScale(d.subsidiariesCount); })
-        .attr('height', _yScale.bandwidth())
-        .style('fill', function (d) { return colorScale_1.blueScale()(cs(d.subsidiariesCount)); });
-    _legendGroup.select('.max')
-        .text(xDomain[1]);
-}
 //# sourceMappingURL=bySubsidiariesCount.js.map
