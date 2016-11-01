@@ -1,0 +1,27 @@
+body{
+    /*font-family: 'Raleway', sans-serif;*/
+    font-family: 'Karla', sans-serif;
+}
+.axis .tick text{
+    font-size:.8em;
+}
+.tick line{
+    stroke:darkgray;
+}
+.domain{
+    fill:transparent;
+    stroke:darkgray;
+}
+.title{
+    text-anchor: middle;
+    font-size: 1.2em;
+}
+.brush .extent {
+  stroke: #fff;
+  fill-opacity: .125;
+  shape-rendering: crispEdges;
+}
+circle{
+    fill:transparent;
+    stroke: black;
+}
