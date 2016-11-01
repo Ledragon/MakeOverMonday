@@ -1,0 +1,23 @@
+{
+    "authors": "Alex Ford <https://github.com/gustavderdrache>, Boris Yankov <https://github.com/borisyankov>, Tom Wanzek <https://github.com/tomwanzek>",
+    "definitionFilename": "index.d.ts",
+    "libraryDependencies": [],
+    "moduleDependencies": [],
+    "libraryMajorVersion": "0",
+    "libraryMinorVersion": "0",
+    "libraryName": "D3JS d3-request module 1.0.0",
+    "typingsPackageName": "d3-request",
+    "projectName": "https://github.com/d3/d3-request/",
+    "sourceRepoURL": "https://www.github.com/DefinitelyTyped/DefinitelyTyped",
+    "sourceBranch": "types-2.0",
+    "kind": "ProperModule",
+    "globals": [],
+    "declaredModules": [
+        "d3-request"
+    ],
+    "files": [
+        "index.d.ts"
+    ],
+    "hasPackageJson": false,
+    "contentHash": "c1758b2fd44a74516a30bdec1d7ba0216bc3e866c988c23c253c41ff8ff78a7a"
+}
