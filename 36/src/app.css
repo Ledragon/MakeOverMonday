@@ -1,0 +1,54 @@
+body{
+    background-color: #191919;
+}
+.main-title{
+    /*text-align: center;*/
+    /*background: lightgray;*/
+    padding: 15px;
+    height:150px;
+}
+.main-title{
+    color: rgba(241, 232, 184, 1);
+}
+.series path{
+    fill:none;
+    stroke: gray;
+}
+svg{
+    /*background-color: red;*/
+    border: 1px solid darkgray;
+}
+.legend-item text{
+    font-size:11px;
+}
+.background-rect{
+    opacity: 0.4;
+}
+.picture{
+    width: 150px;
+    height: 150px;
+    margin-right: 30px;
+    background-image: url('assets/sm.jpg');
+    background-size: cover;
+    border-radius: 50%;
+}
+.card{
+    margin: 15px;
+}
+.card .title{
+    background: rgba(241, 232, 184, 1);
+    padding: 10px;
+}
+.card .content{
+    color:rgba(229, 143, 101, 1);
+    font-size:14px;
+}
+.card h1{
+    font-size:16px;
+    color: rgba(208, 83, 83, 1);
+    padding: 0;
+    margin: 0;
+}
+/*.time-axis line{
+    stroke: rgba(241, 232, 184, 1);
+}*/
