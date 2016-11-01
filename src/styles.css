@@ -59,9 +59,15 @@ svg{
     stroke: green;
     stroke-width: 1px;
 }*/
-circle.clinton{
-    fill:red;
+.clinton{
+    fill:lightskyblue;
 }
-circle.trump{
-    fill:blue;
+.trump{
+    fill:lightcoral;
+}
+.other{
+    fill: lightgreen
+}
+.undecided{
+    fill: lightgray
 }

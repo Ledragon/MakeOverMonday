@@ -5,16 +5,14 @@ var d3_request_1 = require('d3-request');
 var d3_collection_1 = require('d3-collection');
 var d3_scale_1 = require('d3-scale');
 var d3_axis_1 = require('d3-axis');
-var d3_shape_1 = require('d3-shape');
 var d3_time_format_1 = require('d3-time-format');
-var d3_array_1 = require('d3-array');
 var width = 1900;
-var height = 780;
+var height = 700;
 var margins = {
-    top: 50,
+    top: 30,
     bottom: 50,
-    left: 50,
-    right: 50
+    left: 20,
+    right: 20
 };
 var container = d3_selection_1.select('#chart')
     .append('svg')
@@ -25,6 +23,11 @@ var plotGroup = container.append('g')
     .attr('transform', "translate(" + margins.left + "," + margins.top + ")");
 var plotWidth = width - margins.left - margins.right;
 var plotHeight = height - margins.top - margins.bottom;
+var stateScale = d3_scale_1.scaleBand()
+    .range([0, plotWidth]);
+var stateScaleGroup = plotGroup.append('g')
+    .classed('axis', true);
+var stateAxis = d3_axis_1.axisTop(stateScale);
 var seriesGroup = plotGroup.append('g')
     .classed('series', true);
 var colors = ['red', 'blue', 'green', 'gray'];
@@ -48,33 +51,88 @@ q.awaitAll(function (error, responses) {
                 date: timeParser(d.Date)
             };
         });
-        var byDate = d3_collection_1.nest()
+        var byDate_1 = d3_collection_1.nest()
             .key(function (d) { return d.date; })
-            .entries(mapped)
-            .map(function (d) {
-            return {
-                date: new Date(d.key),
-                clinton: d3_array_1.mean(d.values, function (v) { return v.clinton; }),
-                trump: d3_array_1.mean(d.values, function (v) { return v.trump; }),
-                other: d3_array_1.mean(d.values, function (v) { return v.other; }),
-                undecided: d3_array_1.mean(d.values, function (v) { return v.undecided; }),
-            };
-        });
-        var timeScale = d3_scale_1.scaleTime()
-            .domain(d3_array_1.extent(byDate, function (d) { return d.date; }))
-            .range([0, plotWidth]);
-        var yScale = d3_scale_1.scaleLinear()
+            .entries(mapped);
+        stateScale.domain(mapped.map(function (d) { return d.state; }));
+        stateScaleGroup.call(stateAxis);
+        // let timeScale = scaleTime()
+        //     .domain(extent(byDate, d => d.date))
+        //     .range([0, plotWidth]);
+        var yScale_1 = d3_scale_1.scaleLinear()
             .domain([0, 1])
-            .range([plotHeight, 0]);
-        var timeAxis = d3_axis_1.axisBottom(timeScale);
-        var timeAxisGroup = plotGroup.append('g')
-            .classed('time-axis', true)
-            .attr('transform', "translate(" + 0 + "," + plotHeight + ")")
-            .call(timeAxis);
-        var stackGenerator = d3_shape_1.stack()
-            .keys(byDate.map(function (d) { return d.date; }));
-        var stacked = stackGenerator(byDate);
-        console.log(stacked);
+            .range([0, plotHeight]);
+        var dateFormat_1 = d3_time_format_1.timeFormat('%B %d');
+        var i_1 = 0;
+        setInterval(function () {
+            if (i_1 >= byDate_1.length) {
+                i_1 = 0;
+            }
+            d3_selection_1.select('#date')
+                .select('span')
+                .text(dateFormat_1(new Date(byDate_1[i_1].key)));
+            var databound = seriesGroup.selectAll('.series-individual')
+                .data(byDate_1[i_1].values);
+            var enterSelection = databound
+                .enter()
+                .append('g')
+                .classed('series-individual', true)
+                .attr('transform', function (d) { return ("translate(" + stateScale(d.state) + "," + 0 + ")"); });
+            var rectWidth = stateScale.bandwidth() / 2;
+            enterSelection.append('rect')
+                .classed('clinton', true)
+                .attr('x', rectWidth / 2)
+                .attr('y', 0)
+                .attr('width', rectWidth)
+                .attr('height', function (d) { return yScale_1(d.clinton); });
+            databound.select('.clinton')
+                .attr('x', rectWidth / 2)
+                .attr('y', 0)
+                .attr('width', rectWidth)
+                .attr('height', function (d) { return yScale_1(d.clinton); });
+            enterSelection.append('rect')
+                .classed('trump', true)
+                .attr('x', rectWidth / 2)
+                .attr('y', function (d) { return yScale_1(d.clinton); })
+                .attr('width', rectWidth)
+                .attr('height', function (d) { return yScale_1(d.trump); });
+            databound.select('.trump')
+                .attr('x', rectWidth / 2)
+                .attr('y', function (d) { return yScale_1(d.clinton); })
+                .attr('width', rectWidth)
+                .attr('height', function (d) { return yScale_1(d.trump); });
+            enterSelection.append('rect')
+                .classed('other', true)
+                .attr('x', rectWidth / 2)
+                .attr('y', function (d) { return yScale_1(d.clinton) + yScale_1(d.trump); })
+                .attr('width', rectWidth)
+                .attr('height', function (d) { return yScale_1(d.other); });
+            databound.select('.other')
+                .attr('x', rectWidth / 2)
+                .attr('y', function (d) { return yScale_1(d.clinton) + yScale_1(d.trump); })
+                .attr('width', rectWidth)
+                .attr('height', function (d) { return yScale_1(d.other); });
+            enterSelection.append('rect')
+                .classed('undecided', true)
+                .attr('x', rectWidth / 2)
+                .attr('y', function (d) { return yScale_1(d.clinton) + yScale_1(d.trump) + yScale_1(d.other); })
+                .attr('width', rectWidth)
+                .attr('height', function (d) { return yScale_1(d.undecided); });
+            databound.select('.undecided')
+                .attr('x', rectWidth / 2)
+                .attr('y', function (d) { return yScale_1(d.clinton) + yScale_1(d.trump) + yScale_1(d.other); })
+                .attr('width', rectWidth)
+                .attr('height', function (d) { return yScale_1(d.undecided); });
+            databound.exit()
+                .remove();
+            // console.log(i)
+            // databound.select('.clinton')
+            //     .attr('x', 0)
+            //     .attr('y', 0)
+            //     .attr('width', stateScale.bandwidth())
+            //     .attr('height', d => yScale(d.clinton));
+            i_1++;
+        }, 100);
     }
 });
 //# sourceMappingURL=app.js.map
