@@ -1,0 +1,95 @@
+html, body{
+    font-family: 'Karla', sans-serif;
+    margin: 0;
+    height: 100%;
+}
+h1,h2{
+    font-weight: normal;
+    text-transform: uppercase;
+}
+.col-1,.col-2, .col-3, .col-4, .col-5, .col-6, .col-7, .col-8, .col-9, .col-10, .col-11, .col-12{
+    float:left;
+}
+.col-2{
+    width:16.67%;
+}
+.col-3{
+    width:25%;
+}
+.col-4{
+    width:33.33%;
+}
+.col-5{
+    width:41.67%;
+    
+}
+.col-6{
+    width:50%;
+}
+.col-8{
+    width:66.67%;
+}
+.col-9{
+    width:75%;
+}
+.col-12{
+    width:100%;
+}
+/************************************************************/
+.series path{
+    fill:none;
+    stroke: gray;
+}
+svg{
+    /*border: 1px solid darkgray;*/
+}
+.legend-item text{
+    font-size:11px;
+}
+.background-rect{
+    opacity: 0.4;
+}
+.highlight{
+    background: lightcoral;
+    /*background: #ccc;*/
+    /*border: 1px #ccc solid;*/
+}
+.page{
+    display: flex;
+    height: 100%;
+    flex-direction: column;
+}
+.main-title{
+    flex: 0 0 120px;
+    background: lightgray;
+    padding: 15px;
+}
+.main-content{
+    flex-grow: 1;
+    display: flex;
+    /*overflow: hidden;*/
+}
+.left-menu{
+    flex: 0 0 300px;
+    overflow-y: auto;
+}
+.country{
+    padding: 8px;
+    margin: 5px ;
+}
+.content{
+    flex-grow: 1;
+    flex-shrink:0;
+    display: flex;
+}
+.legend>rect{
+    fill: white;
+    stroke: darkgray;
+}
+.country{
+    fill:transparent;
+    stroke: #999;
+}
+.legend text{
+    font-size:10px;
+}
