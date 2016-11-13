@@ -47,7 +47,7 @@ h1,h2{
 }
 svg{
     /*background-color: red;*/
-    border: 1px solid darkgray;
+    /*border: 1px solid darkgray;*/
 }
 .legend-item text{
     font-size:11px;
