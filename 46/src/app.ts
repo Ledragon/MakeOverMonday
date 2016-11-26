@@ -38,7 +38,21 @@ let songsGroup = plotGroup.append('g')
     .classed('songs', true);
 
 let wordsChart = drawWords(plotGroup, plotWidth, plotHeight);
-wordsChart.on('click', d => console.log(d));
+wordsChart.on('click', d => {
+    let song = select('#song');
+    let bySong = groupBySong(d.values);
+    console.log(bySong)
+    song.select('p')
+        .text('Word ' + d.key + ' is used ' + d.values.length + ' times in ' + bySong.length + ' songs');
+    let lis = song.select('ul')
+        .selectAll('li')
+        .data(bySong.sort((a, b) => b.words.length - a.words.length));
+    lis.exit().remove();
+    lis.enter()
+        .append('li')
+        .text(d => d.artist+' - '+d.title + ': ' + d.words.length);
+    lis.text(d =>  d.artist+' - '+d.title + ': ' + d.words.length);
+});
 
 const stopWords = ['a', 'able', 'about', 'across', 'after', 'all', 'almost', 'also', 'am', 'among', 'an', 'and', 'any', 'are', 'as', 'at', 'be', 'because', 'been', 'but', 'by', 'can', 'cannot', 'could', 'dear', 'did', 'do', 'does', 'either', 'else', 'ever', 'every', 'for', 'from', 'get', 'got', 'had', 'has', 'have', 'he', 'her', 'hers', 'him', 'his', 'how', 'however', 'i', 'if', 'in', 'into', 'is', 'it', 'its', 'just', 'least', 'let', 'like', 'likely', 'may', 'me', 'might', 'most', 'must', 'my', 'neither', 'no', 'nor', 'not', 'of', 'off', 'often', 'on', 'only', 'or', 'other', 'our', 'own', 'rather', 'said', 'say', 'says', 'she', 'should', 'since', 'so', 'some', 'than', 'that', 'the', 'their', 'them', 'then', 'there', 'these', 'they', 'this', 'tis', 'to', 'too', 'twas', 'us', 'wants', 'was', 'we', 'were', 'what', 'when', 'where', 'which', 'while', 'who', 'whom', 'why', 'will', 'with', 'would', 'yet', 'you', 'your'];
 
@@ -79,21 +93,9 @@ function groupBySong(data: Array<any>): Array<any> {
     return bySong;
 }
 
-function drawSongs(container, width, height, data) {
-    var bySong = data;
-    var dataBound = container.selectAll('.song')
-        .data(bySong);
-    dataBound
-        .exit()
-        .remove();
-    let enterSelection = dataBound
-        .enter()
-        .append('g')
-        .classed('song', true)
-        .attr('transform', (d, i) => `translate(${0},${i * 20})`)
-        .on('mousedown', d => { });
-    enterSelection.append('text')
-        .text(d => `${d.rank}. ${d.artist} - ${d.title}`);
+function drawSong(container: Selection<any, any, any, any>, width: number, height: number) {
+    var group = container.append('g')
+        .classed('song', true);
 }
 
 function drawWords(container: Selection<any, any, any, any>, width: number, height: number) {
