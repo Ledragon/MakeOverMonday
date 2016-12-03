@@ -1,0 +1,16 @@
+{
+  "name": "47",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "live-server dist"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "live-server": "^1.1.0",
+    "typescript": "^2.0.10"
+  }
+}
