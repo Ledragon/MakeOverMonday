@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "watch": "tsc -w"
+    "watch": "webpack --watch",
+    "start": "live-server src"
   },
   "keywords": [],
   "author": "",
@@ -14,6 +15,10 @@
   },
   "devDependencies": {
     "@types/d3": "^4.4.0",
-    "typescript": "^2.1.4"
+    "live-server": "^1.1.0",
+    "ts-loader": "^1.3.1",
+    "typescript": "^2.1.4",
+    "webpack": "^1.14.0",
+    "webpack-dev-server": "^1.16.2"
   }
 }
