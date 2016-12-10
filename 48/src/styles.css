@@ -2,6 +2,7 @@ html,body{
     height: 100%;
     margin:0;
     font-family: 'Raleway', sans-serif;
+    font-family: 'Nunito Sans', sans-serif;
 }
 .container{
     /*background: blanchedalmond;*/
@@ -11,6 +12,8 @@ html,body{
 }
 .heading{
     padding: 0 15px;
+    background: #754668;
+    color:#B5DDA4;
 }
 .body-container{
     display: flex;
