@@ -94,7 +94,7 @@ d3.csv('data/Inequality.csv', (d: any) => {
         enterSelection.append('path')
             .attr('d', areaGeneratorBottom90);
         enterSelection.append('text')
-            .attr('transform', `translate(${plotWidth / 2},${0})`)
+            .attr('transform', (d,i)=>`translate(${plotWidth / 2},${yScale(1-d3.mean(data, dd=>dd[d.key]))})`)
             .text(d => d.key);
         // plotGroup.append('path')
         //     .classed('bottom-90', true)

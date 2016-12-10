@@ -1,6 +1,7 @@
 html,body{
     height: 100%;
     margin:0;
+    font-family: 'Raleway', sans-serif;
 }
 .container{
     /*background: blanchedalmond;*/
@@ -17,17 +18,23 @@ html,body{
     /*background: salmon;*/
 }
 .bottom90 path{
-    fill: red;
+    fill: #587D71;
     /*stroke:red;
     stroke-width: 1px;*/
 }
+.bottom90 text{
+    fill: #F9ECCC;
+}
 .top10 path{
-    fill: blue;
+    fill: #F9ECCC;
     /*stroke:blue;
     stroke-width: 1px;*/
 }
+.top10 text{
+    fill: #587D71;
+}
 .series text{
-    font-size: 1.2em;
+    font-size: 1.5em;
     text-transform: uppercase;
     text-anchor: middle;
 }
