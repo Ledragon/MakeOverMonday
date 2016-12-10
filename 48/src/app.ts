@@ -42,13 +42,23 @@ let yAxisGroup = plotGroup.append('g')
     .attr('transform', `translate(${0},${0})`)
     .call(yAxis);
 
-let lineGeneratorBottom90 = d3.line()
-    .x(d => xScale(d.year))
-    .y(d => yScale(d.bottom90));
-let lineGeneratorTop10 = d3.line()
-    .x(d => xScale(d.year))
-    .y(d => yScale(d.top10));
 
+// let lineGeneratorBottom90 = d3.line<any>()
+//     .x(d => xScale(d.year))
+//     .y(d => yScale(d.bottom90));
+// let lineGeneratorTop10 = d3.line<any>()
+//     .x(d => xScale(d.year))
+//     .y(d => yScale(d.top10));
+let areaGeneratorBottom90 = d3.area<any>()
+    .x(d => xScale(d.data.year))
+    .y0((d, i) => {
+        let y0 = isNaN(d[0]) ? yScale(0) : yScale(d[0]);
+        return y0;
+    })
+    .y1((d, i) => {
+        let y1: number = isNaN(d[1]) ? yScale(d[0]) : yScale(d[1]);
+        return y1;
+    });
 
 d3.csv('data/Inequality.csv', (d: any) => {
     let par = (dd: string) => { return dd ? parseFloat(dd.replace('%', '')) / 100 : null; };
@@ -62,16 +72,37 @@ d3.csv('data/Inequality.csv', (d: any) => {
         console.error(error);
     } else {
         data = data.filter(d => !!d.bottom90);
+
+
+        let stackGenerator = d3.stack<any>()
+            .keys(['top10', 'bottom90']);
+        let stacked = stackGenerator(data);
+        console.log(stacked);
         // console.log(data);
         xScale.domain(d3.extent(data, d => d.year));
         xAxisGroup.call(xAxis);
-        plotGroup.append('path')
-            .classed('bottom-90', true)
-            // .data(data)
-            .attr('d', lineGeneratorBottom90(data));
-        plotGroup.append('path')
-            .classed('top-10', true)
-            // .data(data)
-            .attr('d', lineGeneratorTop10(data));
+        var dataBound = plotGroup.selectAll('.series')
+            .data(stacked);
+        dataBound
+            .exit()
+            .remove();
+        let enterSelection = dataBound
+            .enter()
+            .append('g')
+            .attr('class', d => d.key)
+            .classed('series', true);
+        enterSelection.append('path')
+            .attr('d', areaGeneratorBottom90);
+        enterSelection.append('text')
+            .attr('transform', `translate(${plotWidth / 2},${0})`)
+            .text(d => d.key);
+        // plotGroup.append('path')
+        //     .classed('bottom-90', true)
+        //     // .data(data)
+        //     .attr('d', lineGeneratorBottom90(data));
+        // plotGroup.append('path')
+        //     .classed('top-10', true)
+        //     // .data(data)
+        //     .attr('d', lineGeneratorTop10(data));
     }
 });

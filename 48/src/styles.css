@@ -16,13 +16,18 @@ html,body{
     flex-grow: 1;
     /*background: salmon;*/
 }
-.bottom-90{
-    fill: none;
-    stroke:red;
-    stroke-width: 1px;
+.bottom90 path{
+    fill: red;
+    /*stroke:red;
+    stroke-width: 1px;*/
 }
-.top-10{
-    fill: none;
-    stroke:blue;
-    stroke-width: 1px;
+.top10 path{
+    fill: blue;
+    /*stroke:blue;
+    stroke-width: 1px;*/
+}
+.series text{
+    font-size: 1.2em;
+    text-transform: uppercase;
+    text-anchor: middle;
 }
