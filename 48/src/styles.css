@@ -2,3 +2,27 @@ html,body{
     height: 100%;
     margin:0;
 }
+.container{
+    /*background: blanchedalmond;*/
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+.heading{
+    padding: 0 15px;
+}
+.body-container{
+    display: flex;
+    flex-grow: 1;
+    /*background: salmon;*/
+}
+.bottom-90{
+    fill: none;
+    stroke:red;
+    stroke-width: 1px;
+}
+.top-10{
+    fill: none;
+    stroke:blue;
+    stroke-width: 1px;
+}
