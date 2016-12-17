@@ -6,7 +6,13 @@ let svg = d3.select('#chart')
     .append('svg')
     .attr('width', width)
     .attr('height', height);
-
+svg.append('marker')
+    .attr('id', 'head')
+    .attr('orient', 'auto')
+    .attr('markerWidth', 2)
+    .attr('markerHeight', 2)
+    .append('path')
+    .attr('d', 'M0,0 V4 L2, 2Z');
 let plotMargins = {
     top: 30,
     bottom: 30,
@@ -32,6 +38,11 @@ let ribbonGenerator = d3.ribbon()
 let container = plotGroup.append('g')
     .attr('transform', `translate(${plotWidth / 2},${plotHeight / 2})`)
 
+let thicknesScale = d3.scaleLinear()
+    .range([1, 100]);
+
+
+
 d3.csv('data/data.csv', (d: any) => {
     return {
         origin: d['Origin'],
@@ -56,22 +67,9 @@ d3.csv('data/data.csv', (d: any) => {
             .style('fill', 'none')
             .style('stroke', 'steelblue');
         let keys = byOriign.map(d => d.key);
-        let enterSelection = container.selectAll('g.origin')
-            .data(byOriign)
-            .enter()
-            .append('g')
-            .classed('origin', true)
-            .attr('transform', (d, i) => {
-                let pos = position(d, globalRadius, byOriign.length, i)
-                return `translate(${pos[0]},${pos[1]})`
-            });
-        enterSelection.append('circle')
-            .attr('r', radius)
-            .style('fill', 'none')
-            .style('stroke', (d, i) => colors[i]);
-        enterSelection.append('text')
-            .style('text-anchor', 'middle')
-            .text(d => d.key);
+
+
+        thicknesScale.domain(d3.extent(data, d => d['2005']));
         let linesSelection = container.selectAll('g.line')
             .data(data)
             .enter()
@@ -95,7 +93,26 @@ d3.csv('data/data.csv', (d: any) => {
                 var pos = position(d, globalRadius, keys.length, keys.indexOf(d.destination));
                 return pos[1];
             })
-            .style('stroke', (d, i) => colors[keys.indexOf(d.destination)]);
+            // .attr('marker-end','url(\'#head\')')
+            .style('stroke', (d, i) => colors[keys.indexOf(d.destination)])
+            .style('stroke-width',d=>thicknesScale(d['2005']));
+
+        let enterSelection = container.selectAll('g.origin')
+            .data(byOriign)
+            .enter()
+            .append('g')
+            .classed('origin', true)
+            .attr('transform', (d, i) => {
+                let pos = position(d, globalRadius, byOriign.length, i)
+                return `translate(${pos[0]},${pos[1]})`
+            });
+        enterSelection.append('circle')
+            .attr('r', radius)
+            .style('fill', 'rgba(255,255,255,0.5)')
+            .style('stroke', (d, i) => colors[i]);
+        enterSelection.append('text')
+            .style('text-anchor', 'middle')
+            .text(d => d.key);
     }
 });
 
