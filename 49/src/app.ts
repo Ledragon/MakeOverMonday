@@ -26,22 +26,16 @@ let colors = d3.schemeCategory10;
 let plotWidth = width - plotMargins.left - plotMargins.right;
 let plotHeight = height - plotMargins.top - plotMargins.bottom;
 
-let chordGenerator = d3.chord()
-    .padAngle(0.05);
-let outerRadius = (plotWidth - plotMargins.left) / 2;
-let arcGenerator = d3.arc()
-    .outerRadius(outerRadius)
-    .innerRadius(outerRadius - 10);
-let ribbonGenerator = d3.ribbon()
-    .radius(outerRadius - 10);
-
 let container = plotGroup.append('g')
     .attr('transform', `translate(${plotWidth / 2},${plotHeight / 2})`)
 
 let thicknesScale = d3.scaleLinear()
-    .range([1, 100]);
+    .range([1, 50]);
 
-
+let lineGenerator = d3.line<any>()
+    .x(d => d.x)
+    .y(d => d.y)
+    .curve(d3.curveCatmullRom.alpha(0.5));
 
 d3.csv('data/data.csv', (d: any) => {
     return {
@@ -56,16 +50,15 @@ d3.csv('data/data.csv', (d: any) => {
     if (error) {
         console.error(error);
     } else {
-        // console.log(data);
         let byOriign = d3.nest<any>()
             .key(d => d.origin)
             .entries(data);
         let radius = 80;
         let globalRadius = (plotWidth - plotMargins.left) / 2 - radius;
-        container.append('circle')
-            .attr('r', globalRadius)
-            .style('fill', 'none')
-            .style('stroke', 'steelblue');
+        // container.append('circle')
+        //     .attr('r', globalRadius)
+        //     .style('fill', 'none')
+        //     .style('stroke', 'steelblue');
         let keys = byOriign.map(d => d.key);
 
 
@@ -76,26 +69,34 @@ d3.csv('data/data.csv', (d: any) => {
             .append('g')
             .classed('line', true);
         linesSelection
-            .append('line')
-            .attr('x1', (d, i) => {
-                var pos = position(d, globalRadius, keys.length, keys.indexOf(d.origin));
-                return pos[0];
+            .append('path')
+            .attr('d', (d) => {
+                var origin = position(d, globalRadius, keys.length, keys.indexOf(d.origin));
+                var destination = position(d, globalRadius, keys.length, keys.indexOf(d.destination));
+                var points = [
+                    { x: origin[0], y: origin[1] },
+                    { x: destination[0], y: destination[1] }
+                ]
+                return lineGenerator(points);
             })
-            .attr('y1', (d, i) => {
-                var pos = position(d, globalRadius, keys.length, keys.indexOf(d.origin));
-                return pos[1];
-            })
-            .attr('x2', (d, i) => {
-                var pos = position(d, globalRadius, keys.length, keys.indexOf(d.destination));
-                return pos[0];
-            })
-            .attr('y2', (d, i) => {
-                var pos = position(d, globalRadius, keys.length, keys.indexOf(d.destination));
-                return pos[1];
-            })
+            // .attr('x1', (d, i) => {
+            //     return pos[0];
+            // })
+            // .attr('y1', (d, i) => {
+            //     var pos = position(d, globalRadius, keys.length, keys.indexOf(d.origin));
+            //     return pos[1];
+            // })
+            // .attr('x2', (d, i) => {
+            //     var pos = position(d, globalRadius, keys.length, keys.indexOf(d.destination));
+            //     return pos[0];
+            // })
+            // .attr('y2', (d, i) => {
+            //     var pos = position(d, globalRadius, keys.length, keys.indexOf(d.destination));
+            //     return pos[1];
+            // })
             // .attr('marker-end','url(\'#head\')')
             .style('stroke', (d, i) => colors[keys.indexOf(d.destination)])
-            .style('stroke-width',d=>thicknesScale(d['2005']));
+            .style('stroke-width', d => thicknesScale(d['2005']));
 
         let enterSelection = container.selectAll('g.origin')
             .data(byOriign)
@@ -108,7 +109,7 @@ d3.csv('data/data.csv', (d: any) => {
             });
         enterSelection.append('circle')
             .attr('r', radius)
-            .style('fill', 'rgba(255,255,255,0.5)')
+            .style('fill', 'rgba(255,255,255,0.8)')
             .style('stroke', (d, i) => colors[i]);
         enterSelection.append('text')
             .style('text-anchor', 'middle')
