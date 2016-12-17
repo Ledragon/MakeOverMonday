@@ -30,12 +30,12 @@ let container = plotGroup.append('g')
     .attr('transform', `translate(${plotWidth / 2},${plotHeight / 2})`)
 
 let thicknesScale = d3.scaleLinear()
-    .range([1, 50]);
+    .range([1, 100]);
 
 let lineGenerator = d3.line<any>()
     .x(d => d.x)
     .y(d => d.y)
-    .curve(d3.curveBasis);
+    .curve(d3.curveStep);
 
 d3.csv('data/data.csv', (d: any) => {
     return {
@@ -76,8 +76,8 @@ d3.csv('data/data.csv', (d: any) => {
                 let diffX = destination[0] - origin[0];
                 let diffY = destination[1] - origin[1];
                 // let ratio = 4 / 3;
-                let moveX = 1/3 * Math.max(diffX, 50);//ratio * diffX;
-                let moveY = 1/3 * Math.max(diffY, 50);
+                let moveX = 1/3 * diffX;//ratio * diffX;
+                let moveY = 1/3 * diffY;
                 var points = [
                     { x: origin[0], y: origin[1] },
                     { x: origin[0] + moveX, y: origin[1] + moveY },
