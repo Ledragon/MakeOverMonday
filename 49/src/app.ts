@@ -49,41 +49,27 @@ d3.csv('data/data.csv', (d: any) => {
         let byOriign = d3.nest<any>()
             .key(d => d.origin)
             .entries(data);
-        // console.log(byOriign);
-        let matrix = byOriign.map(d => d.values.map(dd => dd['2005']));
-        // console.log(matrix);
-        let chords = chordGenerator(matrix);
-        let g = container.datum(chords);
-        let group = g.append('g')
-            .classed('groups', true)
-            .selectAll('g')
-            .data(d => d.groups)
+        let radius = 80;
+        let globalRadius = (plotWidth - plotMargins.left) / 2 - radius;
+        container.append('circle')
+            .attr('r', globalRadius)
+            .style('fill', 'none')
+            .style('stroke', 'steelblue');
+        // 10=>2PI
+        let enterSelection = container.selectAll('g.origin')
+            .data(byOriign)
             .enter()
-            .append('g');
+            .append('g')
+            .classed('origin', true)
+              .attr('transform', (d,i)=>`translate(${globalRadius*(Math.cos(i/byOriign.length*2*Math.PI))},${globalRadius*(Math.sin(i/byOriign.length*2*Math.PI))})`);
+        enterSelection.append('circle')
+            .attr('r', radius)
+            .style('fill', 'none')
+            .style('stroke', (d, i) => colors[i]);
+        enterSelection.append('text')
+        .style('text-anchor', 'middle')    
+            .text(d => d.key);
 
-        group.append('path')
-            .attr('d', arcGenerator)
-            .style('fill', (d, i) => colors[i])
-
-        g.append("g")
-            .attr("class", "ribbons")
-            .selectAll("path")
-            .data(function (chords) { return chords; })
-            .enter().append("path")
-            .attr("d", ribbonGenerator)
-            .style("fill", (d) => { return colors[d.target.index]; })
-        // .style("stroke", function(d) { return d3.rgb(color(d.target.index)).darker(); });
-        // var dataBound = container.selectAll('.chord')
-        //     .data(chords);
-        // dataBound
-        //   .exit()
-        //   .remove();
-        // let enterSelection = dataBound
-        //   .enter()
-        //   .append('g')
-        //     .classed('chord', true);
-        // enterSelection.append('path')
-        // .attr('d', arcGenerator)
 
     }
 });
