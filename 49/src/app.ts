@@ -55,21 +55,51 @@ d3.csv('data/data.csv', (d: any) => {
             .attr('r', globalRadius)
             .style('fill', 'none')
             .style('stroke', 'steelblue');
-        // 10=>2PI
+        let keys = byOriign.map(d => d.key);
         let enterSelection = container.selectAll('g.origin')
             .data(byOriign)
             .enter()
             .append('g')
             .classed('origin', true)
-              .attr('transform', (d,i)=>`translate(${globalRadius*(Math.cos(i/byOriign.length*2*Math.PI))},${globalRadius*(Math.sin(i/byOriign.length*2*Math.PI))})`);
+            .attr('transform', (d, i) => {
+                let pos = position(d, globalRadius, byOriign.length, i)
+                return `translate(${pos[0]},${pos[1]})`
+            });
         enterSelection.append('circle')
             .attr('r', radius)
             .style('fill', 'none')
             .style('stroke', (d, i) => colors[i]);
         enterSelection.append('text')
-        .style('text-anchor', 'middle')    
+            .style('text-anchor', 'middle')
             .text(d => d.key);
-
-
+        let linesSelection = container.selectAll('g.line')
+            .data(data)
+            .enter()
+            .append('g')
+            .classed('line', true);
+        linesSelection
+            .append('line')
+            .attr('x1', (d, i) => {
+                var pos = position(d, globalRadius, keys.length, keys.indexOf(d.origin));
+                return pos[0];
+            })
+            .attr('y1', (d, i) => {
+                var pos = position(d, globalRadius, keys.length, keys.indexOf(d.origin));
+                return pos[1];
+            })
+            .attr('x2', (d, i) => {
+                var pos = position(d, globalRadius, keys.length, keys.indexOf(d.destination));
+                return pos[0];
+            })
+            .attr('y2', (d, i) => {
+                var pos = position(d, globalRadius, keys.length, keys.indexOf(d.destination));
+                return pos[1];
+            })
+            .style('stroke', (d, i) => colors[keys.indexOf(d.destination)]);
     }
 });
+
+function position(d: any, globalRadius: number, itemsCount: number, i: number): [number, number] {
+    let angle = i / itemsCount * 2 * Math.PI
+    return [globalRadius * (Math.cos(angle)), globalRadius * (Math.sin(angle))];
+}
