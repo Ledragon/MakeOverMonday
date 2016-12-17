@@ -35,7 +35,7 @@ let thicknesScale = d3.scaleLinear()
 let lineGenerator = d3.line<any>()
     .x(d => d.x)
     .y(d => d.y)
-    .curve(d3.curveCatmullRom.alpha(0.5));
+    .curve(d3.curveBasis);
 
 d3.csv('data/data.csv', (d: any) => {
     return {
@@ -73,29 +73,21 @@ d3.csv('data/data.csv', (d: any) => {
             .attr('d', (d) => {
                 var origin = position(d, globalRadius, keys.length, keys.indexOf(d.origin));
                 var destination = position(d, globalRadius, keys.length, keys.indexOf(d.destination));
+                let diffX = destination[0] - origin[0];
+                let diffY = destination[1] - origin[1];
+                // let ratio = 4 / 3;
+                let moveX = 1/3 * Math.max(diffX, 50);//ratio * diffX;
+                let moveY = 1/3 * Math.max(diffY, 50);
                 var points = [
                     { x: origin[0], y: origin[1] },
+                    { x: origin[0] + moveX, y: origin[1] + moveY },
+                    { x: origin[0] + moveX, y: origin[1] + moveY },
                     { x: destination[0], y: destination[1] }
                 ]
                 return lineGenerator(points);
             })
-            // .attr('x1', (d, i) => {
-            //     return pos[0];
-            // })
-            // .attr('y1', (d, i) => {
-            //     var pos = position(d, globalRadius, keys.length, keys.indexOf(d.origin));
-            //     return pos[1];
-            // })
-            // .attr('x2', (d, i) => {
-            //     var pos = position(d, globalRadius, keys.length, keys.indexOf(d.destination));
-            //     return pos[0];
-            // })
-            // .attr('y2', (d, i) => {
-            //     var pos = position(d, globalRadius, keys.length, keys.indexOf(d.destination));
-            //     return pos[1];
-            // })
-            // .attr('marker-end','url(\'#head\')')
-            .style('stroke', (d, i) => colors[keys.indexOf(d.destination)])
+            .style('fill', 'none')
+            .style('stroke', (d, i) => colors[keys.indexOf(d.origin)])
             .style('stroke-width', d => thicknesScale(d['2005']));
 
         let enterSelection = container.selectAll('g.origin')
