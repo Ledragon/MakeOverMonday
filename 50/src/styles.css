@@ -1,0 +1,43 @@
+html,body{
+    height: 100%;
+    margin:0;
+    font-family: 'Raleway', sans-serif;
+    font-family: 'Nunito Sans', sans-serif;
+}
+.container{
+    /*background: blanchedalmond;*/
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+.heading{
+    padding: 0 15px;
+    background: #754668;
+    color:#B5DDA4;
+}
+.body-container{
+    display: flex;
+    flex-grow: 1;
+    /*background: salmon;*/
+}
+.bottom90 path{
+    fill: #587D71;
+    /*stroke:red;
+    stroke-width: 1px;*/
+}
+.bottom90 text{
+    fill: #F9ECCC;
+}
+.top10 path{
+    fill: #F9ECCC;
+    /*stroke:blue;
+    stroke-width: 1px;*/
+}
+.top10 text{
+    fill: #587D71;
+}
+.series text{
+    font-size: 1.5em;
+    text-transform: uppercase;
+    text-anchor: middle;
+}
