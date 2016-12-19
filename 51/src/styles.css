@@ -1,0 +1,22 @@
+html,body{
+    height: 100%;
+    margin:0;
+    font-family: 'Raleway', sans-serif;
+    font-family: 'Nunito Sans', sans-serif;
+}
+.container{
+    /*background: blanchedalmond;*/
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+.heading{
+    padding: 0 15px;
+    background: #353A47;
+    color:#F7C1BB;
+}
+.body-container{
+    display: flex;
+    flex-grow: 1;
+    /*background: salmon;*/
+}
