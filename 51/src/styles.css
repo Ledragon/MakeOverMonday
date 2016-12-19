@@ -38,3 +38,12 @@ html,body{
     stroke:red;
     fill:none;
 }
+.area-plus{
+    fill: salmon;
+}
+.plus.above, .minus.below{
+    fill:#84B082;
+}
+.minus.above, .plus.below{
+    fill:#885A5A;
+}
