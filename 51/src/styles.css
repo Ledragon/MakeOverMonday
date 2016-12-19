@@ -30,3 +30,11 @@ html,body{
 .menu-item.highlight{
     border: 1px solid wheat;
 }
+.series path{
+    stroke:blue;
+    fill:none;
+}
+.target path{
+    stroke:red;
+    fill:none;
+}
