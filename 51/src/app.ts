@@ -8,7 +8,7 @@ let svg = d3.select('#chart')
     .append('svg')
     .attr('width', width)
     .attr('height', height);
-    
+
 let plotMargins = {
     top: 50,
     bottom: 30,
@@ -22,12 +22,21 @@ let plotGroup = svg.append('g')
 let plotWidth = width - plotMargins.left - plotMargins.right;
 let plotHeight = height - plotMargins.top - plotMargins.bottom;
 
-d3.csv('data/data.csv', (d: any) => {
-    return d;
-}, (error: any, data: Array<any>) => {
+d3.csv('data/data.csv', (error: any, data: any) => {
     if (error) {
         console.error(error);
     } else {
         console.log(data);
+        let categories = data.columns.splice(2, 20).filter(d => d.indexOf('Target') < 0);
+        console.log(categories);
+
+
+        d3.select('#menu')
+            .selectAll('.menu-item')
+            .data(categories)
+            .enter()
+            .append('div')
+            .classed('menu-item', true)
+            .text(d => d)
     }
 });
