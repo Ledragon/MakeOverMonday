@@ -5,15 +5,19 @@
   "main": "index.js",
   "scripts": {
     "watch": "webpack --watch",
-    "serve":"live-server src"
+    "serve": "live-server src"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "angular": "^1.6.0",
+    "angular-ui-router": "^0.3.2",
     "d3": "^4.4.0"
   },
   "devDependencies": {
+    "@types/angular": "^1.5.21",
+    "@types/angular-ui-router": "^1.1.35",
     "@types/d3": "^4.4.0",
     "concurrently": "^3.1.0",
     "live-server": "^1.1.0",
