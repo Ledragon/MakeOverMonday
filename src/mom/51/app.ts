@@ -164,3 +164,5 @@ function updateLines(data: Array<any>, propertyName: string) {
 interface IDataFormat extends Array<any> {
     columns: string[];
 }
+
+export var toto = '';
