@@ -1,14 +1,5 @@
 <ul class="menu-list">
-    <li>
-        <a ui-sref="mom48" ui-sref-active="active">48</a>
-    </li>
-    <li>
-        <a ui-sref="mom49" ui-sref-active="active">49</a>
-    </li>
-    <li>
-        <a ui-sref="mom50" ui-sref-active="active">50</a>
-    </li>
-    <li>
-        <a ui-sref="mom51"  ui-sref-active="active">51</a>
+    <li ng-repeat="state in $ctrl.list">
+        <a ui-sref="{{state.name}}" ui-sref-active="active">{{state.displayName}}</a>
     </li>
 </ul>
