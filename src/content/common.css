@@ -1,0 +1,15 @@
+
+/********************************************************/
+ul.menu-list{
+    list-style-image: none;
+}
+ul.menu-list a{
+    color:beige;
+    text-decoration: none;
+}
+ul.menu-list a.active{
+    text-decoration: underline;
+}
+
+/********************************************************/
+
