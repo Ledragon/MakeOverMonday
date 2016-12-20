@@ -5,6 +5,6 @@ export var mom48State = {
     template: '<mom48 class=\"flex-container\"></mom48>',
     url: '/mom48',
     data: {
-        description: 'Which States have the worst drivers?'
+        description: 'Inequality in the United States'
     }
 };
