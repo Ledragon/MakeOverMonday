@@ -7,7 +7,7 @@ export class momListController {
             .map(d => {
                 return {
                     name: d.name,
-                    displayName: d.name.replace('mom', '');
+                    displayName: d.name.replace('mom', '')
                 }
             });
         console.log(this.list);

@@ -1,8 +1,8 @@
 import { interpolateReds, interpolateGreens } from 'd3-scale-chromatic';
-import { scaleSequential, Sequential } from 'd3-scale';
+import { scaleSequential, ScaleSequential } from 'd3';
 
 export class colorScale {
-    private _colorScale: Sequential;
+    private _colorScale: ScaleSequential<any>;
 
     constructor() {
         this._colorScale = scaleSequential(interpolateReds);
