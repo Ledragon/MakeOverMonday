@@ -1,5 +1,8 @@
 import * as angular from 'angular';
 
+import { mom48 } from './48/component';
+import { mom48State } from './48/state';
+
 import { mom49 } from './49/component';
 import { mom49State } from './49/state';
 import { mom50 } from './50/component';
@@ -9,10 +12,12 @@ import { mom51State } from './51/state';
 
 export const momName = angular.module('momModule', [])
     .config(($stateProvider: angular.ui.IStateProvider) => {
+        $stateProvider.state(mom48State);
         $stateProvider.state(mom49State);
         $stateProvider.state(mom50State);
         $stateProvider.state(mom51State);
     })    
+    .component(mom48.name, mom48.component)
     .component(mom49.name, mom49.component)
     .component(mom50.name, mom50.component)
     .component(mom51.name, mom51.component)

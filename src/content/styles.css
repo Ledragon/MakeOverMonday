@@ -40,7 +40,7 @@ ui-view, :host, .flex-container{
     border: 1px solid wheat;
 }
 .series path{
-    stroke:blue;
+    /*stroke:blue;*/
     fill:none;
 }
 .target path{
@@ -57,6 +57,29 @@ ui-view, :host, .flex-container{
     fill:#885A5A;
 }
 
+/******************/
+/* 48             */
+/******************/
 
-
+.bottom90 path{
+    fill: #587D71;
+    /*stroke:red;
+    stroke-width: 1px;*/
+}
+.bottom90 text{
+    fill: #F9ECCC;
+}
+.top10 path{
+    fill: #F9ECCC;
+    /*stroke:blue;
+    stroke-width: 1px;*/
+}
+.top10 text{
+    fill: #587D71;
+}
+.series text{
+    font-size: 1.5em;
+    text-transform: uppercase;
+    text-anchor: middle;
+}
 
