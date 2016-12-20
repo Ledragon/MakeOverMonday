@@ -3,6 +3,8 @@ import * as uiRouter from 'angular-ui-router';
 
 import { momName } from './mom/momModule';
 
-let appModule = angular.module('app', [uiRouter.toString(), momName]);
+import { momList } from './momList/component';
+let appModule = angular.module('app', [uiRouter.toString(), momName])
+    .component(momList.name, momList.component);
 
 export const name = appModule.name;

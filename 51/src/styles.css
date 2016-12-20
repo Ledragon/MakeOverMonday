@@ -30,6 +30,18 @@ html,body{
 .menu-item.highlight{
     border: 1px solid wheat;
 }
+
+/********************************************************/
+ul.menu-list{
+    list-style-image: none;
+}
+
+/********************************************************/
+
+
+
+
+
 .series path{
     stroke:blue;
     fill:none;

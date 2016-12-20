@@ -25,7 +25,13 @@ ui-view, :host, .flex-container{
     flex-grow:1;
 }
 #menu{
-    flex-grow: 0; flex-shrink:0; flex-basis:250px; background: #353A47; color: #F7C1BB;
+    flex-grow: 0; 
+    flex-shrink:0; 
+    flex-basis:250px; 
+}
+.menu{
+    background: #353A47; 
+    color: #F7C1BB;
 }
 .menu-item{
     padding: 10px 15px 0;
