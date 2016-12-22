@@ -10,6 +10,5 @@ export class momListController {
                     displayName: d.name.replace('mom', '')
                 }
             });
-        console.log(this.list);
     }
 }
