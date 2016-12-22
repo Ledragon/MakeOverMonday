@@ -5,7 +5,7 @@ var mom41State = {
     template: '<mom41 class=\"flex-container\"></mom41>',
     url: '/mom41',
     data: {
-        description: 'Inequality in the United States'
+        description: 'Satisfaction with Transport in EU Cities'
     }
 };
 export function register(module: angular.IModule) {

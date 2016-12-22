@@ -5,7 +5,7 @@ export var mom40State = {
     template: '<mom40 class=\"flex-container\"></mom40>',
     url: '/mom40',
     data: {
-        description: 'Inequality in the United States'
+        description: 'Global Peace Index'
     }
 };
 

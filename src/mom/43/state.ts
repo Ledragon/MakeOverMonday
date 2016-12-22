@@ -3,6 +3,6 @@ export var mom43State = {
     template: '<mom43 class=\"flex-container\"></mom43>',
     url: '/mom43',
     data: {
-        description: 'Inequality in the United States'
+        description: 'The Size of the U.S. Debt'
     }
 };

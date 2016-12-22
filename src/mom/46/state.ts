@@ -3,6 +3,6 @@ export var mom46State = {
     template: '<mom46 class=\"flex-container\"></mom46>',
     url: '/mom46',
     data: {
-        description: 'Inequality in the United States'
+        description: 'Top 100 Songs Lyrics'
     }
 };

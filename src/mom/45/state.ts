@@ -3,6 +3,6 @@ export var mom45State = {
     template: '<mom45 class=\"flex-container\"></mom45>',
     url: '/mom45',
     data: {
-        description: 'Inequality in the United States'
+        description: 'TC16: Austin Restaurant Inspection Scores'
     }
 };
