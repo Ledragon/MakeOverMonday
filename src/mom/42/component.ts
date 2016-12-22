@@ -44,13 +44,12 @@ function controller(csvService: ICsvService) {
     q.awaitAll((error, responses) => {
         if (error) {
             console.error(error);
-        } d3.
-            else {
+        } else {
             update(responses);
         }
     });
 
-    function update(responses: Array<any>) {
+    function update(responses: Array<Array<any>>) {
         let mapped = responses[0]
             .map(d => {
                 return {
@@ -63,7 +62,7 @@ function controller(csvService: ICsvService) {
                 }
             })
 
-        let byDate = d3.nest()
+        let byDate = d3.nest<any>()
             .key(d => d.date)
             .entries(mapped);
         stateScale.domain(mapped.map(d => d.state));
@@ -83,7 +82,7 @@ function controller(csvService: ICsvService) {
             }
             d3.select('#date')
                 .select('span')
-                .text(dateFormat(new Date(byDate[i].key));
+                .text(dateFormat(new Date(byDate[i].key)));
             let databound = seriesGroup.selectAll('.series-individual')
                 .data(byDate[i].values);
             let enterSelection = databound
