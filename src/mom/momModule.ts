@@ -11,7 +11,7 @@ import { mom49 } from './49/component';
 import { mom49State } from './49/state';
 import { mom50 } from './50/component';
 import { mom50State } from './50/state';
-import { mom51 } from './51/component';
+import { mom51, mom51Controller } from './51/component';
 import { mom51State } from './51/state';
 
 export const momName = angular.module('momModule', [])
