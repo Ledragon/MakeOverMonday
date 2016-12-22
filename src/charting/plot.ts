@@ -1,31 +1,32 @@
 import * as d3 from 'd3';
 import { IMargins } from './IMargins';
+export class chartContainer {
+    private _chartContainerWidth: number;
+    private _chartContainerHeight: number;
+    private _group: d3.Selection<any, any, any, any>;
 
-var _plotGroup;
-var _plotWidth: number;
-var _plotHeight: number;
+    constructor(container: d3.Selection<any, any, any, any>, width: number, height: number, margins: IMargins) {
+        let chartContainerMargins = margins;
+        let chartContainerGroup = container.append('g')
+            // .classed('chartContainer', true)
+            .attr('transform', `translate(${chartContainerMargins.left},${chartContainerMargins.top})`);
 
-export function plot(selector: string, width: number, height: number, margins: IMargins) {
-    let svg = d3.select(selector)
-        .append('svg')
-        .attr('width', width)
-        .attr('height', height);
+        let chartContainerWidth = width - chartContainerMargins.left - chartContainerMargins.right;
+        let chartContainerHeight = height - chartContainerMargins.top - chartContainerMargins.bottom;
+        this._chartContainerWidth = chartContainerWidth;
+        this._chartContainerHeight = chartContainerHeight;
+        this._group = chartContainerGroup;
+    }
 
-    let plotMargins = margins;
-    let plotGroup = svg.append('g')
-        .classed('plot', true)
-        .attr('transform', `translate(${plotMargins.left},${plotMargins.top})`);
+    group() {
+        return this._group;
+    }
 
-    let plotWidth = width - plotMargins.left - plotMargins.right;
-    let plotHeight = height - plotMargins.top - plotMargins.bottom;
-    _plotWidth = plotWidth;
-    _plotHeight = plotHeight;
-    return plotGroup;
-}
+    width() {
+        return this._chartContainerWidth;
+    }
 
-export function width() {
-    return _plotWidth;
-}
-export function height() {
-    return _plotHeight;
+    height() {
+        return this._chartContainerHeight;
+    }
 }

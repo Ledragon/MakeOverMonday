@@ -1,5 +1,5 @@
 import * as d3 from 'd3';
-import * as plot from '../../charting/plot';
+import * as plot from '../../charting/plotFactory';
 class mom51Controller {
 
     static $inject = ['csvService'];
@@ -22,9 +22,10 @@ class mom51Controller {
             right: 30
         };
 
-        let plotGroup = plot.plot('#chart', width, height, plotMargins);
-        let plotHeight = plot.height();
-        let plotWidth = plot.width();
+        let p = plot.plot('#chart', width, height, plotMargins);
+        let plotGroup = p.group();
+        let plotHeight = p.height();
+        let plotWidth = p.width();
 
         let yScale = d3.scaleLinear()
             .domain([0, 1])
