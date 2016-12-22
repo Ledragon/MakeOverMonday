@@ -82,4 +82,20 @@ ui-view, :host, .flex-container{
     text-transform: uppercase;
     text-anchor: middle;
 }
+/******************/
+/* 42             */
+/******************/
+
+.clinton{
+    fill:lightskyblue;
+}
+.trump{
+    fill:lightcoral;
+}
+.other{
+    fill: lightgreen
+}
+.undecided{
+    fill: lightgray
+}
 
