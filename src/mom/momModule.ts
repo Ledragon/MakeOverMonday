@@ -1,7 +1,7 @@
 import * as angular from 'angular';
 
-import { mom41 } from './41/component';
-import { mom41State } from './41/state';
+import { register as register40 } from './40/state';
+import { register as register41 } from './41/state';
 import { mom42 } from './42/component';
 import { mom42State } from './42/state';
 import { mom43 } from './43/component';
@@ -23,9 +23,12 @@ import { mom50State } from './50/state';
 import { mom51 } from './51/component';
 import { mom51State } from './51/state';
 
-export const momName = angular.module('momModule', [])
+let momModule = angular.module('momModule', []);
+register40(momModule);
+register41(momModule);
+
+export const momName = momModule
     .config(($stateProvider: angular.ui.IStateProvider) => {
-        $stateProvider.state(mom41State);
         $stateProvider.state(mom42State);
         $stateProvider.state(mom43State);
         $stateProvider.state(mom44State);
@@ -37,7 +40,6 @@ export const momName = angular.module('momModule', [])
         $stateProvider.state(mom50State);
         $stateProvider.state(mom51State);
     })    
-    .component(mom41.name, mom41.component)
     .component(mom42.name, mom42.component)
     .component(mom43.name, mom43.component)
     .component(mom44.name, mom44.component)
