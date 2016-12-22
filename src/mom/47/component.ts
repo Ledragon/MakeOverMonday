@@ -1,5 +1,7 @@
 import * as d3 from 'd3';
 import { map } from './map';
+import * as plot from '../../charting/plotFactory';
+import { ICsvService } from '../../services/csvService';
 
 export var mom47 = {
     name: 'mom47',
@@ -9,13 +11,9 @@ export var mom47 = {
     }
 }
 
-function controller() {
+function controller(csvService: ICsvService) {
     let width = 960;
     let height = 480;
-    let svg = d3.select('#chart')
-        .append('svg')
-        .attr('width', width)
-        .attr('height', height);
 
     let plotMargins = {
         top: 0,
@@ -23,22 +21,17 @@ function controller() {
         left: 0,
         right: 0
     };
-    let plotGroup = svg.append('g')
-        .classed('plot', true)
-        .attr('transform', `translate(${plotMargins.left},${plotMargins.top})`);
-
-    let plotWidth = width - plotMargins.left - plotMargins.right;
-    let plotHeight = height - plotMargins.top - plotMargins.bottom;
+    let p = plot.plot('#chart', width, height, plotMargins);
+    let plotGroup = p.group();
+    let plotHeight = p.height();
+    let plotWidth = p.width();
     var myMap = new map(plotGroup, width, height);
+    csvService.read<any>('mom/47/data/data.csv', update);
 
-    d3.csv('mom/47/data/data.csv', (error, data) => {
-        if (error) {
-            console.error(error);
-        } else {
-            let byState = d3.nest<any>()
-                .key(d => d['Origin State'])
-                .entries(data);
-            myMap.update(byState);
-        }
-    });
+    function update(data: Array<any>) {
+        let byState = d3.nest<any>()
+            .key(d => d['Origin State'])
+            .entries(data);
+        myMap.update(byState);
+    }
 }

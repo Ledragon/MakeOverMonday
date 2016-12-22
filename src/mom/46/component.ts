@@ -1,4 +1,6 @@
 import * as d3 from 'd3';
+import * as plot from '../../charting/plotFactory';
+import { ICsvService } from '../../services/csvService';
 
 export var mom46 = {
     name: 'mom46',
@@ -8,28 +10,23 @@ export var mom46 = {
     }
 }
 
-function controller() {
+function controller(csvService: ICsvService) {
 
     const width = 480;
     const height = 780;
-    let svg = d3.select('#chart')
-        .append('svg')
-        .attr('width', width)
-        .attr('height', height);
-
     let plotMargins = {
         top: 50,
         bottom: 30,
         left: 80,
         right: 30
     };
-    let plotGroup = svg.append('g')
-        .classed('plot', true)
-        .attr('transform', `translate(${plotMargins.left},${plotMargins.top})`);
 
-    let plotWidth = width - plotMargins.left - plotMargins.right;
-    let plotHeight = height - plotMargins.top - plotMargins.bottom;
-
+    let p = plot.plot('#chart', width, height, plotMargins);
+    let plotGroup = p.group();
+    let plotHeight = p.height();
+    let plotWidth = p.width();
+    let svg = d3.select('#chart')
+        .select('svg');
     let titleGroup = svg.append('g')
         .classed('title', true)
         .attr('transform', `translate(${width / 2},${30})`)
@@ -60,15 +57,14 @@ function controller() {
 
     const stopWords = ['a', 'able', 'about', 'across', 'after', 'all', 'almost', 'also', 'am', 'among', 'an', 'and', 'any', 'are', 'as', 'at', 'be', 'because', 'been', 'but', 'by', 'can', 'cannot', 'could', 'dear', 'did', 'do', 'does', 'either', 'else', 'ever', 'every', 'for', 'from', 'get', 'got', 'had', 'has', 'have', 'he', 'her', 'hers', 'him', 'his', 'how', 'however', 'i', 'if', 'in', 'into', 'is', 'it', 'its', 'just', 'least', 'let', 'like', 'likely', 'may', 'me', 'might', 'most', 'must', 'my', 'neither', 'no', 'nor', 'not', 'of', 'off', 'often', 'on', 'only', 'or', 'other', 'our', 'own', 'rather', 'said', 'say', 'says', 'she', 'should', 'since', 'so', 'some', 'than', 'that', 'the', 'their', 'them', 'then', 'there', 'these', 'they', 'this', 'tis', 'to', 'too', 'twas', 'us', 'wants', 'was', 'we', 'were', 'what', 'when', 'where', 'which', 'while', 'who', 'whom', 'why', 'will', 'with', 'would', 'yet', 'you', 'your'];
 
-    d3.csv('mom/46/data/Top 100 Songs of All Time Lyrics.csv', (error, data) => {
-        if (error) {
-            console.error(error);
-        } else {
-            let byWord = groupByWord(data);
-            wordsChart.update(byWord);
-            // drawSongs(songsGroup, 0, 0, groupBySong(data));
-        }
-    });
+    const fileName = 'mom/46/data/Top 100 Songs of All Time Lyrics.csv';
+    csvService.read(fileName, update);
+
+    function update(data: Array<any>) {
+        let byWord = groupByWord(data);
+        wordsChart.update(byWord);
+        // drawSongs(songsGroup, 0, 0, groupBySong(data));
+    };
 
     function groupByWord(data: Array<any>): Array<any> {
         let byWord = d3.nest<any>()
@@ -91,7 +87,7 @@ function controller() {
                     artist: d.values[0]['Artist'],
                     words: d.values.map((dd: any) => dd.Word),
                     lyrics: d.values.sort((a: any, b: any) => a['WordCount'] - b['WordCount'])
-                        .map((dd:any) => dd.Word).join(' ')
+                        .map((dd: any) => dd.Word).join(' ')
                 }
             })
             .sort((a, b) => a.rank - b.rank);

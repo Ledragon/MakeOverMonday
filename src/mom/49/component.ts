@@ -35,8 +35,9 @@ function controller(csvService: ICsvService) {
         .x(d => d.x)
         .y(d => d.y)
         .curve(d3.curveStep);
-
-    csvService.read<any>('mom/49/data/data.csv', update, parseFunction);
+    
+    const fileName = 'mom/49/data/data.csv'
+    csvService.read<any>(fileName, update, parseFunction);
 
     function update(data: Array<any>) {
         let byOriign = d3.nest<any>()
