@@ -31,6 +31,7 @@ function controller(csvService: ICsvService) {
 
     const fileName = 'mom/44/data/Scottish Index of Multiple Deprivation 2012.csv';
     csvService.read<any>(fileName, update);
+let radius = 130;
 
     function update(data: Array<any>) {
         let authorities = _.chain(data).map(d => d['Local Authority Name']).uniq().value();
