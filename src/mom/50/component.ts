@@ -5,7 +5,7 @@ export var mom50 = {
     name: 'mom50',
     component: {
         templateUrl: 'mom/50/template.html',
-        controller: () => {
+        controller: (csvService: any) => {
             let width = 800;
             let height = 830;
             let green = '#84B082';
@@ -23,21 +23,8 @@ export var mom50 = {
             let plotHeight = p.height();
             let plotWidth = p.width();
 
-            d3.csv('mom/50/data/data.csv', (d: any) => {
-                return {
-                    state: d.State,
-                    fatalities: parseInt(d['Fatalities Rate per 100 Million Vehicle Miles Traveled']),
-                    failureToObey: parseInt(d['Failure to Obey']),
-                    drunkDriving: parseInt(d['Drunk Driving']),
-                    speeding: parseInt(d['Speeding']),
-                    carelessDriving: parseInt(d['Careless Driving']),
-                    totalScore: parseInt(d['Total Score']),
-                    rank: parseInt(d['Rank']),
-                };
-            }, (error: any, data: Array<any>) => {
-                if (error) {
-                    console.error(error);
-                } else {
+            csvService.read('mom/50/data/data.csv',
+                (data: Array<any>) => {
                     var sorted = data.sort((a, b) => a.rank - b.rank);
                     let statesScale = d3.scaleBand()
                         .domain(sorted.map(d => d.state))
@@ -64,8 +51,8 @@ export var mom50 = {
                         .attr('width', d => scoreScale(d.totalScore))
                         .attr('height', statesScale.bandwidth())
                         .style('fill', d => colorScale(d.totalScore))
-                }
-            });
+                },
+                parseFunction);
 
 
             interface IDataFormat extends Array<any> {
@@ -74,4 +61,17 @@ export var mom50 = {
 
         }
     }
+}
+
+function parseFunction(d: any) {
+    return {
+        state: d.State,
+        fatalities: parseInt(d['Fatalities Rate per 100 Million Vehicle Miles Traveled']),
+        failureToObey: parseInt(d['Failure to Obey']),
+        drunkDriving: parseInt(d['Drunk Driving']),
+        speeding: parseInt(d['Speeding']),
+        carelessDriving: parseInt(d['Careless Driving']),
+        totalScore: parseInt(d['Total Score']),
+        rank: parseInt(d['Rank']),
+    };
 }

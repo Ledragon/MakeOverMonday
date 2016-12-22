@@ -1,10 +1,12 @@
 import * as d3 from 'd3';
 import * as plot from '../../charting/plotFactory';
+import { ICsvService } from '../../services/csvService';
+
 class mom51Controller {
 
     static $inject = ['csvService'];
 
-    constructor(csvService: any) {
+    constructor(csvService: ICsvService) {
         let width = 960;
         let height = 480;
         let green = '#84B082';
@@ -46,9 +48,6 @@ class mom51Controller {
             .call(xAxis);
         let rectGorup = plotGroup.append('g')
             .classed('rects', true);
-        // plotGroup.append('g')
-        //     .classed('series', true)
-        //     .append('path');
         plotGroup.append('g')
             .classed('target', true)
             .append('path');
@@ -58,9 +57,9 @@ class mom51Controller {
             .x(d => xScale(d.date));
 
 
-        csvService.read('mom/51/data/data.csv', (data: any) => {
+        csvService.read<any>('mom/51/data/data.csv', data => {
             let categories = data.columns.splice(2, 20).filter(d => d.indexOf('Target') < 0);
-            console.log(JSON.stringify(categories));
+            // console.log(JSON.stringify(categories));
             let filtered = data
                 .filter(d => d.Month.indexOf('YTD') < 0)
                 .map(d => {
