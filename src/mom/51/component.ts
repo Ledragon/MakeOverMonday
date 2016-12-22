@@ -1,8 +1,9 @@
 import * as d3 from 'd3';
-
-export class mom51Controller {
+import * as plot from '../../charting/plot';
+class mom51Controller {
 
     static $inject = ['csvService'];
+
     constructor(csvService: any) {
         let width = 960;
         let height = 480;
@@ -12,11 +13,7 @@ export class mom51Controller {
             "Rail Fleet Reliability", "Rail On-Time Performance", "Escalator Reliability",
             "Elevator Reliability", "Customer Injury Rate (per 1M passengers)",
             "Employee Injury Rate (per 200K hours)", "Crimes (per 1M passengers)"];
-        let type = ["above", "above", "above", "above", "above", "above", "below", "below", "below"]
-        let svg = d3.select('#chart')
-            .append('svg')
-            .attr('width', width)
-            .attr('height', height);
+        let type = ["above", "above", "above", "above", "above", "above", "below", "below", "below"];
 
         let plotMargins = {
             top: 30,
@@ -24,12 +21,10 @@ export class mom51Controller {
             left: 60,
             right: 30
         };
-        let plotGroup = svg.append('g')
-            .classed('plot', true)
-            .attr('transform', `translate(${plotMargins.left},${plotMargins.top})`);
 
-        let plotWidth = width - plotMargins.left - plotMargins.right;
-        let plotHeight = height - plotMargins.top - plotMargins.bottom;
+        let plotGroup = plot.plot('#chart', width, height, plotMargins);
+        let plotHeight = plot.height();
+        let plotWidth = plot.width();
 
         let yScale = d3.scaleLinear()
             .domain([0, 1])
@@ -85,7 +80,6 @@ export class mom51Controller {
                 })
                 .sort((a, b) => a.date - b.date);
             let dates = filtered.map(d => d.date);
-            // console.log(dates);
             xScale.domain(d3.extent(dates));
             xAxisGroup.call(xAxis);
             d3.select('#menu')
@@ -114,15 +108,10 @@ export class mom51Controller {
                     value: d[propertyName]
                 }
             });
-            // let above = data.filter(d => d[propertyName] >= d[targetName]);
-            // let below = data.filter(d => d[propertyName] <= d[targetName]);
             yScale.domain(d3.extent(data, d => d[propertyName])).nice();
             yAxisGroup.call(yAxis);
             lineGenerator.y(d => yScale(d[propertyName]));
             targetGenerator.y(d => yScale(d[propertyName + ' Target']));
-            // plotGroup.select('.series')
-            //     .select('path')
-            //     .attr('d', lineGenerator(data.filter(d => !!d[propertyName])))
             plotGroup.select('.target')
                 .select('path')
                 .attr('d', targetGenerator(data.filter(d => !!d[propertyName])));
@@ -151,12 +140,6 @@ export class mom51Controller {
                 .attr('y', d => yScale(d.target))
                 .attr('width', 20)
                 .attr('height', d => Math.abs(yScale(d.value) - yScale(d.target)));
-            // areaPlusGenerator
-            //     .y0(d => yScale(d[propertyName + ' Target']))
-            //     .y1(d => d[propertyName] >= d[propertyName + ' Target'] ? yScale(d[propertyName]) : yScale(d[propertyName + ' Target']));
-            // plotGroup.select('.area-plus')
-            //     .select('path')
-            //     .attr('d', areaPlusGenerator(data.filter(d => !!d[propertyName])));
         }
     }
 
