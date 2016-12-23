@@ -5,7 +5,7 @@ var mom35State = {
     template: '<mom35 class=\"flex-container\"></mom35>',
     url: '/mom35',
     data: {
-        description: ''
+        description: 'U.S. Corporate Tax Havens'
     }
 };
 
