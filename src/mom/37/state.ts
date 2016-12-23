@@ -5,7 +5,7 @@ var mom37State = {
     template: '<mom37 class=\"flex-container\"></mom37>',
     url: '/mom37',
     data: {
-        description: ''
+        description: 'Top 20 Container Shipping Companies '
     }
 };
 
