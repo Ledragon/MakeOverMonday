@@ -5,7 +5,7 @@ var mom31State = {
     template: '<mom31 class=\"flex-container\"></mom31>',
     url: '/mom31',
     data: {
-        description: ''
+        description: 'The Many Ways The Media Gets Around Saying Groin'
     }
 };
 
