@@ -13,7 +13,7 @@ let yAxis: any;
 let yAxisGroup: any;
 
 var seriesGroup: d3.Selection<any, any, any, any>;
-var dispatch: any = d3.dispatch('clicked');
+var dispatch = d3.dispatch('clicked');
 
 
 export function submissionsPerWeek(container: d3.Selection<any, any, any, any>, width: number, height: number) {
@@ -112,7 +112,7 @@ function update(data: Array<any>) {
             d3.select(d3.event.currentTarget)
                 .style('fill', '#e5f5f9')
                 .style('stroke', '#2ca25f');
-            dispatch.clicked(d);
+            dispatch.call('clicked',this, d);
 
         });
 }

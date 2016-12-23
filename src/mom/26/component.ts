@@ -98,15 +98,19 @@ function controller(csvService: ICsvService) {
             var enter = bound.enter()
                 .append('div')
                 .classed('miniature', true)
-                .append('a');
+                .append('a')
+
+                .attr('target', '_blank')
+                .attr('href', d => d.imageUrl);
             bound.select('a')
                 .attr('target', '_blank')
                 .attr('href', d => d.imageUrl);
-            enter.append('span');
+            enter.append('span').text(d => d.name);
             bound.select('span').text(d => d.name);
 
             enter.append('div')
                 .classed('thumbnail', true)
+                .style('background-image', d => `url("${d.imageUrl}")`)
             bound.select('.thumbnail')
                 .style('background-image', d => `url("${d.imageUrl}")`)
         });
