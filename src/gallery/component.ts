@@ -19,6 +19,5 @@ function controller($state: angular.ui.IStateService) {
                     description: d.data.description
                 }
             });
-        console.log(list)
     }
 }
