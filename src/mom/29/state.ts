@@ -5,7 +5,7 @@ var mom29State = {
     template: '<mom29 class=\"flex-container\"></mom29>',
     url: '/mom29',
     data: {
-        description: ''
+        description: 'The Next To Die'
     }
 };
 

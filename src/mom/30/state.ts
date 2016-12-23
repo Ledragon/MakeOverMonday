@@ -5,7 +5,7 @@ var mom30State = {
     template: '<mom30 class=\"flex-container\"></mom30>',
     url: '/mom30',
     data: {
-        description: ''
+        description: 'Bermuda Census'
     }
 };
 
