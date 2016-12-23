@@ -1,16 +1,16 @@
-import {Selection} from 'd3-selection';
-import { scaleLinear, Linear} from 'd3-scale';
+import { Selection } from 'd3-selection';
+import { scaleLinear, ScaleLinear } from 'd3-scale';
 import { axisLeft, Axis } from 'd3-axis';
 import { extent } from 'd3-array';
 import { dataFormat } from './models/dataFormat';
 
 
 export class yAxis {
-    private _scale: Linear<number>;
-    private _group: Selection;
-    private _axis: Axis;
+    private _scale: ScaleLinear<any, any>;
+    private _group: Selection<any, any, any, any>;
+    private _axis: Axis<any>;
 
-    constructor(container: Selection, private _width: number, private _height: number) {
+    constructor(container: Selection<any, any, any, any>, private _width: number, private _height: number) {
         var scale = scaleLinear<number>()
             .range([this._height, 0]);
         var axis = axisLeft(scale);
@@ -30,7 +30,7 @@ export class yAxis {
         this._group.call(this._axis);
     }
 
-    scale(): Linear<number> {
+    scale(): ScaleLinear<any, any> {
         return this._scale;
     }
 }

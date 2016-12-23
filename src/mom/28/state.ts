@@ -5,7 +5,7 @@ var mom28State = {
     template: '<mom28 class=\"flex-container\"></mom28>',
     url: '/mom28',
     data: {
-        description: ''
+        description: 'What Lawmakers Spoke About After the Orlando Mass Shooting'
     }
 };
 

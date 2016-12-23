@@ -2,6 +2,8 @@ import * as d3 from 'd3';
 import * as plot from '../../charting/plotFactory';
 import { ICsvService } from '../../services/csvService';
 
+import { chart } from './chart';
+import { dataFormat } from './models/dataFormat';
 export var mom28 = {
     name: 'mom28',
     component: {
@@ -11,25 +13,19 @@ export var mom28 = {
 }
 
 function controller(csvService: ICsvService) {
-    const width = 960;
-    const height = 480;
-    let plotMargins = {
-        top: 50,
-        bottom: 30,
-        left: 80,
-        right: 30
-    };
+    var width = 1400;
+    var height = 600;
+    var div = d3.select('#chart');
+    var container = div.append('svg')
+        .attr('width', width)
+        .attr('height', height);
+    var c = new chart(container, width, height);
 
-    let p = plot.plot('#chart', width, height, plotMargins);
-    let plotGroup = p.group();
-    let plotHeight = p.height();
-    let plotWidth = p.width();
-
-    
-    const fileName = 'mom/28/data/data.csv';
+    const fileName = 'mom/28/data/Orlando Mass Shooting.csv';
     csvService.read<any>(fileName, update);
 
     function update(data: Array<any>) {
-        console.log(data);
+        c.update(data);
+
     };
 }
