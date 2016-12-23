@@ -5,7 +5,7 @@ var mom33State = {
     template: '<mom33 class=\"flex-container\"></mom33>',
     url: '/mom33',
     data: {
-        description: ''
+        description: 'Make-up of UK Beauty'
     }
 };
 

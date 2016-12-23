@@ -117,3 +117,10 @@ ui-view, :host, .flex-container{
 .legend text{
     font-size:10px;
 }
+
+/******************/
+/* 32             */
+/******************/
+.legend-item text{
+    font-size:11px;
+}
