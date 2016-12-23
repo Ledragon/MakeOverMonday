@@ -5,7 +5,7 @@ var mom26State = {
     template: '<mom26 class=\"flex-container\"></mom26>',
     url: '/mom26',
     data: {
-        description: ''
+        description: 'Makeover Monday Dashboard Design Contest'
     }
 };
 
