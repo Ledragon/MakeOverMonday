@@ -49,3 +49,4 @@ merge.ps1
 src/data/build
 *.log
 typings
+dist
