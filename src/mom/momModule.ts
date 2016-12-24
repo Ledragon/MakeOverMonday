@@ -1,5 +1,7 @@
 import * as angular from 'angular';
 
+import { register as register23 } from './23/state';
+import { register as register24 } from './24/state';
 import { register as register25 } from './25/state';
 import { register as register26 } from './26/state';
 import { register as register28 } from './28/state';
@@ -38,6 +40,8 @@ import { mom51 } from './51/component';
 import { mom51State } from './51/state';
 
 let momModule = angular.module('momModule', []);
+register23(momModule);
+register24(momModule);
 register25(momModule);
 register26(momModule);
 register28(momModule);
