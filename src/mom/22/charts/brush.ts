@@ -51,12 +51,15 @@ export class brush {
             .classed('brush', true);
         this._brushScale = d3.scaleLinear()
             .range([0, this._width - this._marginLeft - this._marginRight]);
-        this._brush = d3.brush()
+        this._brush = d3.brushX()
+
             // .x(this._brushScale)
-            .on('brush', (d, i) => {
-                if (!this._brush.empty()) {
-                    this._dispatch.call('brushed', this, this._brush.extent());
-                }
+            .on('brush end', (d, i) => {
+                var s = d3.event.selection;
+                console.log(s)
+                // if (!this._brush.empty()) {
+                this._dispatch.call('brushed', this, s);
+                // }
             });
     }
 

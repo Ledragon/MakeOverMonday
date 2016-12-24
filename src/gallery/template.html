@@ -1,14 +1,16 @@
 <div style="flex-grow:1; display: flex; flex-wrap:wrap; overflow-y:auto;margin:10px;">
     <div style="flex-basis: 100px; flex-grow:0; flex-shrink:0;margin:10px;height: 180px;" ng-repeat="item in $ctrl.list">
+
         <div style= "border:1px solid lightGray;">
-            <div style="padding: 5px; text-overflow: ellipsis">
-                {{item.displayName}}: {{item.description}}
-            </div>
-            <div>
-                <a ui-sref="{{item.name}}">
+            <a ui-sref="{{item.name}}">
+                
+                <div style="padding: 5px; text-overflow: ellipsis">
+                    {{item.displayName}}: {{item.description}}
+                </div>
+                <div>
                     <img ng-src="{{item.url}}" style="width: 150px; height:150px;"/>
-                </a>
-            </div>
+                </div>
+            </a>
         </div>
     </div>  
 </div>

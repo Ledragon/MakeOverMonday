@@ -81,12 +81,13 @@ export class histogram {
             .attr('x', 0)
             .attr('y', 0)
             .attr('height', 5)
+            .style('fill', '#A6CFD5')
             .transition()
             .attr('width', (d: any) => {
                     return this._xScale(d.length)
                 }
             )
-            .style('fill', '#A6CFD5');
+            ;
         dataBound
             .attr('transform', (d: any) => `translate(${0},${this._yScale(d.x0)})`)
             .select('rect')

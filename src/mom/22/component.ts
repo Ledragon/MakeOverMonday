@@ -23,12 +23,12 @@ function controller(csvService: ICsvService) {
         .append('svg')
         .attr('id', 'histogram')
         .style('border', '1px black solid');
-    
+
     d3.select('#chart')
         .append('svg')
         .attr('id', 'map')
         .style('border', '1px black solid');
-    
+
     d3.select('#chart')
         .append('svg')
         .attr('id', 'other')
@@ -47,9 +47,17 @@ function controller(csvService: ICsvService) {
     var perIndustry = new appwomenPerIndustry('other', width, height);
     var brush = new appBrush('brush', 1606, 50);
 
-
     const fileName = 'mom/22/data/History of Famous People.csv';
-    csvService.read<any>(fileName, update);
+    csvService.read<any>(fileName, data => {
+
+        brush.dispatch().on('brushed', extent => {
+            var filtered = data.filter(function (d) {
+                return +d.Birthyear >= extent[0] && +d.Birthyear <= extent[1];
+            });
+            update(filtered);
+        })
+        update(data);
+    });
 
     function update(data: Array<any>) {
         brush.update(data);
