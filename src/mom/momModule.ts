@@ -56,7 +56,8 @@ register40(momModule);
 register41(momModule);
 
 export const momName = momModule
-    .config(($stateProvider: angular.ui.IStateProvider) => {
+    .config(($stateProvider: angular.ui.IStateProvider, $urlRouterProvider: angular.ui.IUrlRouterProvider) => {
+        $urlRouterProvider.otherwise('gallery');
         $stateProvider.state(mom42State);
         $stateProvider.state(mom43State);
         $stateProvider.state(mom44State);
