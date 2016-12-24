@@ -3,9 +3,16 @@
         <h1>Makeover Monday {{$ctrl.name}}</h1>
         <h2>{{$ctrl.description}}</h2>
     </div>
-    <div style="float:right;background: rgba(255,255,255,0.1)">  
-        <a ui-sref="gallery" >
-            <img src="http://www.freeiconspng.com/uploads/photo-album-icon-png-14.png" alt="Gallery" style="width:120px; height:120px;">
-        </a>
+    <div class="heading-buttons">  
+        <div class="heading-button">
+            <a ui-sref="gallery"  title="View gallery">
+                <i class="fa fa-2x fa-picture-o" style="color:white"></i>
+            </a>
+        </div>
+        <div class="heading-button">
+            <a href="https://github.com/Ledragon/MakeOverMonday" target="_blank" title="View source on GitHub">
+                <i class="fa fa-2x fa-github" style="color:white"></i>
+            </a>
+        </div>
     </div>
 </div>
