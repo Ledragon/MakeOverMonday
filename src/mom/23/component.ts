@@ -47,7 +47,6 @@ function controller(csvService: ICsvService) {
         .text('Facebook energy consumption');
 
 
-
     const fileName = 'mom/23/data/Facebook Energy Sources.csv';
     csvService.read<any>(fileName, update, parseFunction);
 
@@ -55,7 +54,7 @@ function controller(csvService: ICsvService) {
         console.log(data);
         var test = d3.nest<any>()
             .key((d) => d.year)
-            .entries(data);
+            .entries(data.sort((a,b)=>a.year-b.year));
 
         var x0 = d3.scaleBand()
             .domain(test.map(d => d.key))
