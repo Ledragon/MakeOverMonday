@@ -66,7 +66,7 @@ export class viewPerYearOfBirth {
     }
 
     private initPathGenerator(container: d3.Selection<any, any, any, any>) {
-        this._pathGenerator = d3.line()
+        this._pathGenerator = d3.line<any>()
             .x(d => this._scale(d.Birthyear))
             .y(d => this._yScale(+(d['Total Page Views'].replace(/,/g, ''))))
         // .interpolate('basis');

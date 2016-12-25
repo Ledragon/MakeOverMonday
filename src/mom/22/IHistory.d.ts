@@ -27,4 +27,5 @@ export interface IHistory {
     "Page Views Non English": any;
     "Std Dev Page Views": any;
     "Total Page Views": any;
+    [key: string]: any;
 }

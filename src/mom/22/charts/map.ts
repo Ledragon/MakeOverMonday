@@ -37,7 +37,7 @@ export class map {
             .translate([width / 2, height / 2])
             .scale(height / 6);
         var pathGenerator = d3.geoPath().projection(projection);
-        d3.json(mapFile, (error, geo) => {
+        d3.json(mapFile, (error, geo: any) => {
             if (error) {
                 console.error(error);
             } else {
@@ -51,7 +51,7 @@ export class map {
                     this._countries
                         .style('fill', (d, i) => {
                             var lowerCase = d.properties.name.toLowerCase();
-                            var index = this._data.find(el => el.key.toLowerCase() === lowerCase);
+                            var index = this._data.find((el: any) => el.key.toLowerCase() === lowerCase);
                             var value = index ? index.values.length : 0;
                             var c = this._color(value);
                             return c;
@@ -61,7 +61,7 @@ export class map {
         });
     }
 
-    private initLegend(container: d3.Selection<any,any,any,any>, width: number, height: number) {
+    private initLegend(container: d3.Selection<any, any, any, any>, width: number, height: number) {
         this._legendGroup = container.append('g')
             .classed('legend', true)
             .attr('transform', `translate(10,${height - 40})`);
@@ -75,11 +75,11 @@ export class map {
             .data(range)
             .enter()
             .append('rect')
-                .attr('x', (d, i) => i * 10,)
-                .attr('y', 0,)
-                .attr('width', 10,)
-                .attr('height', 10)
-            .style('fill' d => this._color(d));
+            .attr('x', (d, i) => i * 10, )
+            .attr('y', 0, )
+            .attr('width', 10, )
+            .attr('height', 10)
+            .style('fill', (d: any) => this._color(d));
         var legnedText = this._legendGroup.append('g')
             .attr('transform', 'translate(0,25)');
         legnedText.append('text')
@@ -88,13 +88,13 @@ export class map {
 
         legnedText.append('text')
             .classed('last', true)
-            .attr('x',range.length * 10)
+            .attr('x', range.length * 10)
             .style('text-anchor', 'middle');
     }
 
     update(data: IHistory[]) {
         var key = 'Country Name';
-        var nested = d3.nest<any>()
+        var nested = <NestedArray<any>>d3.nest<any>()
             .key(d => d[key])
             .entries(data.filter(d => d[key] && d[key] !== "Unknown"));
         this._data = nested;
@@ -106,12 +106,16 @@ export class map {
             this._countries
                 .style('fill', (d, i) => {
                     var lowerCase = d.properties.name.toLowerCase();
-                    var index = nested.find(el => el.key.toLowerCase() === lowerCase);
+                    var index = nested.find((el: any) => el.key.toLowerCase() === lowerCase);
                     var value = index ? index.values.length : 0;
                     var c = this._color(value);
                     return c;
                 });
         }
     }
+}
+
+interface NestedArray<T> extends Array<T> {
+    find: (predicate: (el: T) => boolean) => T;
 }
 

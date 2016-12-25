@@ -48,7 +48,7 @@ export class histogram {
             .range([0, height - this._marginTop - this._marginBottom]);
 
         this._yAxis = d3.axisLeft(this._yScale)
-            // .tickFormat(d3.timeFormat('YYYY'));
+        // .tickFormat(d3.timeFormat('YYYY'));
         this._yAxisGroup = container.append('g')
             .classed('axis', true);
     }
@@ -62,8 +62,8 @@ export class histogram {
         var yearsExtent = d3.extent(data, d => +d.Birthyear);
         // var delta = Math.ceil((yearsExtent[1] - yearsExtent[0]) / 100);
         this._histogram
-            // .bins(delta)
-            // .thresholds(yearsExtent);
+        // .bins(delta)
+        // .thresholds(yearsExtent);
         var split = this._histogram(data);
         console.log(split)
         this._xScale.domain([0, d3.max(split, d => d.length)]);
@@ -76,7 +76,7 @@ export class histogram {
         dataBound.enter()
             .append('g')
             .classed('bin', true)
-            .attr('transform', (d: any) => `translate(${0},${this._yScale(d3.min(d, dd=>+dd.Birthyear))})`)
+            .attr('transform', (d: any) => `translate(${0},${this._yScale(d3.min(d, (dd: any) => +dd.Birthyear))})`)
             .append('rect')
             .attr('x', 0)
             .attr('y', 0)
@@ -84,17 +84,15 @@ export class histogram {
             .style('fill', '#A6CFD5')
             .transition()
             .attr('width', (d: any) => {
-                    return this._xScale(d.length)
-                }
-            )
-            ;
+                return this._xScale(d.length)
+            });
         dataBound
             .attr('transform', (d: any) => `translate(${0},${this._yScale(d.x0)})`)
             .select('rect')
             .transition()
             .attr('width', (d: any) => {
-                    return this._xScale(d.length)
-                }
+                return this._xScale(d.length)
+            }
             );
     }
 }
