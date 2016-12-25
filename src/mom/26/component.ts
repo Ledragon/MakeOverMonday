@@ -35,7 +35,7 @@ function controller(csvService: ICsvService) {
         .style('width', '300px')
         .append('div')
 
-    let parseFunction = (d) => {
+    let parseFunction = (d: any) => {
         return {
             pinterestBoard: d['Pinterest Board'],
             pinboardUrl: d['Pinboard URL'],
@@ -63,18 +63,19 @@ function controller(csvService: ICsvService) {
 
         statistics.append('h2')
             .text('Participants');
-        var byName = d3.nest()
+        var byName = d3.nest<any>()
             .key(d => d.name)
             .entries(data);
         statistics.append('span')
             .text(byName.length);
 
-        var sorted = byName.map(d => {
-            return {
-                name: d.key,
-                submissions: d.values.length
-            };
-        })
+        var sorted = byName
+            .map(d => {
+                return {
+                    name: d.key,
+                    submissions: d.values.length
+                };
+            })
             .sort((a, b) => d3.descending(a.submissions, b.submissions))
             .splice(0, 20);
         var subWidth = 300;
@@ -85,12 +86,11 @@ function controller(csvService: ICsvService) {
 
         submissionsByPerson(svg, sorted, subWidth, subHeight);
 
-        spw.dispatch.on('clicked', d => {
-            console.log(d)
+        spw.dispatch.on('clicked', (d: any) => {
             d3.select('#weekNumber')
                 .select('h4')
                 .text(`Week ${d.key} - ${d.values.length} submissions`);
-            var sorted = d.values.sort((a, b) => d3.ascending(a.name, b.name));
+            var sorted = <Array<any>>d.values.sort((a: any, b: any) => d3.ascending(a.name, b.name));
             var bound = d3.select('#weeks')
                 .selectAll('div')
                 .data(sorted);
@@ -101,10 +101,10 @@ function controller(csvService: ICsvService) {
                 .append('a')
 
                 .attr('target', '_blank')
-                .attr('href', d => d.imageUrl);
+                .attr('href', (d:any) => d.imageUrl);
             bound.select('a')
                 .attr('target', '_blank')
-                .attr('href', d => d.imageUrl);
+                .attr('href', (d:any) => d.imageUrl);
             enter.append('span').text(d => d.name);
             bound.select('span').text(d => d.name);
 

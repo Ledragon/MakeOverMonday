@@ -18,7 +18,7 @@ function controller(csvService: ICsvService) {
     var census = createChart('chart', 800, 600, true);
     var menuContainer = d3.select('#menu');
 
-    let parseFunction = d => {
+    let parseFunction = (d:any) => {
         return {
             category: d['Category'],
             year: +d['Year'],
