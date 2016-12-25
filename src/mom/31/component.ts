@@ -64,60 +64,64 @@ function controller(csvService: ICsvService) {
     const fileName = 'mom/31/data/Not Saying Groin.csv';
     csvService.read<any>(fileName, update);
 
-    function update(data: Array<any>) {
+    function update(data: IDataFormat<any>) {
         var labels = data.columns.filter(d => d !== 'Phrase' && d !== 'Total');
 
-            var phrases = data.map(d => d['Phrase']);
-            let byPhrase = d3.nest()
-                .key(d => d['Phrase'])
-                .entries(data)
-                .map(d => {
-                    let tmp = d.values;
-                    let result = [];
-                    for (var key in tmp[0]) {
-                        result.push({
-                            key: key,
-                            value: +tmp[0][key]
-                        })
-                    }
-                    return {
-                        key: d.key,
-                        values: result.filter(d => labels.indexOf(d.key) >= 0)
-                    }
-                });
-            var values = [].concat.apply([], byPhrase.map(d => d.values)).map(d => d.value);
-            seriesScale.domain(d3.extent(values));
-            console.log(values);
-            xScale.domain(labels);
-            xAxisGroup.call(xAxis);
-            yScale.domain(phrases);
-            yAxisGroup.call(yAxis);
-            var dataBound = seriesGroup.selectAll('.seriesGroup')
-                .data(byPhrase);
-            dataBound
-                .exit()
-                .remove();
-            let enterSelection = dataBound
-                .enter()
-                .append('g')
-                .classed('seriesGroup', true)
-                .attr('transform', (d, i) => {
-                    return `translate(${0},${yScale(d.key)+yScale.bandwidth() / 2})`
-                });
-            enterSelection.append('line')
-                .classed('gridline', true)
-                .attr('x1', 0)
-                .attr('x2', plotWidth)
-                // .attr('y1', yScale.bandwidth() / 2)
-                // .attr('y2', yScale.bandwidth() / 2)
-            enterSelection
-                .selectAll('g')
-                .data(d => d.values)
-                .enter()
-                .append('circle')
-                .style('fill', '#824670')
-                .attr('cx', d => xScale(d.key) + xScale.bandwidth() / 2)
-                // .attr('cy', yScale.bandwidth() / 2)
-                .attr('r', d => seriesScale(d.value))
+        var phrases = data.map(d => d['Phrase']);
+        let byPhrase = d3.nest<any>()
+            .key(d => d['Phrase'])
+            .entries(data)
+            .map(d => {
+                let tmp = d.values;
+                let result = [];
+                for (var key in tmp[0]) {
+                    result.push({
+                        key: key,
+                        value: +tmp[0][key]
+                    })
+                }
+                return {
+                    key: d.key,
+                    values: result.filter(d => labels.indexOf(d.key) >= 0)
+                }
+            });
+        var values = [].concat.apply([], byPhrase.map(d => d.values)).map((d: any) => d.value);
+        seriesScale.domain(d3.extent(values));
+        console.log(values);
+        xScale.domain(labels);
+        xAxisGroup.call(xAxis);
+        yScale.domain(phrases);
+        yAxisGroup.call(yAxis);
+        var dataBound = seriesGroup.selectAll('.seriesGroup')
+            .data(byPhrase);
+        dataBound
+            .exit()
+            .remove();
+        let enterSelection = dataBound
+            .enter()
+            .append('g')
+            .classed('seriesGroup', true)
+            .attr('transform', (d, i) => {
+                return `translate(${0},${yScale(d.key) + yScale.bandwidth() / 2})`
+            });
+        enterSelection.append('line')
+            .classed('gridline', true)
+            .attr('x1', 0)
+            .attr('x2', plotWidth)
+        // .attr('y1', yScale.bandwidth() / 2)
+        // .attr('y2', yScale.bandwidth() / 2)
+        enterSelection
+            .selectAll('g')
+            .data(d => d.values)
+            .enter()
+            .append('circle')
+            .style('fill', '#824670')
+            .attr('cx', d => xScale(d.key) + xScale.bandwidth() / 2)
+            // .attr('cy', yScale.bandwidth() / 2)
+            .attr('r', d => seriesScale(d.value))
     };
+}
+
+interface IDataFormat<T> extends Array<T> {
+    columns: Array<string>;
 }
