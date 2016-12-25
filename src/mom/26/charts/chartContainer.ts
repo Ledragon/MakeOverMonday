@@ -1,7 +1,7 @@
-
-var _width,
-    _height;
-export function chartContainer(container, width, height, margin, classed) {
+import { IMargins } from '../../../charting/IMargins';
+var _width: number;
+var _height: number;
+export function chartContainer(container: d3.Selection<any, any, any, any>, width: number, height: number, margin: IMargins, classed: string) {
     var group = container
         .append('g')
         .attr('transform', `translate(${margin.left},${margin.top})`)

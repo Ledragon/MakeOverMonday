@@ -110,4 +110,3 @@ function parseFunction(d: any) {
         '2005': parseFloat(d['2005']),
     };
 }
-}

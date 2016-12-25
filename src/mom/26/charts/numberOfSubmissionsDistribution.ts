@@ -112,6 +112,6 @@ function update(data: Array<any>) {
         .attr('x', -10)
         .attr('y', 0)
         .attr('width', 20)
-        .attr('height', d => plotHeight - yScale(d.values.length))
-        .style('fill', d => colorScale(d.values.length));
+        .attr('height', (d:any) => plotHeight - yScale(d.values.length))
+        .style('fill', (d:any) => colorScale(d.values.length));
 }
