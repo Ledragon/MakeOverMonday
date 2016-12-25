@@ -62,7 +62,7 @@ function controller(csvService: ICsvService) {
                 }
             })
 
-        let byDate = d3.nest<any>()
+        let byDate: { key: string; value: any, values: Array<any> }[] = d3.nest<any, any>()
             .key(d => d.date)
             .entries(mapped);
         stateScale.domain(mapped.map(d => d.state));
