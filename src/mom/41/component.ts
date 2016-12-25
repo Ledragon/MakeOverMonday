@@ -46,16 +46,6 @@ function controller(csvService: ICsvService) {
         let c2 = svg2.append('g')
             .classed('c2015', true)
             .attr('transform', `translate(${0},${0})`);
-        // c1.append('text')
-        //     .style('text-anchor', 'middle')
-        //     .attr('x', 200)
-        //     .attr('y', 0)
-        //     .text('Total')
-        // c1.append('text')
-        //     .style('text-anchor', 'middle')
-        //     .attr('x', 300)
-        //     .attr('y', 0)
-        //     .text('Very')
         let scale = d3.scaleLinear()
             .range([0, 600])
             .domain([0, 1]);
@@ -74,8 +64,8 @@ function controller(csvService: ICsvService) {
 
 function mapData(data: Array<any>) {
 
-    let mapped: Array<any> = data.map(d => {
-        let total = d3.sum(d.values, v => parseFloat(v.TOTAL));
+    let mapped: Array<any> = data.map((d: { values: Array<any>, key: string }) => {
+        let total = d3.sum(d.values, (v: any) => parseFloat(v.TOTAL));
         return {
             country: d.key,
             verySatisfied: d3.sum(d.values, v => parseFloat(v['Very satisfied'])) / total,

@@ -25,15 +25,12 @@ function controller(csvService: ICsvService) {
     var rank = new countryRank(countryRankSvg, w, h);
 
 
-    let parseFunction = (d) => {
+    let parseFunction = (d: any) => {
         return {
             edition: +d.Edition,
             rank: +d.Rank,
             country: d.Country,
             countryGroup: d['Country Group'],
-            // gold: +d.Gold,
-            // silver: +d.Silver,
-            // bronze: +d.Bronze,
             total: d.Total ? +d.Total : 0
         };
     }

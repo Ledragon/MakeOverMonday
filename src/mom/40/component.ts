@@ -63,7 +63,7 @@ function controller(csvService: ICsvService) {
                 if (error) {
                     console.error(error);
                 } else {
-                    let byYear = d3.nest()
+                    let byYear = d3.nest<any>()
                         .key(d => d.Year)
                         .entries(csvData);
                     let years = byYear.map(d => +d.key);
@@ -75,7 +75,7 @@ function controller(csvService: ICsvService) {
                         .enter()
                         .append('path')
                         .classed('country', true)
-                        .attr('d', d => pathGenerator(d));
+                        .attr('d', (d:any) => pathGenerator(d));
 
                     let i = 0;
                     setInterval(() => {
@@ -93,7 +93,7 @@ function controller(csvService: ICsvService) {
             var first = kvp.values;
             colorScale.domain(d3.extent(first, f => parseFloat(f.Score)));
             chartSvg.selectAll('path')
-                .style('fill', d => {
+                .style('fill', (d:any) => {
                     let index = first.filter(f => f.Code === d.properties.ADM0_A3);
                     if (index.length > 0) {
                         let found = index[0];

@@ -1,6 +1,7 @@
 import * as d3 from 'd3';
 import * as plot from '../../charting/plotFactory';
 import { ICsvService } from '../../services/csvService';
+import { IDataFormat } from '../../models/IDataFormat';
 import { timeChart } from './charts/timeline';
 import { schemeDark2 as color } from 'd3-scale-chromatic';
 
@@ -32,7 +33,7 @@ function controller(csvService: ICsvService) {
     const fileName = 'mom/39/data/data.csv';
     csvService.read<any>(fileName, update);
 
-    function update(data: any) {
+    function update(data: IDataFormat<any>) {
         let years = data.columns.splice(3, data.columns.length - 1).map(d => +d);
         let mapped = data.map(d => {
             return {
@@ -44,7 +45,7 @@ function controller(csvService: ICsvService) {
                     };
                 })
             }
-        })
+        });
         var selected: Array<any> = [];
         d3.select('.left-menu')
             .selectAll('.country')
@@ -52,7 +53,7 @@ function controller(csvService: ICsvService) {
             .enter()
             .append('div')
             .classed('country', true)
-            .on('click', function (d) {
+            .on('click', function (d:any) {
                 let sel = d3.select(this);
                 // let hasClass = sel.classed('highlight');
                 // sel.classed('highlight', !hasClass);

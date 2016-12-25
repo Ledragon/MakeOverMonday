@@ -32,7 +32,7 @@ function controller(csvService: ICsvService) {
 
     function update(data: rawDataObject) {
         timelineChart.clickCallback(year => {
-            var mapped = data.map(d => {
+            var mapped = data.map((d:any) => {
                 return {
                     name: d.Country,
                     value: +d[year]

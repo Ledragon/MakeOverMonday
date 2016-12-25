@@ -1,6 +1,7 @@
 import * as d3 from 'd3';
 import * as plot from '../../charting/plotFactory';
 import { ICsvService } from '../../services/csvService';
+import { IDataFormat } from '../../models/IDataFormat';
 
 import { statistics } from './charts/statistics';
 import { chart } from './charts/chart';
@@ -47,7 +48,7 @@ function controller(csvService: ICsvService) {
     const fileName = 'mom/38/data/Data Breaches.csv';
     csvService.read<any>(fileName, update, parseFUnction);
 
-    function update(data: Array<any>) {
+    function update(data: IDataFormat<any>) {
         var stats = new statistics(d3.select('#statistics'), 200, 500);
             stats.update(data);
 

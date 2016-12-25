@@ -24,7 +24,7 @@ function controller(csvService: ICsvService) {
         .attr('height', h);
     let c = new chart(svg, w, h);
 
-    let parseFunction = (d) => {
+    let parseFunction = (d:any) => {
         return {
             category: d.Category,
             product: d.Product,
