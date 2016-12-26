@@ -109,10 +109,10 @@ function drawPlot(container: any, width: number, height: number, current: any) {
         .attr('transform', (d: any) => `translate(${xScale(d.x0)},${0})`);
     var rect = enterSelection.append('rect')
         .attr('x', 0)
-        .attr('y', d => yScale(d.length))
+        .attr('y', (d: any) => yScale(d.length))
         .attr('width', 5)
-        .attr('height', d => plotHeight - yScale(d.length))
-        .style('fill', d => interpolateGreens(colorScale(d.length)));
+        .attr('height', (d: any) => plotHeight - yScale(d.length))
+        .style('fill', (d: any) => interpolateGreens(colorScale(d.length)));
 
 }
 

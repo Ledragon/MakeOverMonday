@@ -1,20 +1,24 @@
 import {Selection} from 'd3-selection';
-import { scaleLinear, Linear} from 'd3-scale';
+import { scaleLinear, ScaleLinear} from 'd3-scale';
 import { axisLeft, Axis } from 'd3-axis';
 import { max } from 'd3-array';
 import { nest } from 'd3-collection';
-import { dataFormat } from '../typings-custom/dataFormat';
+
+import { dataFormat } from '../dataFormat';
+import { IDataFormat } from '../../../models/IDataFormat';
+
 
 export class yAxis {
-    private _scale: Linear<number>;
-    private _group: Selection;
-    private _axis: Axis;
+    private _scale: ScaleLinear<number,number>;
+    private _group: Selection<any, any, any, any>;
+
+    private _axis: Axis<number>;
     private _valueFunction = (d: dataFormat) => d.total;
 
-    constructor(container: Selection, private _width: number, private _height: number) {
+    constructor(container: Selection<any, any, any, any>, private _width: number, private _height: number) {
         var scale = scaleLinear<number>()
             .range([this._height, 0]);
-        var axis = axisLeft(scale);
+        var axis = axisLeft<number>(scale);
         var axisGroup = container.append('g')
             .classed('horizontal axis', true)
             .attr('transform', `translate(${0},${0})`)
@@ -35,7 +39,7 @@ export class yAxis {
         this._group.call(this._axis);
     }
 
-    scale(): Linear<number> {
+    scale(): ScaleLinear<number, number> {
         return this._scale;
     }
 }

@@ -107,7 +107,7 @@ export class chart {
             .text(d => d.key)
         var bandEnter = enterSelection
             .selectAll('.band')
-            .data(d => d.values)
+            .data(d => <Array<any>> d.values)
             .enter();
         const bandGroups = bandEnter
             .append('g')

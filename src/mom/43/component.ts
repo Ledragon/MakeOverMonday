@@ -23,7 +23,6 @@ function controller(csvService: ICsvService) {
 
         let mapped = data.map(d => parseFloat(d.Debt));
         let p = d3.pie()(mapped);
-        console.log(p);
         let arcGenerator = d3.arc()
             .innerRadius(0)
             .outerRadius(radius);
