@@ -1,17 +1,17 @@
-import {Selection} from 'd3-selection';
-import {  scaleTime, Time} from 'd3-scale';
+import { Selection } from 'd3-selection';
+import { scaleTime, ScaleTime } from 'd3-scale';
 import { axisBottom, Axis } from 'd3-axis';
 import { timeParse } from 'd3-time-format';
 import { extent } from 'd3-array';
-import { dataFormat } from '../typings-custom/dataFormat';
+import { IDataFormat } from '../../../models/IDataFormat';
 
 
 export class xAxis {
-    private _scale: Time;
-    private _group: Selection;
-    private _axis: Axis;
+    private _scale: ScaleTime<any, any>;
+    private _group: Selection<any, any, any, any>;
+    private _axis: Axis<any>;
 
-    constructor(container: Selection, private _width: number, private _height: number) {
+    constructor(container: Selection<any, any, any, any>, private _width: number, private _height: number) {
         var xScale = scaleTime()
             .range([0, this._width]);
         var xAxis = axisBottom(xScale);
@@ -25,13 +25,13 @@ export class xAxis {
         this._axis = xAxis;
     }
 
-    update(data: Array<dataFormat>): void {
+    update(data: IDataFormat<any>): void {
         var domain = data.map(d => d.date);
         this._scale.domain(extent(domain));
         this._group.call(this._axis);
     }
 
-    scale(): Time {
+    scale(): ScaleTime<any, any> {
         return this._scale;
     }
 }

@@ -5,16 +5,16 @@ import { GeoPath, geoPath, geoMercator, geoAlbersUsa } from 'd3-geo';
 import { json } from 'd3-request';
 import { dispatch } from 'd3-dispatch';
 import { Nest, nest } from 'd3-collection';
-import {max, range } from 'd3-array';
+import { max, range } from 'd3-array';
 import { dataFormat } from '../dataFormat';
 import { colorScale } from './colorScale';
 
 export class map {
-    private _group: d3.Selection<any,any,any,any>;
+    private _group: d3.Selection<any, any, any, any>;
     private _colorScale: colorScale;
-    private _dispatch:any;
-    private _colorScaleLegend: d3.Selection<any,any,any,any>;
-    constructor(container: d3.Selection<any,any,any,any>, private _width: number, private _height: number) {
+    private _dispatch: any;
+    private _colorScaleLegend: d3.Selection<any, any, any, any>;
+    constructor(container: d3.Selection<any, any, any, any>, private _width: number, private _height: number) {
         this._group = container.append('g')
             .classed('map', true);
         this._dispatch = dispatch('loaded');
@@ -26,7 +26,7 @@ export class map {
         this._colorScale = new colorScale();
         this._colorScaleLegend = this._group.append('g')
             .classed('color-legend', true)
-            .attr('transform', `translate(${70},${this._height-70})`);
+            .attr('transform', `translate(${70},${this._height - 70})`);
         this._colorScaleLegend.append('text')
             .attr('transform', `translate(${0},${12})`)
             .text('0');
@@ -77,7 +77,7 @@ export class map {
         this._colorScaleLegend.select('#max')
             .text(maxValue.toString());
         this._group.selectAll('.country')
-            .style('fill', d => {
+            .style('fill', (d: any) => {
                 var current = byState.filter(s => s.key === d.properties.name);
                 return current.length > 0 ? this._colorScale.color(current[0].values.length) : this._colorScale.color(0);
             });

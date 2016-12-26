@@ -1,15 +1,15 @@
-import {Selection} from 'd3-selection';
-import {  scaleBand, Band} from 'd3-scale';
+import { Selection } from 'd3-selection';
+import { scaleBand, ScaleBand } from 'd3-scale';
 import { axisBottom, Axis } from 'd3-axis';
 import { dataFormat } from './models/dataFormat';
 
 
 export class xAxis {
-    private _scale: Band<string>;
-    private _group: Selection;
-    private _axis: Axis;
+    private _scale: ScaleBand<string>;
+    private _group: Selection<any, any, any, any>;
+    private _axis: Axis<any>;
 
-    constructor(container: Selection, private _width: number, private _height: number) {
+    constructor(container: Selection<any, any, any, any>, private _width: number, private _height: number) {
         var xScale = scaleBand<string>()
             .range([0, this._width])
             .paddingInner(.5)
@@ -31,7 +31,7 @@ export class xAxis {
         this._group.call(this._axis);
     }
 
-    scale(): Band<string> {
+    scale(): ScaleBand<string> {
         return this._scale;
     }
 }

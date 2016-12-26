@@ -1,7 +1,7 @@
-import {select, selectAll, Selection} from 'd3-selection';
+import { select, selectAll, Selection } from 'd3-selection';
 import { scaleLinear, scaleTime } from 'd3-scale';
 import { axisBottom, axisLeft } from 'd3-axis';
-import {nest, Nest } from 'd3-collection';
+import { nest, Nest } from 'd3-collection';
 import { xAxis } from './xAxis';
 import { yAxis } from './yAxis';
 import { dataFormat } from './models/dataFormat'
@@ -24,10 +24,10 @@ export class chart {
     private _xAxis: xAxis;
     private _yAxis: yAxis;
 
-    private _seriesGroup: Selection<any,any,any,any>;
+    private _seriesGroup: Selection<any, any, any, any>;
     private _plotHeight: number;
 
-    constructor(container: Selection<any,any,any,any>, private _width: number, private _height: number) {
+    constructor(container: Selection<any, any, any, any>, private _width: number, private _height: number) {
         var chartGroup = container.append('g')
             .classed('chart-group', true)
             .attr('transform', `translate(${this._chartMargins.left},${this._chartMargins.top})`);
@@ -37,8 +37,8 @@ export class chart {
 
         chartGroup.append('text')
             .classed('title', true)
-              .attr('transform', `translate(${chartWidth/2},${15})`)
-            .text('Number of lawnmakers taking about topics');        
+            .attr('transform', `translate(${chartWidth / 2},${15})`)
+            .text('Number of lawnmakers taking about topics');
 
         var plotGroup = chartGroup.append('g')
             .classed('plot-group', true)
@@ -55,15 +55,15 @@ export class chart {
         this.initLegend(chartGroup, chartWidth, chartHeight);
     }
 
-    private initxAxis(container: d3.Selection<any,any,any,any>, width: number, height: number) {
+    private initxAxis(container: d3.Selection<any, any, any, any>, width: number, height: number) {
         this._xAxis = new xAxis(container, width, height);
     }
 
-    private inityAxis(container: Selection<any,any,any,any>, width: number, height: number) {
+    private inityAxis(container: Selection<any, any, any, any>, width: number, height: number) {
         this._yAxis = new yAxis(container, width, height);
     }
 
-    private initLegend(container: Selection<any,any,any,any>, width: number, height: number) {
+    private initLegend(container: Selection<any, any, any, any>, width: number, height: number) {
         var legendWidth = 150;
         var legendHeight = 55;
         var group = container.append('g')
@@ -125,7 +125,7 @@ export class chart {
             .attr('transform', d => `translate(${this._xAxis.scale()(d.key)},${0})`);
         enterSelection
             .selectAll('rect')
-            .data(d => d.values)
+            .data(d => <Array<any>>d.values)
             .enter()
             .append('rect')
             .attr('width', this._xAxis.scale().bandwidth() / 2)

@@ -1,6 +1,7 @@
 import * as d3 from 'd3';
 import * as plot from '../../charting/plotFactory';
 import { ICsvService } from '../../services/csvService';
+import { IDataFormat } from '../../models/IDataFormat';
 
 
 import { dataFormat } from './dataFormat';
@@ -53,7 +54,7 @@ function controller(csvService: ICsvService) {
     const fileName = 'mom/29/data/The Next to Die2.csv';
     csvService.read<any>(fileName, update, parseFunction);
 
-    function update(data: Array<any>) {
+    function update(data: IDataFormat<any>) {
         byRace.update(data);
         bycountry.update(data);
 

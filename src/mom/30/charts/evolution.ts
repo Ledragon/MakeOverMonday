@@ -7,7 +7,8 @@ import { xAxis } from './xAxis';
 import { yAxis } from './yAxis';
 import { title } from './title';
 import { colorScale } from './colorScale';
-import { dataFormat } from '../typings-custom/dataFormat';
+import { dataFormat } from '../dataFormat';
+import { IDataFormat } from '../../../models/IDataFormat';
 
 export class evolution {
     private _chartMargins = {
@@ -27,11 +28,11 @@ export class evolution {
     private _xAxis: xAxis;
     private _yAxis: yAxis;
 
-    private _seriesGroup: Selection;
+    private _seriesGroup: Selection<any, any, any, any>;
     private _plotHeight: number;
     private _showGender: boolean;
     private _title: title;
-    constructor(container: Selection, private _width: number, private _height: number) {
+    constructor(container: Selection<any, any, any, any>, private _width: number, private _height: number) {
         var chartGroup = container.append('g')
             .classed('chart-group', true)
             .attr('transform', `translate(${this._chartMargins.left},${this._chartMargins.top})`);
@@ -58,15 +59,15 @@ export class evolution {
         this.initSeries(plotGroup, plotWidth, plotHeight);
     }
 
-    private initxAxis(container: Selection, width: number, height: number) {
+    private initxAxis(container: Selection<any, any, any, any>, width: number, height: number) {
         this._xAxis = new xAxis(container, width, height);
     }
 
-    private inityAxis(container: Selection, width: number, height: number) {
+    private inityAxis(container: Selection<any, any, any, any>, width: number, height: number) {
         this._yAxis = new yAxis(container, width, height);
     }
 
-    private initSeries(container: Selection, width: number, height: number) {
+    private initSeries(container: Selection<any, any, any, any>, width: number, height: number) {
         var cs = new colorScale();
         this._seriesGroup = container.append('g')
             .classed('series-group', true);
@@ -99,7 +100,7 @@ export class evolution {
         this._title.text(value);
     }
 
-    update(data: Array<dataFormat>) {
+    update(data: IDataFormat<dataFormat>) {
         this._xAxis.update(data);
         this._yAxis.update(data);
         var xScale = this._xAxis.scale();
