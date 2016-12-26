@@ -38,7 +38,7 @@ function controller(csvService: ICsvService) {
             .enter()
             .append('path')
             .classed('arc', true)
-            .attr('d', d => arcGenerator.startAngle(d.startAngle).endAngle(d.endAngle)())
+            .attr('d', (d:any) => arcGenerator.startAngle(d.startAngle).endAngle(d.endAngle)(d))
             .style('fill', (d, i) => colors[i]);
         let items = svg.append('g')
             .classed('legend', true)

@@ -23,13 +23,6 @@ export class timeChart {
         let plotGroup = new group(chartGroup.group(), chartGroup.width(), chartGroup.height(),
             { top: 20, bottom: 30, left: 100, right: 30 }, 'plot-group')
 
-        // chartGroup.append('g')
-        //     .classed('legend', true)
-        //     .attr('transform', `translate(${chartGroup.width() - legendWIdth - 10},${chartGroup.height() / 2 - legendHeight / 2})`)
-        //     .append('rect')
-        //     .attr('width', legendWIdth)
-        //     .attr('height', legendHeight);
-
         this._xAxis = new horizontalLinearAxis(plotGroup.group(), plotGroup.width(), plotGroup.height());
 
         this._yScale = scaleLinear()
@@ -52,12 +45,12 @@ export class timeChart {
     }
 
     update(data: Array<any>) {
-        var merged = [].concat.apply([], data.map(d => d.values));
-        console.log(merged)
+        var merged: Array<any> = [].concat.apply([], data.map(d => d.values));
         var maxY = max(merged, d => d.value);
         this._yScale.domain([0, maxY]).nice();
         this._yAxisGroup.call(this._yAxis)
-        let generator = line().x((d, i) => this._xAxis.scale(d.year))
+        let generator = line<any>()
+            .x((d, i) => this._xAxis.scale(d.year))
             .y((d, i) => this._yScale(d.value))
 
         var dataBound = this._plotGroup.group()
@@ -74,13 +67,13 @@ export class timeChart {
             .attr('d', d => {
                 return generator(d.values);
             })
-            .style('stroke',d=>d.color);
+            .style('stroke', d => d.color);
         dataBound
             .attr('data-name', d => d.name)
             .select('path')
             .attr('d', d => {
                 return generator(d.values);
             })
-            .style('stroke',d=>d.color);
+            .style('stroke', d => d.color);
     }
 }

@@ -43,7 +43,9 @@ export class chart {
         this._xAxisGroup.call(this._xAxis);
         this._radiusScale
             .domain(extent(data, d => d.recordsStolen));
-        let byYear = nest().key(d => d.year).entries(data);
+        let byYear = nest<any>()
+            .key(d => d.year)
+            .entries(data);
         this._yScale.domain([0, max(byYear, d => d.values.length)]);
         let enterSelection = this._selection.select('.data-container')
             .selectAll('.year')
@@ -53,7 +55,7 @@ export class chart {
             .classed('year', true)
             .attr('transform', d => `translate(${0},${this._xScale(+d.key)})`);
         let dataPoints = enterSelection.selectAll('.data-point')
-            .data(d => d.values)
+            .data(d => <Array<any>>d.values)
             .enter()
             .append('g')
             .classed('data-point', true)

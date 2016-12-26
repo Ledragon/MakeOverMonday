@@ -4,8 +4,7 @@ import { axisBottom, Axis } from 'd3-axis';
 import { extent } from 'd3-array';
 import { format } from 'd3-format';
 
-
-export class xAxis {
+export class bottomLinearAxis<T> {
     private _scale: ScaleLinear<number, number>;
     private _group: Selection<any, any, any, any>;
     private _axis: Axis<any>;
@@ -15,7 +14,7 @@ export class xAxis {
             .range([0, this._width]);
         var fmt = format('0')
         var xAxis = axisBottom(xScale)
-            .tickFormat((d: any) => fmt(d));
+            .tickFormat((d:any) => fmt(d));
         var xAxisGroup = container.append('g')
             .classed('horizontal axis', true)
             .attr('transform', `translate(${0},${this._height})`)
@@ -26,8 +25,8 @@ export class xAxis {
         this._axis = xAxis;
     }
 
-    update(data: Array<any>): void {
-        var domain = data.map(d => d.year);
+    update(data: Array<T>): void {
+        var domain = data.map((d:any) => d.year);
         this._scale.domain(extent(domain));
         this._group.call(this._axis);
     }

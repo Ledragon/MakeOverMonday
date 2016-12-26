@@ -5,7 +5,7 @@ import { line } from 'd3-shape';
 
 import { xAxis } from './xAxis';
 import { yAxis } from './yAxis';
-import { title } from './title';
+import { title } from '../../../charting/title';
 import { colorScale } from './colorScale';
 import { dataFormat } from '../dataFormat';
 import { IDataFormat } from '../../../models/IDataFormat';
