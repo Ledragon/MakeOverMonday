@@ -39,6 +39,7 @@ import { mom50 } from './50/component';
 import { mom50State } from './50/state';
 import { mom51 } from './51/component';
 import { mom51State } from './51/state';
+import { register as register52 } from './52/state';
 
 let momModule = angular.module('momModule', []);
 register22(momModule);
@@ -60,6 +61,7 @@ register38(momModule);
 register39(momModule);
 register40(momModule);
 register41(momModule);
+register52(momModule);
 
 export const momName = momModule
     .config(($stateProvider: angular.ui.IStateProvider, $urlRouterProvider: angular.ui.IUrlRouterProvider) => {

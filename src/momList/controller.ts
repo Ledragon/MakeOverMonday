@@ -9,6 +9,7 @@ export class momListController {
                     name: d.name,
                     displayName: d.name.replace('mom', '')
                 }
-            });
+            })
+            .sort((a,b)=>+a.displayName-parseInt(b.displayName));
     }
 }
