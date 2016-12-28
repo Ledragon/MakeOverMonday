@@ -5,6 +5,7 @@ import { ICsvService } from '../../services/csvService';
 import { IDataFormat } from '../../models/IDataFormat';
 
 import { BottomCategoricalAxis } from '../../charting/bottomCategoricalAxis'
+import { LeftLinearAxis } from '../../charting/LeftLinearAxis'
 
 export var mom52 = {
     name: 'mom52',
@@ -48,7 +49,8 @@ function controller(csvService: ICsvService) {
     const fileName = 'mom/52/data/data.csv';
     csvService.read<any>(fileName, update, parseFunction);
     var xAxis = new BottomCategoricalAxis(plotGroup, plotWidth, plotHeight);
-    
+    let yAxis = new LeftLinearAxis(plotGroup, plotWidth, plotHeight);
+
     function update(data: IDataFormat<any>) {
         let columns = data.columns.splice(1, data.columns.length - 1)
         let layout = d3.stack<any>()
@@ -56,6 +58,7 @@ function controller(csvService: ICsvService) {
         let series = layout(data);
         console.log(series)
         xAxis.domain(columns);
+        yAxis.domain([0, 1]);
     };
 
 }
