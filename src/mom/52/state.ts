@@ -5,7 +5,7 @@ var mom52State = {
     template: '<mom52 class=\"flex-container\"></mom52>',
     url: '/mom52',
     data: {
-        description: ''
+        description: 'Christmas dinner costs rising again'
     }
 };
 

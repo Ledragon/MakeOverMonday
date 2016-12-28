@@ -2,6 +2,10 @@ import * as d3 from 'd3';
 import * as plot from '../../charting/plotFactory';
 import { ICsvService } from '../../services/csvService';
 
+import { IDataFormat } from '../../models/IDataFormat';
+
+import { BottomCategoricalAxis } from '../../charting/bottomCategoricalAxis'
+
 export var mom52 = {
     name: 'mom52',
     component: {
@@ -43,8 +47,15 @@ function controller(csvService: ICsvService) {
     }
     const fileName = 'mom/52/data/data.csv';
     csvService.read<any>(fileName, update, parseFunction);
-
-    function update(data: Array<any>) {
-        console.log(data);
+    var xAxis = new BottomCategoricalAxis(plotGroup, plotWidth, plotHeight);
+    
+    function update(data: IDataFormat<any>) {
+        let columns = data.columns.splice(1, data.columns.length - 1)
+        let layout = d3.stack<any>()
+            .keys(columns);
+        let series = layout(data);
+        console.log(series)
+        xAxis.domain(columns);
     };
+
 }
