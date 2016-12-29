@@ -1,7 +1,7 @@
 import * as d3 from 'd3';
 import * as plot from '../../charting/plotFactory';
-import { BottomCategoricalAxis } from '../../charting/bottomCategoricalAxis';
-import { LeftCategoricalAxis } from '../../charting/LeftCategorical';
+import { BottomCategoricalAxis } from '../../charting/BottomCategoricalAxis';
+import { LeftCategoricalAxis } from '../../charting/LeftCategoricalAxis';
 import { ICsvService } from '../../services/csvService';
 
 export var mom31 = {

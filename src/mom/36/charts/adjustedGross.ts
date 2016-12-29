@@ -1,7 +1,7 @@
 import * as d3 from 'd3';
 
 import { title } from '../../../charting/title';
-import { LeftCategoricalAxis } from '../../../charting/LeftCategorical';
+import { LeftCategoricalAxis } from '../../../charting/LeftCategoricalAxis';
 import { IMargins } from '../../../charting/IMargins';
 
 import { IDate } from './Idate';

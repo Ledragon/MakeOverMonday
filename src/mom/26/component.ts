@@ -1,6 +1,6 @@
 import * as d3 from 'd3';
 import * as plot from '../../charting/plotFactory';
-import { LeftCategoricalAxis } from '../../charting/LeftCategorical';
+import { LeftCategoricalAxis } from '../../charting/LeftCategoricalAxis';
 
 import { ICsvService } from '../../services/csvService';
 

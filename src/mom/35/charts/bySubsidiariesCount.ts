@@ -3,7 +3,7 @@ import { scaleBand, ScaleBand, scaleLinear, ScaleLinear } from 'd3-scale';
 import { axisLeft, Axis } from 'd3-axis';
 import { max } from 'd3-array';
 
-import { LeftCategoricalAxis } from '../../../charting/LeftCategorical'
+import { LeftCategoricalAxis } from '../../../charting/LeftCategoricalAxis'
 
 import { mappedFormat } from '../models/mapped';
 import { blueScale } from './colorScale';

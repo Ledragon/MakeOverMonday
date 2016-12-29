@@ -4,7 +4,7 @@ import { ICsvService } from '../../services/csvService';
 
 import { IDataFormat } from '../../models/IDataFormat';
 
-import { BottomCategoricalAxis } from '../../charting/bottomCategoricalAxis'
+import { BottomCategoricalAxis } from '../../charting/BottomCategoricalAxis'
 import { LeftLinearAxis } from '../../charting/LeftLinearAxis'
 
 export var mom52 = {

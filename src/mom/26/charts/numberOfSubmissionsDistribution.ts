@@ -3,7 +3,6 @@ import { chartContainer } from './chartContainer';
 import { title } from './title';
 import { horizontalAxis } from './horizontalAxis';
 
-import { LeftCategoricalAxis } from '../../../charting/LeftCategorical';
 import { LeftLinearAxis } from '../../../charting/LeftLinearAxis';
 
 var _width;

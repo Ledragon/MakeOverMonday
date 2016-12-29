@@ -1,6 +1,6 @@
 import * as d3 from 'd3';
 
-import { LeftCategoricalAxis } from '../../../charting/LeftCategorical';
+import { LeftCategoricalAxis } from '../../../charting/LeftCategoricalAxis';
 import { title } from '../../../charting/title';
 import { IHistory } from '../IHistory';
 

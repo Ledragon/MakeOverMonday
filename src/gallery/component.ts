@@ -19,6 +19,6 @@ function controller($state: angular.ui.IStateService) {
                     description: d.data.description
                 }
             })
-            .sort((a,b)=>a.displayName-b.displayName);
+            .sort((a, b) => <any>a.displayName - <any>b.displayName);
     }
 }

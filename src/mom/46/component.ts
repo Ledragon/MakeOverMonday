@@ -2,7 +2,7 @@ import * as d3 from 'd3';
 import * as plot from '../../charting/plotFactory';
 import { ICsvService } from '../../services/csvService';
 
-import { LeftCategoricalAxis } from '../../charting/LeftCategorical';
+import { LeftCategoricalAxis } from '../../charting/LeftCategoricalAxis';
 
 export var mom46 = {
     name: 'mom46',

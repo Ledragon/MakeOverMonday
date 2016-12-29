@@ -4,7 +4,7 @@ import { axisBottom, Axis } from 'd3-axis';
 import { extent } from 'd3-array';
 import { format } from 'd3-format';
 
-export class bottomLinearAxis<T> {
+export class BottomLinearAxis<T> {
     private _scale: ScaleLinear<number, number>;
     private _group: Selection<any, any, any, any>;
     private _axis: Axis<any>;

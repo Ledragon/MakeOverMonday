@@ -1,6 +1,6 @@
 import * as d3 from 'd3';
 import * as plot from '../../charting/plotFactory';
-import { LeftCategoricalAxis } from '../../charting/LeftCategorical';
+import { LeftCategoricalAxis } from '../../charting/LeftCategoricalAxis';
 
 export var mom50 = {
     name: 'mom50',
