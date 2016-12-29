@@ -1,8 +1,8 @@
 import * as d3 from 'd3';
 
 export class LeftCategoricalAxis<T> {
-    private _axis: d3.Axis<T>;
-    private _scale: d3.ScaleBand<any>;
+    private _axis: d3.Axis<string>;
+    private _scale: d3.ScaleBand<string>;
     private _group: d3.Selection<SVGGElement, any, any, any>;
 
     constructor(container: d3.Selection<SVGElement, T, any, any>, private _width: number, private _height: number) {
@@ -18,7 +18,7 @@ export class LeftCategoricalAxis<T> {
         return this._group;
     }
 
-    domain(value?: any): LeftCategoricalAxis<T> | any[] {
+    domain(value?: string[]): LeftCategoricalAxis<T> | any[] {
         if (arguments.length) {
             this._scale.domain(value);
             this._group.call(this._axis);
