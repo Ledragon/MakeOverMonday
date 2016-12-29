@@ -2,6 +2,8 @@ import * as d3 from 'd3';
 import * as plot from '../../charting/plotFactory';
 import { ICsvService } from '../../services/csvService';
 
+import { LeftCategoricalAxis } from '../../charting/LeftCategorical';
+
 export var mom46 = {
     name: 'mom46',
     component: {
@@ -63,7 +65,6 @@ function controller(csvService: ICsvService) {
     function update(data: Array<any>) {
         let byWord = groupByWord(data);
         wordsChart.update(byWord);
-        // drawSongs(songsGroup, 0, 0, groupBySong(data));
     };
 
     function groupByWord(data: Array<any>): Array<any> {
@@ -105,21 +106,15 @@ function controller(csvService: ICsvService) {
         let xScale = d3.scaleLinear()
             .domain([0, 1])
             .range([0, width]);
-        let yScale = d3.scaleBand<any>()
-            .range([0, height])
+        let yAxis = new LeftCategoricalAxis(container, width, height)
             .padding(0.3);
-        let axis = d3.axisLeft(yScale);
-        let axisGroup = container.append('g')
-            .classed('axis', true)
-            .call(axis);
 
         let _dispatch = d3.dispatch('click');
 
         function update(data: Array<any>): void {
             let usedData = data.splice(0, 50);
             xScale.domain([0, d3.max(usedData, d => d.values.length)]);
-            yScale.domain(usedData.map(d => d.key));
-            axisGroup.call(axis);
+            yAxis.domain(usedData.map(d => d.key));
 
             var dataBound = group.selectAll('.words')
                 .data(usedData);
@@ -130,15 +125,16 @@ function controller(csvService: ICsvService) {
                 .enter()
                 .append('g')
                 .classed('words', true)
-                .attr('transform', (d, i) => `translate(${0},${yScale(d.key)})`)
+                .attr('transform', (d, i) => `translate(${0},${yAxis.scale(d.key)})`)
                 .on('mousedown', function (d) {
                     _dispatch.call('click', <any>this, d);
                 });
+            const bandwidth = yAxis.bandWidth();
             var rect = enterSelection.append('rect')
                 .attr('x', 0)
                 .attr('y', 0)
                 .attr('width', d => xScale(d.values.length))
-                .attr('height', yScale.bandwidth())
+                .attr('height', bandwidth)
                 .style('fill', 'lightblue');
             enterSelection.append('text')
                 .style('font-size', 10)
