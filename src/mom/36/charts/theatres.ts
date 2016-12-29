@@ -1,4 +1,7 @@
 import * as d3 from 'd3';
+
+import { LeftCategoricalAxis } from '../../../charting/LeftCategorical';
+
 import { IDate } from './Idate';
 import { IMargins } from './IMargins';
 import { group } from './group';
@@ -15,17 +18,12 @@ export function chart(selection: d3.Selection<any, any, any, any>, width: number
     let marginLeft = 250;
     var plotMargins: IMargins = { top: _marginTop, bottom: 0, left: marginLeft, right: 0 };
     var plot = new group(chart.group(), chart.width(), chart.height(), plotMargins, 'plot-group');
+    let movieAxis = new LeftCategoricalAxis(plot.group(), plot.width(), plot.height())
+        .padding(0.25)
+        .domain(byDate.map(d => d.title));
+    
+    var movieAxisGroup = movieAxis.group();
 
-    var moviesScale = d3.scaleBand<any>()
-        .domain(byDate.map(d => d.title))
-        .range([0, plot.height()])
-        .padding(0.25);
-
-    var movieAxis = d3.axisLeft(moviesScale);
-    var movieAxisGroup = plot.group()
-        .append('g')
-        .classed('time-axis', true)
-        .call(movieAxis);
     var color = 'rgba(241, 232, 184, 1)';
     movieAxisGroup.select('path.domain')
         .attr('stroke', color)
@@ -34,20 +32,20 @@ export function chart(selection: d3.Selection<any, any, any, any>, width: number
         .attr('stroke', color);
     ticks.select('text')
         .attr('fill', color);
-    drawProfits(plot.group(), plot.width(), plot.height(), moviesScale, data);
+    drawProfits(plot.group(), plot.width(), plot.height(), movieAxis, data);
 
-    var fmt = d3.format('2.0f');    
+    var fmt = d3.format('2.0f');
     chart.group()
         .append('g')
         .classed('title', true)
-        .attr('transform', `translate(${plotMargins.left + plot.width() / 2},${30})`)
+        .attr('transform', `translate(${plotMargins.left/2 + plot.width() / 2},${30})`)
         .append('text')
-        .text(`Theatres (average: ${fmt(d3.mean(byDate, d=>d.theatres))})`)
+        .text(`Theatres (average: ${fmt(d3.mean(byDate, d => d.theatres))})`)
         .attr('text-anchor', 'middle')
         .attr('fill', color)
 }
 
-function drawProfits(selection: d3.Selection<any, any, any, any>, width: number, height: number, scale: d3.ScaleBand<string>, data: Array<any>) {
+function drawProfits(selection: d3.Selection<any, any, any, any>, width: number, height: number, axis: LeftCategoricalAxis<any>, data: Array<any>) {
     var group = selection.append('g')
         .classed('series', true)
         .attr('transform', `translate(${0},${0})`);
@@ -63,9 +61,9 @@ function drawProfits(selection: d3.Selection<any, any, any, any>, width: number,
         .enter()
         .append('g')
         .classed('item', true)
-        .attr('transform', d => `translate(${0},${scale(d.title)})`);
+        .attr('transform', d => `translate(${0},${axis.scale(d.title)})`);
     enterSelection.append('rect')
         .attr('width', d => scoreScale(d.theatres))
-        .attr('height', scale.bandwidth())
+        .attr('height', axis.bandWidth())
         .style('fill', colors[3]);
 }

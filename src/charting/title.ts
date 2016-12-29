@@ -13,4 +13,8 @@ export class title {
     text(value: string): void {
         this._group.select('text').text(value);
     }
+    
+    classed(value: string): void{
+        this._group.classed(value, true);
+    }
 }

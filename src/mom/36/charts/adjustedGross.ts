@@ -1,6 +1,10 @@
 import * as d3 from 'd3';
+
+import { title } from '../../../charting/title';
+import { LeftCategoricalAxis } from '../../../charting/LeftCategorical';
+import { IMargins } from '../../../charting/IMargins';
+
 import { IDate } from './Idate';
-import { IMargins } from './IMargins';
 import { group } from './group';
 import { colors } from './colors';
 
@@ -15,39 +19,22 @@ export function chart(selection: d3.Selection<any, any, any, any>, width: number
     let marginLeft = 250;
     var plotMargins: IMargins = { top: _marginTop, bottom: 0, left: marginLeft, right: 0 };
     var plot = new group(chart.group(), chart.width(), chart.height(), plotMargins, 'plot-group');
-
-    var moviesScale = d3.scaleBand<any>()
-        .domain(byDate.map(d => d.title))
-        .range([0, plot.height()])
-        .padding(0.25);
-
-    var movieAxis = d3.axisLeft(moviesScale);
-    var movieAxisGroup = plot.group()
-        .append('g')
-        .classed('time-axis', true)
-        .call(movieAxis);
-    var color = 'rgba(241, 232, 184, 1)';
-    movieAxisGroup.select('path.domain')
-        .attr('stroke', color)
-    var ticks = movieAxisGroup.selectAll('.tick');
-    ticks.select('line')
-        .attr('stroke', color);
-    ticks.select('text')
-        .attr('fill', color);
-    drawProfits(plot.group(), plot.width(), plot.height(), moviesScale, data);
+    let plotGroup = plot.group();
+    let plotWidth = plot.width();
+    let plotHeight = plot.height();
+    let yAxis = new LeftCategoricalAxis(plotGroup, plotWidth, plotHeight)
+        .padding(0.25)
+        .domain(byDate.map(d => d.title));
+    
+    drawProfits(plot.group(), plot.width(), plot.height(), yAxis, data);
 
     var fmt = d3.format('$3.4s');    
-    chart.group()
-        .append('g')
-        .classed('title', true)
-        .attr('transform', `translate(${plotMargins.left + plot.width() / 2},${30})`)
-        .append('text')
-        .text(`Adjusted gross (total: ${fmt(d3.sum(byDate, d=>d.adjustedGross))})`)
-        .attr('text-anchor', 'middle')
-        .attr('fill', color)
+    let t = new title(chart.group(), chart.width(), chart.height());
+    t.text(`Adjusted gross (total: ${fmt(d3.sum(byDate, d => d.adjustedGross))})`);
+    t.classed('title');
 }
 
-function drawProfits(selection: d3.Selection<any, any, any, any>, width: number, height: number, scale: d3.ScaleBand<string>, data: Array<any>) {
+function drawProfits(selection: d3.Selection<any, any, any, any>, width: number, height: number, axis: LeftCategoricalAxis<any>, data: Array<any>) {
     var group = selection.append('g')
         .classed('series', true)
         .attr('transform', `translate(${0},${0})`);
@@ -63,9 +50,9 @@ function drawProfits(selection: d3.Selection<any, any, any, any>, width: number,
         .enter()
         .append('g')
         .classed('item', true)
-        .attr('transform', d => `translate(${0},${scale(d.title)})`);
+        .attr('transform', d => `translate(${0},${axis.scale(d.title)})`);
     enterSelection.append('rect')
         .attr('width', d => scoreScale(d.adjustedGross))
-        .attr('height', scale.bandwidth())
+        .attr('height', axis.bandWidth())
         .style('fill', colors[3]);
 }

@@ -29,7 +29,7 @@ export function chart(selection: d3.Selection<any, any, any, any>, width: number
         .attr('text-anchor', 'middle')
         .attr('fill', colors[0])
         .text('Audience score')
-        .attr('transform', `translate(${plot.width() / 2},${plot.height()})`);
+        .attr('transform', `translate(${chart.width() / 2},${plot.height()})`);
 
     var horizScale = d3.scaleLinear()
         .domain([0, 1])

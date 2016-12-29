@@ -10,6 +10,12 @@ body{
 .main-title{
     color: rgba(241, 232, 184, 1);
 }
+ .title text, .tick text{
+    fill: rgba(241, 232, 184, 1);
+ }
+ path.domain, .tick line{
+    stroke: rgba(241, 232, 184, 1);
+ }
 .series path{
     fill:none;
     stroke: gray;
