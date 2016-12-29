@@ -13,9 +13,16 @@
     /*flex-basis: 12.5%; 
     flex-grow:0; 
     flex-shrink:0;*/
-    padding:10px;
+    /*padding:10px;*/
     height: 180px;
     overflow-x: hidden;
     overflow-y: hidden;
     border:1px solid lightGray;
+}
+.card-header{
+    padding:5px;
+    border-bottom:1px solid lightgray;
+}
+.card-body{
+    padding:5px;
 }
