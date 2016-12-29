@@ -1,9 +1,10 @@
 import * as d3 from 'd3';
 
+import { title } from '../../../charting/title';
 import { LeftCategoricalAxis } from '../../../charting/LeftCategorical';
+import { IMargins } from '../../../charting/IMargins';
 
 import { IDate } from './Idate';
-import { IMargins } from './IMargins';
 import { group } from './group';
 import { colors } from './colors';
 
@@ -23,26 +24,12 @@ export function chart(selection: d3.Selection<any, any, any, any>, width: number
         .domain(byDate.map(d => d.title));
     
     var movieAxisGroup = movieAxis.group();
-
-    var color = 'rgba(241, 232, 184, 1)';
-    movieAxisGroup.select('path.domain')
-        .attr('stroke', color)
-    var ticks = movieAxisGroup.selectAll('.tick');
-    ticks.select('line')
-        .attr('stroke', color);
-    ticks.select('text')
-        .attr('fill', color);
     drawProfits(plot.group(), plot.width(), plot.height(), movieAxis, data);
 
     var fmt = d3.format('2.0f');
-    chart.group()
-        .append('g')
-        .classed('title', true)
-        .attr('transform', `translate(${plotMargins.left/2 + plot.width() / 2},${30})`)
-        .append('text')
-        .text(`Theatres (average: ${fmt(d3.mean(byDate, d => d.theatres))})`)
-        .attr('text-anchor', 'middle')
-        .attr('fill', color)
+    let t = new title(chart.group(), chart.width(), chart.height());
+    t.text(`Adjusted gross (total: ${fmt(d3.sum(byDate, d => d.adjustedGross))})`);
+    t.classed('title');
 }
 
 function drawProfits(selection: d3.Selection<any, any, any, any>, width: number, height: number, axis: LeftCategoricalAxis<any>, data: Array<any>) {

@@ -1,6 +1,10 @@
 import * as d3 from 'd3';
+
+import { title } from '../../../charting/title';
+import { LeftCategoricalAxis } from '../../../charting/LeftCategorical';
+import { IMargins } from '../../../charting/IMargins';
+
 import { IDate } from './Idate';
-import { IMargins } from './IMargins';
 import { group } from './group';
 import { colors } from './colors';
 
@@ -16,38 +20,23 @@ export function scores(selection: d3.Selection<any, any, any, any>, width: numbe
     var plotMargins: IMargins = { top: _marginTop, bottom: 0, left: marginLeft, right: 0 };
     var plot = new group(chart.group(), chart.width(), chart.height(), plotMargins, 'plot-group');
 
-    var moviesScale = d3.scaleBand<any>()
-        .domain(byDate.map(d => d.title))
-        .range([0, plot.height()])
-        .padding(0.25);
+    let plotGroup = plot.group();
+    let plotWidth = plot.width();
+    let plotHeight = plot.height();
+    let yAxis = new LeftCategoricalAxis(plotGroup, plotWidth, plotHeight)
+        .padding(0.25)
+        .domain(byDate.map(d => d.title));
 
-    var movieAxis = d3.axisLeft(moviesScale);
-    var movieAxisGroup = plot.group()
-        .append('g')
-        .classed('time-axis', true)
-        .call(movieAxis);
-    var color = 'rgba(241, 232, 184, 1)';
-    movieAxisGroup.select('path.domain')
-        .attr('stroke', color)
-    var ticks = movieAxisGroup.selectAll('.tick');
-    ticks.select('line')
-        .attr('stroke', color);
-    ticks.select('text')
-        .attr('fill', color);
-    drawScores(plot.group(), plot.width(), plot.height(), moviesScale, data);
+    drawScores(plot.group(), plot.width(), plot.height(), yAxis, data);
 
-    var fmt = d3.format('2.2f');    
-    chart.group()
-        .append('g')
-        .classed('title', true)
-        .attr('transform', `translate(${plotMargins.left + plot.width() / 2},${30})`)
-        .append('text')
-        .text(`Scores (tomato:${fmt(d3.mean(byDate, d=>d.tomatometerScore))}, audience:${fmt(d3.mean(byDate, d=>d.audienceScore))})`)
-        .attr('text-anchor', 'middle')
-        .attr('fill', color)
+    var fmt = d3.format('2.2f');
+
+    let t = new title(chart.group(), chart.width(), chart.height());
+    t.text(`Scores (tomato:${fmt(d3.mean(byDate, d => d.tomatometerScore))}, audience:${fmt(d3.mean(byDate, d => d.audienceScore))})`);
+    t.classed('title');
 }
 
-function drawScores(selection: d3.Selection<any, any, any, any>, width: number, height: number, scale: d3.ScaleBand<string>, data: Array<any>) {
+function drawScores(selection: d3.Selection<any, any, any, any>, width: number, height: number, scale: LeftCategoricalAxis<any>, data: Array<any>) {
     var group = selection.append('g')
         .classed('series', true)
         .attr('transform', `translate(${0},${0})`);
@@ -63,15 +52,14 @@ function drawScores(selection: d3.Selection<any, any, any, any>, width: number, 
         .enter()
         .append('g')
         .classed('item', true)
-        .attr('transform', d => `translate(${0},${scale(d.title)})`);
-    let bandHeight = scale.bandwidth() / 2;
+        .attr('transform', d => `translate(${0},${scale.scale(d.title)})`);
+    let bandHeight = scale.bandWidth() / 2;
     enterSelection.append('rect')
         .attr('y', bandHeight)
         .attr('width', d => scoreScale(d.tomatometerScore))
         .attr('height', bandHeight)
         .style('fill', colors[3]);
     enterSelection.append('rect')
-        // .attr('x', d => -scoreScale(d.audienceScore))
         .attr('width', d => scoreScale(d.audienceScore))
         .attr('height', bandHeight)
         .style('fill', colors[0]);
