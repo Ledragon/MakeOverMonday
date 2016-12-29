@@ -18,6 +18,8 @@ export class LeftCategoricalAxis<T> {
         return this._group;
     }
 
+    domain(): string[];
+    domain(value: string[]): LeftCategoricalAxis<T>;
     domain(value?: string[]): LeftCategoricalAxis<T> | any[] {
         if (arguments.length) {
             this._scale.domain(value);

@@ -1,5 +1,7 @@
 import * as d3 from 'd3';
 import * as plot from '../../charting/plotFactory';
+import { LeftCategoricalAxis } from '../../charting/LeftCategorical';
+
 import { ICsvService } from '../../services/csvService';
 
 import { submissionsPerWeek } from './charts/submissionsPerWeek';
@@ -101,10 +103,10 @@ function controller(csvService: ICsvService) {
                 .append('a')
 
                 .attr('target', '_blank')
-                .attr('href', (d:any) => d.imageUrl);
+                .attr('href', (d: any) => d.imageUrl);
             bound.select('a')
                 .attr('target', '_blank')
-                .attr('href', (d:any) => d.imageUrl);
+                .attr('href', (d: any) => d.imageUrl);
             enter.append('span').text(d => d.name);
             bound.select('span').text(d => d.name);
 
@@ -125,29 +127,23 @@ function submissionsByPerson(container: d3.Selection<any, any, any, any>, data: 
         .attr('transform', `translate(${width / 2},${20})`)
         .style('text-anchor', 'middle')
         .append('text')
-        .text('Top submitters')
-        ;
+        .text('Top submitters');
+    
     var group = container.append('g')
         .attr('transform', `translate(${120},${marginTop})`);
     var xScale = d3.scaleLinear()
         .domain([0, d3.max(data, d => d.submissions)])
         .range([0, width - 140]);
-
-    var yScale = d3.scaleBand<any>()
-        .domain(data.map(d => d.name))
-        .range([0, height - marginTop])
-        .padding(0.5);
-    var yAxis = d3.axisLeft(yScale);
-    var yAxisGroup = group.append('g')
-        .classed('axis', true)
-        .call(yAxis);
-    var rectHeight = yScale.bandwidth()
+    let yAxis = new LeftCategoricalAxis<any>(<any>group, width, height - marginTop)
+        .padding(0.5)
+        .domain(data.map(d => d.name));
+    var rectHeight = yAxis.bandWidth()
     var enterSelection = group.selectAll('g.person')
         .data(data)
         .enter()
         .append('g')
         .classed('person', true)
-        .attr('transform', d => `translate(${0},${yScale(d.name)})`);
+        .attr('transform', d => `translate(${0},${yAxis.scale(d.name)})`);
     enterSelection.append('rect')
         .attr('x', 0)
         .attr('y', 0)

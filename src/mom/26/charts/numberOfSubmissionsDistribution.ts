@@ -3,15 +3,16 @@ import { chartContainer } from './chartContainer';
 import { title } from './title';
 import { horizontalAxis } from './horizontalAxis';
 
+import { LeftCategoricalAxis } from '../../../charting/LeftCategorical';
+import { LeftLinearAxis } from '../../../charting/LeftLinearAxis';
+
 var _width;
 var _height;
 
 var xScale;
 var xAxis: any;
 var xAxisGroup;
-var yScale: any;
-var yAxis: any;
-var yAxisGroup: any;
+var yAxis: LeftLinearAxis<any>;
 
 var seriesGroup: any;
 
@@ -71,14 +72,7 @@ function initxScale(container: d3.Selection<any, any, any, any>, width: number, 
 }
 
 function inityScale(container: d3.Selection<any, any, any, any>, width: number, height: number) {
-    // yAxis = charting.linearAxis(container, width, height, 'left');
-    yScale = d3.scaleLinear()
-        .domain([0, 1])
-        .range([height, 0]);
-    yAxis = d3.axisLeft(yScale);
-    yAxisGroup = container.append('g')
-        .classed('axis', true)
-        .call(yAxis);
+    yAxis = new LeftLinearAxis(container, width, height);
 }
 
 
@@ -94,8 +88,7 @@ function update(data: Array<any>) {
     xAxis.domain([0, d3.max(byCount, d => +d.key)]);
     var xScale = xAxis.scale();
 
-    yScale.domain([0, d3.max(byCount, d => d.values.length)]).nice();
-    yAxisGroup.call(yAxis);
+    yAxis.domain([0, d3.max(byCount, d => d.values.length)]);
 
     colorScale.domain(d3.extent(byCount, d => d.values.length));
     var dataBound = seriesGroup.selectAll('.data')
@@ -107,11 +100,11 @@ function update(data: Array<any>) {
         .enter()
         .append('g')
         .classed('data', true)
-        .attr('transform', (d: any) => `translate(${xScale(+d.key)},${yScale(d.values.length)})`);
+        .attr('transform', (d: any) => `translate(${xScale(+d.key)},${yAxis.scale(d.values.length)})`);
     enterSelection.append('rect')
         .attr('x', -10)
         .attr('y', 0)
         .attr('width', 20)
-        .attr('height', (d:any) => plotHeight - yScale(d.values.length))
-        .style('fill', (d:any) => colorScale(d.values.length));
+        .attr('height', (d: any) => plotHeight - yAxis.scale(d.values.length))
+        .style('fill', (d: any) => colorScale(d.values.length));
 }
