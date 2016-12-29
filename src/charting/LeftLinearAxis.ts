@@ -17,14 +17,18 @@ export class LeftLinearAxis<T> {
         return this._group;
     }
 
-    domain(value?: any): LeftLinearAxis<T> | any[] {
+    domain(value?: [number, number]): LeftLinearAxis<T> | any[] {
         if (arguments.length) {
-            this._scale.domain(value);
+            this._scale.domain(value).nice();
             this._group.call(this._axis);
             return this;
         }
         else {
             return this._scale.domain();
         }
+    }
+    
+    scale(value: number): number{
+        return this._scale(value);
     }
 }

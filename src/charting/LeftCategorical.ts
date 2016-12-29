@@ -1,6 +1,6 @@
 import * as d3 from 'd3';
 
-export class BottomCategoricalAxis<T> {
+export class LeftCategoricalAxis<T> {
     private _axis: d3.Axis<T>;
     private _scale: d3.ScaleBand<any>;
     private _group: d3.Selection<SVGGElement, any, any, any>;
@@ -8,17 +8,17 @@ export class BottomCategoricalAxis<T> {
     constructor(container: d3.Selection<SVGElement, T, any, any>, private _width: number, private _height: number) {
         this._group = container.append<SVGGElement>('g')
             .classed('axis', true)
-            .attr('transform', `translate(${0},${_height})`);
+            .attr('transform', `translate(${0},${0})`);
         this._scale = d3.scaleBand<any>()
-            .range([0, _width]);
-        this._axis = d3.axisBottom(this._scale);
+            .range([0, _height]);
+        this._axis = d3.axisLeft(this._scale);
     }
 
     group(): d3.Selection<SVGGElement, any, any, any> {
         return this._group;
     }
 
-    domain(value?: any): BottomCategoricalAxis<T> | any[] {
+    domain(value?: any): LeftCategoricalAxis<T> | any[] {
         if (arguments.length) {
             this._scale.domain(value);
             this._group.call(this._axis);

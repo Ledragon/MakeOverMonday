@@ -18,6 +18,7 @@ function controller($state: angular.ui.IStateService) {
                     url: 'content/images/gallery/' + d.name.replace('mom', '') + '.png',
                     description: d.data.description
                 }
-            });
+            })
+            .sort((a,b)=>a.displayName-b.displayName);
     }
 }
