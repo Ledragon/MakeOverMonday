@@ -5,7 +5,7 @@ var mom24State = {
     template: '<mom24 class=\"flex-container\"></mom24>',
     url: '/mom24',
     data: {
-        description: ''
+        description: 'Women in the Workplace – Corporate Talent Pipeline'
     }
 };
 

@@ -147,3 +147,11 @@ ui-view, :host, .flex-container{
 .gridline{
     stroke:lightgray;
 }
+
+.mom-24 .y2012{
+    fill: #99d8c9;
+}
+
+.mom-24 .y2015{
+    fill: #2ca25f;
+}

@@ -16,7 +16,7 @@ export class LeftLinearAxis<T> {
     group(): d3.Selection<SVGGElement, any, any, any> {
         return this._group;
     }
-    
+
     domain(): [number, number];
     domain(value: [number, number]): LeftLinearAxis<T>;
     domain(value?: [number, number]): any {
@@ -29,6 +29,12 @@ export class LeftLinearAxis<T> {
             return this._scale.domain();
         }
     }
+
+    format(specifier: string): LeftLinearAxis<T> {
+        this._axis.tickFormat(d3.format(specifier));
+        return this;
+    }
+
 
     scale(value: number): number {
         return this._scale(value);

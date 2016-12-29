@@ -94,12 +94,6 @@ class controller {
 
     }
     private update(data: IDataFormat<any>) {
-        // console.log(data)
-        // let columns = data.columns.splice(1, data.columns.length - 1)
-        // let layout = d3.stack<any>()
-        //     .keys(d3.range(2006, 2017, 1).map(d => d.toString()));
-        // let series = layout(data);
-        // console.log(series)
         this._xAxis.domain(d3.range(2006, 2017, 1).map(d => d.toString()));
         this._yAxis.domain([0, d3.max(data[data.length - 1].values, (d: any) => d.value)]);
 

@@ -29,6 +29,11 @@ export class BottomCategoricalAxis<T> {
         }
     }
 
+    padding(value: number): BottomCategoricalAxis<T> {
+        this._scale.padding(value);
+        return this;
+    }
+
     scale(value: any): number{
         return this._scale(value);
     }
