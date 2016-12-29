@@ -144,3 +144,6 @@ ui-view, :host, .flex-container{
 .legend-item.highlight{
     fill: lightgray;
 }
+.gridline{
+    stroke:lightgray;
+}

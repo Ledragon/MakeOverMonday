@@ -13,8 +13,8 @@ export var mom31 = {
 }
 
 function controller(csvService: ICsvService) {
-    const _width = 1000;
-    const _height = 400;
+    const _width = 960;
+    const _height = 480;
     const _chartMargins = {
         top: 10,
         bottom: 10,
@@ -84,6 +84,7 @@ function controller(csvService: ICsvService) {
         seriesScale.domain(d3.extent(values));
         xAxis.domain(labels);
         yAxis.domain(phrases);
+        const yBandWidth = yAxis.bandWidth();
         var dataBound = seriesGroup.selectAll('.seriesGroup')
             .data(byPhrase);
         dataBound
@@ -94,14 +95,12 @@ function controller(csvService: ICsvService) {
             .append('g')
             .classed('seriesGroup', true)
             .attr('transform', (d, i) => {
-                return `translate(${0},${yAxis.scale(d.key) + yAxis.bandWidth() / 2})`
+                return `translate(${0},${yAxis.scale(d.key) + yBandWidth / 2})`
             });
         enterSelection.append('line')
             .classed('gridline', true)
             .attr('x1', 0)
-            .attr('x2', plotWidth)
-        // .attr('y1', yScale.bandwidth() / 2)
-        // .attr('y2', yScale.bandwidth() / 2)
+            .attr('x2', plotWidth);
         enterSelection
             .selectAll('g')
             .data(d => d.values)
