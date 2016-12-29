@@ -29,11 +29,22 @@ export class LeftCategoricalAxis<T> {
         }
     }
 
-    scale(value: any): number{
+    scale(value: any): number {
         return this._scale(value);
     }
 
-    bandWidth(): number{
+    bandWidth(): number {
         return this._scale.bandwidth();
+    }
+
+    padding(): number;
+    padding(value: number): LeftCategoricalAxis<T>;
+    padding(value?: number): any {
+        if (arguments.length) {
+            this._scale.padding(value);
+            return this;
+        } else {
+            return this._scale.padding();
+        }
     }
 }

@@ -3,6 +3,8 @@ import { scaleBand, ScaleBand, scaleLinear, ScaleLinear } from 'd3-scale';
 import { axisLeft, Axis } from 'd3-axis';
 import { max } from 'd3-array';
 
+import { LeftCategoricalAxis } from '../../../charting/LeftCategorical'
+
 import { mappedFormat } from '../models/mapped';
 import { blueScale } from './colorScale';
 
@@ -20,9 +22,6 @@ export function bySubsidiariesCount(container: Selection<any, any, any, any>, wi
     };
 
     var _xScale: ScaleLinear<number, number>;
-    var _yScale: ScaleBand<string>;
-    var _yAxis: Axis<string>;
-    var _yAxisGroup: Selection<any, any, any, any>;
     var _seriesGroup: Selection<any, any, any, any>;
     var _legendGroup: Selection<any, any, any, any>;
     var _valueFn: (d: mappedFormat) => number;
@@ -54,12 +53,9 @@ export function bySubsidiariesCount(container: Selection<any, any, any, any>, wi
     let w = plotWidth - _margins.left - _margins.right;
     _xScale = scaleLinear()
         .range([0, w]);
-    _yScale = scaleBand()
-        .range([0, h])
+
+    let yAxis = new LeftCategoricalAxis(_container, w, h)
         .padding(0.5);
-    _yAxisGroup = _container.append('g')
-        .classed('vertical-axis', true);
-    _yAxis = axisLeft(_yScale);
 
     _seriesGroup = _container.append('g')
         .classed('series-group', true);
@@ -106,8 +102,7 @@ export function bySubsidiariesCount(container: Selection<any, any, any, any>, wi
     function update(data: Array<mappedFormat>) {
         var sorted = data.sort((a, b) => _valueFn(b) - _valueFn(a)).slice(0, 30);
         var domain = sorted.map(d => d.company);
-        _yScale.domain(domain);
-        _yAxisGroup.call(_yAxis);
+        yAxis.domain(domain);
 
         var xDomain = [0, max(sorted, _valueFn)];
         _xScale.domain(xDomain);
@@ -121,14 +116,14 @@ export function bySubsidiariesCount(container: Selection<any, any, any, any>, wi
             .enter()
             .append('g')
             .classed('series', true)
-            .attr('transform', d => `translate(${0},${_yScale(d.company)})`);
+            .attr('transform', d => `translate(${0},${yAxis.scale(d.company)})`);
         var cs = scaleLinear()
             .domain(xDomain)
             .range([0, 1]);
         enterSelection
             .append('rect')
             .attr('width', (d: mappedFormat) => _xScale(_valueFn(d)))
-            .attr('height', _yScale.bandwidth())
+            .attr('height', yAxis.bandWidth())
             .style('fill', d => blueScale()(cs(_valueFn(d))));
         _legendGroup.select('.max')
             .text(xDomain[1]);
