@@ -11,26 +11,40 @@ export var mom52 = {
     name: 'mom52',
     component: {
         templateUrl: 'mom/52/template.html',
-        controller: controller
+        controller: ['csvService', (csvService: ICsvService) => new controller(csvService)]
     }
 }
 
-function controller(csvService: ICsvService) {
-    const width = 1080;
-    const height = 480;
-    let plotMargins = {
+class controller {
+    private _width = 1080;
+    private _height = 480;
+    private _plotMargins = {
         top: 30,
         bottom: 30,
         left: 50,
         right: 180
     };
+    private _plotGroup: d3.Selection<SVGGElement, any, any, any>;
+    private _plotWidth: number;
+    private _plotHeight: number;
+    private _xAxis: BottomCategoricalAxis<any>;
+    private _yAxis: LeftLinearAxis<any>;
 
-    let p = plot.plot('#chart', width, height, plotMargins);
-    let plotGroup = p.group();
-    let plotHeight = p.height();
-    let plotWidth = p.width();
+    private _seriesContainer: d3.Selection<any, any, any, any>;
+    private _overlayContainer: d3.Selection<any, any, any, any>;
+    private _legend: d3.Selection<any, any, any, any>;
+    private _lineGenerator: d3.Line<any>;
 
-    let parseFunction = (d: any) => {
+    static $inject = ['csvService'];
+    constructor(private _csvService: ICsvService) {
+        let p = plot.plot('#chart', this._width, this._height, this._plotMargins);
+        this._plotGroup = p.group();
+        this._plotHeight = p.height();
+        this._plotWidth = p.width();
+    }
+
+
+    parseFunction = (d: any) => {
         let res = [];
         for (var key in d) {
             if (key !== 'Product Family') {
@@ -46,48 +60,52 @@ function controller(csvService: ICsvService) {
         }
     }
 
-    const fileName = 'mom/52/data/data.csv';
-    csvService.read<any>(fileName, update, parseFunction);
-    var xAxis = new BottomCategoricalAxis(plotGroup, plotWidth, plotHeight);
-    let yAxis = new LeftLinearAxis(plotGroup, plotWidth, plotHeight);
-    let lineGenerator = d3.line<any>()
-        .x((d: any) => xAxis.scale(d.year.toString()) + xAxis.bandWidth() / 2)
-        .y((d: any) => yAxis.scale(d.value));
+    $onInit() {
+        this._xAxis = new BottomCategoricalAxis(this._plotGroup, this._plotWidth, this._plotHeight);
+        this._yAxis = new LeftLinearAxis(this._plotGroup, this._plotWidth, this._plotHeight);
+        this._lineGenerator = d3.line<any>()
+            .x((d: any) => this._xAxis.scale(d.year.toString()) + this._xAxis.bandWidth() / 2)
+            .y((d: any) => this._yAxis.scale(d.value));
 
-    let seriesContainer = plotGroup.append('g')
-        .classed('series-list', true);
-    let overlayContainer = seriesContainer.append('g')
-        .classed('overlay', true);
-    overlayContainer.append('path')
-        .style('fill', 'none')
-        .style('stroke', 'blue');
+        this._seriesContainer = this._plotGroup.append('g')
+            .classed('series-list', true);
+        this._overlayContainer = this._seriesContainer.append('g')
+            .classed('overlay', true);
+        this._overlayContainer.append('path')
+            .style('fill', 'none')
+            .style('stroke', 'blue');
 
-    let legendWidth = 150;
-    let legendHeight = 20 * 15;
+        let legendWidth = 150;
+        let legendHeight = 20 * 15;
 
-    let legend = d3.select('svg')
-        .append('g')
-        .classed('legend', true)
-        .attr('transform', `translate(${plotWidth + plotMargins.left},${height / 2 - legendHeight / 2})`);
-    legend.append('rect')
-        .attr('width', legendWidth)
-        .attr('height', legendHeight)
-        .style('fill', 'none')
-        .style('stroke', 'darkgrey');
+        this._legend = d3.select('svg')
+            .append('g')
+            .classed('legend', true)
+            .attr('transform', `translate(${this._plotWidth + this._plotMargins.left},${this._height / 2 - legendHeight / 2})`);
+        this._legend.append('rect')
+            .attr('width', legendWidth)
+            .attr('height', legendHeight)
+            .style('fill', 'none')
+            .style('stroke', 'darkgrey');
 
-    function update(data: IDataFormat<any>) {
+
+        const fileName = 'mom/52/data/data.csv';
+        this._csvService.read<any>(fileName, this.update.bind(this), this.parseFunction);
+
+    }
+    private update(data: IDataFormat<any>) {
         // console.log(data)
         // let columns = data.columns.splice(1, data.columns.length - 1)
         // let layout = d3.stack<any>()
         //     .keys(d3.range(2006, 2017, 1).map(d => d.toString()));
         // let series = layout(data);
         // console.log(series)
-        xAxis.domain(d3.range(2006, 2017, 1).map(d => d.toString()));
-        yAxis.domain([0, d3.max(data[data.length - 1].values, (d: any) => d.value)]);
+        this._xAxis.domain(d3.range(2006, 2017, 1).map(d => d.toString()));
+        this._yAxis.domain([0, d3.max(data[data.length - 1].values, (d: any) => d.value)]);
 
-        let bandWidth = xAxis.bandWidth();
+        let bandWidth = this._xAxis.bandWidth();
 
-        let seriesGroup = seriesContainer
+        let seriesGroup = this._seriesContainer
             .selectAll('.series')
             .data(data.filter(d => d.productFamily === 'Totals'))
             .enter()
@@ -97,11 +115,11 @@ function controller(csvService: ICsvService) {
             .data(d => d.values)
             .enter().append('circle')
             .attr('r', 5)
-            .attr('cx', (d: any) => xAxis.scale(d.year.toString()) + bandWidth / 2)
-            .attr('cy', (d: any) => yAxis.scale(d.value))
+            .attr('cx', (d: any) => this._xAxis.scale(d.year.toString()) + bandWidth / 2)
+            .attr('cy', (d: any) => this._yAxis.scale(d.value))
             .style('fill', 'green');
-
-        let items = legend.selectAll('.legend-item')
+        var self = this;
+        let items = this._legend.selectAll('.legend-item')
             .data(data.filter(d => d.productFamily !== 'Totals'))
             .enter()
             .append('g')
@@ -110,8 +128,9 @@ function controller(csvService: ICsvService) {
             .on('click', function (d: any, i) {
                 d3.selectAll('.highlight').classed('highlight', false);
                 d3.select(this).classed('highlight', true);
-                overlayContainer.select('path')
-                    .attr('d', lineGenerator(d.values));
+                self._overlayContainer
+                    .select('path')
+                    .attr('d', self._lineGenerator(d.values));
             });
         items.append('text')
             .attr('y', 10)
