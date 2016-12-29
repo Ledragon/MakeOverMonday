@@ -1,5 +1,7 @@
 import * as d3 from 'd3';
 import * as plot from '../../charting/plotFactory';
+import { BottomCategoricalAxis } from '../../charting/bottomCategoricalAxis';
+import { LeftCategoricalAxis } from '../../charting/LeftCategorical';
 import { ICsvService } from '../../services/csvService';
 
 export var mom31 = {
@@ -38,23 +40,16 @@ function controller(csvService: ICsvService) {
     var chartWidth = _width - _chartMargins.left - _chartMargins.right;
     var chartHeight = _height - _chartMargins.top - _chartMargins.bottom;
 
-    var plotGroup = chartGroup.append('g')
+    var plotGroup: d3.Selection<SVGGElement, any, any, any> = <d3.Selection<SVGGElement, any, any, any>>chartGroup.append('g')
         .classed('plot-group', true)
         .attr('transform', `translate(${_plotMargins.left},${_plotMargins.top})`);
 
     var plotWidth = chartWidth - _plotMargins.left - _plotMargins.right;
     var plotHeight = chartHeight - _plotMargins.top - _plotMargins.bottom;
 
-    let xScale = d3.scaleBand<string>()
-        .range([0, plotWidth]);
-    let xAxis = d3.axisBottom(xScale);
-    let xAxisGroup = plotGroup.append('g')
-        .attr('transform', `translate(${0},${plotHeight})`);
+    let xAxis = new BottomCategoricalAxis(plotGroup, plotWidth, plotHeight);
 
-    let yScale = d3.scaleBand<string>()
-        .range([0, plotHeight]);
-    let yAxis = d3.axisLeft(yScale);
-    let yAxisGroup = plotGroup.append('g');
+    let yAxis = new LeftCategoricalAxis(plotGroup, plotWidth, plotHeight);
 
     let seriesScale = d3.scaleLinear<number>()
         .range([0, 15]);
@@ -87,11 +82,8 @@ function controller(csvService: ICsvService) {
             });
         var values = [].concat.apply([], byPhrase.map(d => d.values)).map((d: any) => d.value);
         seriesScale.domain(d3.extent(values));
-        console.log(values);
-        xScale.domain(labels);
-        xAxisGroup.call(xAxis);
-        yScale.domain(phrases);
-        yAxisGroup.call(yAxis);
+        xAxis.domain(labels);
+        yAxis.domain(phrases);
         var dataBound = seriesGroup.selectAll('.seriesGroup')
             .data(byPhrase);
         dataBound
@@ -102,7 +94,7 @@ function controller(csvService: ICsvService) {
             .append('g')
             .classed('seriesGroup', true)
             .attr('transform', (d, i) => {
-                return `translate(${0},${yScale(d.key) + yScale.bandwidth() / 2})`
+                return `translate(${0},${yAxis.scale(d.key) + yAxis.bandWidth() / 2})`
             });
         enterSelection.append('line')
             .classed('gridline', true)
@@ -116,7 +108,7 @@ function controller(csvService: ICsvService) {
             .enter()
             .append('circle')
             .style('fill', '#824670')
-            .attr('cx', d => xScale(d.key) + xScale.bandwidth() / 2)
+            .attr('cx', d => xAxis.scale(d.key) + xAxis.bandWidth() / 2)
             // .attr('cy', yScale.bandwidth() / 2)
             .attr('r', d => seriesScale(d.value))
     };
