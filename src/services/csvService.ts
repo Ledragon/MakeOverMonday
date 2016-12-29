@@ -1,18 +1,31 @@
 import * as d3 from 'd3';
 var _cache: Array<IKeyValuePair> = [];
-//TODO cache values per file
 
 export class CsvService implements ICsvService {
     read<T>(path: string, callback: (data: IDataFormat<T>) => void, parseFunction?: (d: any) => any) {
-        d3.csv(path,
-            parseFunction ? parseFunction : (d: any) => d as any,
-            (error: any, data: IDataFormat<T>) => {
-                if (error) {
-                    console.error(error);
-                } else {
-                    callback(data);
+        if (_cache.some(d => d.key === path)) {
+            let data = undefined;
+            _cache.forEach(d => {
+                if (d.key === path) {
+                    data = d.values;
                 }
             });
+            callback(data);
+        } else {
+            d3.csv(path,
+                parseFunction ? parseFunction : (d: any) => d as any,
+                (error: any, data: IDataFormat<T>) => {
+                    if (error) {
+                        console.error(error);
+                    } else {
+                        _cache.push({
+                            key: path,
+                            values: data
+                        });
+                        callback(data);
+                    }
+                });
+        }
     }
 }
 
@@ -25,7 +38,7 @@ interface IDataFormat<T> extends Array<T> {
     columns: string[];
 }
 
-interface IKeyValuePair{
+interface IKeyValuePair {
     key: string;
-    values:Array<any>
+    values: IDataFormat<any>;
 }

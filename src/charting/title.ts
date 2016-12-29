@@ -5,7 +5,7 @@ export class title {
     constructor(container: Selection<any, any, any, any>, width: number, height: number) {
         this._group = container.append('g')
             .classed('chart-title', true)
-            .attr('transform', `translate(${width / 2},${0})`);
+            .attr('transform', `translate(${width / 2},${30})`);
 
         this._group.append('text');
     }
