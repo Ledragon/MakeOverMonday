@@ -10,10 +10,6 @@
     flex-shrink:0;
 }
 .card{
-    /*flex-basis: 12.5%; 
-    flex-grow:0; 
-    flex-shrink:0;*/
-    /*padding:10px;*/
     height: 180px;
     overflow-x: hidden;
     overflow-y: hidden;
@@ -25,4 +21,15 @@
 }
 .card-body{
     padding:5px;
+}
+.gallery-container{
+    padding: 10px;
+    flex-grow:1; 
+    display: flex; 
+    flex-wrap:wrap; 
+    overflow-y:auto;
+    
+}
+.gallery-item{
+    padding:10px;
 }
