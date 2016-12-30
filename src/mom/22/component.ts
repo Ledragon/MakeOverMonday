@@ -33,18 +33,21 @@ function controller(csvService: ICsvService) {
         .append('svg')
         .attr('id', 'other')
         .style('border', '1px black solid');
-    d3.select('#chart')
-        .append('svg')
-        .attr('id', 'perYear')
-        .style('border', '1px black solid');
+    // d3.select('#chart')
+    //     .append('div')
+    //     .attr('id', 'perYear')
+    //     .style('border', '1px black solid')
+    //     .style('float', 'left');
+    var histogram = new apphistogram('histogram', width, height);
+    var map = new appmap('map', width, height, 'common-data/world.json');
+    var perYear = new appviewPerYearOfBirth('chart', width, height);
+    var perIndustry = new appwomenPerIndustry('other', width, height);
+
+    
     d3.select('#chart')
         .append('svg')
         .attr('id', 'brush')
         .style('border', '1px black solid');
-    var histogram = new apphistogram('histogram', width, height);
-    var map = new appmap('map', width, height, 'common-data/world.json');
-    var perYear = new appviewPerYearOfBirth('perYear', width, height);
-    var perIndustry = new appwomenPerIndustry('other', width, height);
     var brush = new appBrush('brush', 1606, 50);
 
     const fileName = 'mom/22/data/History of Famous People.csv';

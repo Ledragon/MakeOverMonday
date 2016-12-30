@@ -12,26 +12,25 @@ export class BottomLinearAxis<T> {
     constructor(container: Selection<any, any, any, any>, private _width: number, private _height: number) {
         var xScale = scaleLinear<number>()
             .range([0, this._width]);
-        var fmt = format('0')
+        var fmt = format('0');
         var xAxis = axisBottom(xScale)
-            .tickFormat((d:any) => fmt(d));
+            .tickFormat((d: any) => fmt(d));
         var xAxisGroup = container.append('g')
             .classed('horizontal axis', true)
-            .attr('transform', `translate(${0},${this._height})`)
-            .call(xAxis);
+            .attr('transform', `translate(${0},${this._height})`);
 
         this._scale = xScale;
         this._group = xAxisGroup;
         this._axis = xAxis;
     }
 
-    update(data: Array<T>): void {
-        var domain = data.map((d:any) => d.year);
-        this._scale.domain(extent(domain));
+    domain(value: [number, number]): BottomLinearAxis<T> {
+        this._scale.domain(value);
         this._group.call(this._axis);
+        return this;
     }
 
-    scale(): ScaleLinear<number, number> {
-        return this._scale;
+    scale(value: number): number {
+        return this._scale(value);
     }
 }

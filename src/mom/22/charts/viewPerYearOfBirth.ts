@@ -1,23 +1,21 @@
 import * as d3 from 'd3';
 
 import { title } from '../../../charting/title';
+import { plot } from '../../../charting/plotFactory';
+import { BottomLinearAxis } from '../../../charting/BottomLinearAxis';
+import { LeftLinearAxis } from '../../../charting/LeftLinearAxis';
 
 import { IHistory } from '../IHistory';
 
 export class viewPerYearOfBirth {
-    private _marginTop = 50;
-    private _marginBottom = 40;
-    private _marginLeft = 50;
+    private _marginTop = 60;
+    private _marginBottom = 30;
+    private _marginLeft = 60;
     private _marginRight = 30;
     private _container: d3.Selection<any, any, any, any>;
 
-    private _scale: d3.ScaleLinear<any, any>;
-    private _axis: d3.Axis<any>;
-    private _axisGroup: d3.Selection<any, any, any, any>;
-
-    private _yScale: d3.ScaleLinear<any, any>;
-    private _yAxis: d3.Axis<any>;
-    private _yAxisGroup: d3.Selection<any, any, any, any>;
+    private _xAxis: BottomLinearAxis<any>;
+    private _yAxis: LeftLinearAxis<any>;
 
     private _pathGenerator: d3.Line<any>;
     private _pathGroup: d3.Selection<any, any, any, any>;
@@ -25,45 +23,24 @@ export class viewPerYearOfBirth {
     private _preparedData: any;
 
     constructor(containerId: string, private _width: number, private _height: number) {
-        this._container = d3.select(`#${containerId}`)
-            .attr('width', this._width)
-            .attr('height', _height)
-            .append('g')
-            .classed('chart', true);
-
-
+        var p = plot('#' + containerId, this._width, this._height, { top: this._marginTop, bottom: this._marginBottom, left: this._marginLeft, right: this._marginRight });
+        this._container = p.group();
         var container = this._container.append('g')
-            .classed('chart-container', true)
-            .attr('transform', `translate(${this._marginLeft},${this._marginTop})`);
-        this.initXAxis(container);
-        this.initYAxis(container);
+            .classed('chart-container', true);
+        let plotWidth = p.width();
+        let plotHeight = p.height();
+        this._xAxis = new BottomLinearAxis(container, plotWidth, plotHeight);
+        this._yAxis = new LeftLinearAxis(<any>container, plotWidth, plotHeight)
+            .format('s');
         this.initPathGenerator(container);
-        new title(this._container, this._width, this._height)
+        new title(p.parent(), this._width, this._height)
             .text('Total number of views according to birth year');
-    }
-
-    private initXAxis(container: d3.Selection<any, any, any, any>) {
-        this._scale = d3.scaleLinear()
-            .range([0, this._width - this._marginLeft - this._marginRight]);
-        this._axis = d3.axisBottom(this._scale);
-        this._axisGroup = container.append('g')
-            .classed('axis', true)
-            .attr('transform', `translate(${0},${this._height - this._marginBottom - this._marginTop})`)
-    }
-
-    private initYAxis(container: d3.Selection<any, any, any, any>) {
-        this._yScale = d3.scaleLinear()
-            .range([this._height - this._marginBottom - this._marginTop, 0]);
-        this._yAxis = d3.axisLeft(this._yScale)
-            .tickFormat(d3.format('s'));
-        this._yAxisGroup = container.append('g')
-            .classed('axis', true);
     }
 
     private initPathGenerator(container: d3.Selection<any, any, any, any>) {
         this._pathGenerator = d3.line<any>()
-            .x(d => this._scale(d.Birthyear))
-            .y(d => this._yScale(+(d['Total Page Views'].replace(/,/g, ''))))
+            .x(d => this._xAxis.scale(d.Birthyear))
+            .y(d => this._yAxis.scale(+(d['Total Page Views'].replace(/,/g, ''))))
         this._pathGroup = container.append('g')
             .append('path')
             .style('fill', 'transparent')
@@ -75,11 +52,8 @@ export class viewPerYearOfBirth {
         var years = data.map(d => +d.Birthyear)
             .sort((a, b) => a - b);
         var mapped = data.map(d => +(d['Total Page Views'].replace(/,/g, '')));
-        this._scale.domain(d3.extent(years));
-        this._axisGroup.call(this._axis);
-
-        this._yScale.domain(d3.extent(mapped));
-        this._yAxisGroup.call(this._yAxis);
+        this._xAxis.domain(d3.extent(years));
+        this._yAxis.domain(d3.extent(mapped));
 
         var prepared = data.filter(d => !!d.Birthyear)
             .sort((a, b) => a.Birthyear - b.Birthyear);

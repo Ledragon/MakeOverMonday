@@ -4,8 +4,9 @@ export class chartContainer {
     private _chartContainerWidth: number;
     private _chartContainerHeight: number;
     private _group: d3.Selection<any, any, any, any>;
-
+    private _parent: d3.Selection<any, any, any, any>;
     constructor(container: d3.Selection<any, any, any, any>, width: number, height: number, margins: IMargins) {
+        this._parent = container;
         let chartContainerMargins = margins;
         let chartContainerGroup = container.append('g')
             // .classed('chartContainer', true)
@@ -17,7 +18,9 @@ export class chartContainer {
         this._chartContainerHeight = chartContainerHeight;
         this._group = chartContainerGroup;
     }
-
+    parent() {
+        return this._parent;
+    }
     group() {
         return this._group;
     }
