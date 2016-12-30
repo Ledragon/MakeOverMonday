@@ -30,11 +30,14 @@ export class LinearLinearChart<T> {
             .classed('chart-container', true);
         let plotWidth = p.width();
         let plotHeight = p.height();
-        this._xAxis = new BottomLinearAxis(container, plotWidth, plotHeight);
-        this._yAxis = new LeftLinearAxis(<any>container, plotWidth, plotHeight)
+        this._xAxis = new BottomLinearAxis<T>(container, plotWidth, plotHeight);
+        this._yAxis = new LeftLinearAxis<T>(<any>container, plotWidth, plotHeight)
             .format('s');
         this.initPathGenerator(container);
         this._title = new title(p.parent(), this._width, this._height);
+
+        this._x = (d: any) => d.x;
+        this._y = (d: any) => d.y;
     }
 
     x(value: (d: T) => number): LinearLinearChart<T> {
