@@ -1,6 +1,7 @@
 import * as d3 from 'd3';
 
-import { title } from './title';
+import { title } from '../../../charting/title';
+
 import { IHistory } from '../IHistory';
 
 export class viewPerYearOfBirth {
@@ -21,11 +22,6 @@ export class viewPerYearOfBirth {
     private _pathGenerator: d3.Line<any>;
     private _pathGroup: d3.Selection<any, any, any, any>;
 
-
-    // private _brush: d3.svg.Brush<any>;
-    // private _brushScale: d3.scale.Linear<any, any>;
-    // private _brushGroup: d3.Selection<any>;
-
     private _preparedData: any;
 
     constructor(containerId: string, private _width: number, private _height: number) {
@@ -42,9 +38,8 @@ export class viewPerYearOfBirth {
         this.initXAxis(container);
         this.initYAxis(container);
         this.initPathGenerator(container);
-        // this.initPoints(container);
-        new title(this._container, this._width, 'Total number of views according to birth year')
-        // this.initBrush(this._pointsGroup);
+        new title(this._container, this._width, this._height)
+            .text('Total number of views according to birth year');
     }
 
     private initXAxis(container: d3.Selection<any, any, any, any>) {
@@ -69,7 +64,6 @@ export class viewPerYearOfBirth {
         this._pathGenerator = d3.line<any>()
             .x(d => this._scale(d.Birthyear))
             .y(d => this._yScale(+(d['Total Page Views'].replace(/,/g, ''))))
-        // .interpolate('basis');
         this._pathGroup = container.append('g')
             .append('path')
             .style('fill', 'transparent')

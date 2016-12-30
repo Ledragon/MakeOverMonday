@@ -1,6 +1,6 @@
 import * as d3 from 'd3';
 
-import { title } from './title';
+import { title } from '../../../charting/title';
 import { IHistory } from '../IHistory';
 
 export class histogram {
@@ -34,7 +34,8 @@ export class histogram {
         this.initHistogram();
         this._seriesGroup = plotArea.append('g')
             .classed('series', true);
-        new title(this._container, width, 'Number of famous people');
+        new title(this._container, width-this._marginLeft, height)
+            .text('Number of famous people');
     }
 
     private initHistogram() {

@@ -1,6 +1,6 @@
 import * as d3 from 'd3';
 
-import { title } from './title';
+import { title } from '../../../charting/title';
 import { IHistory } from '../IHistory';
 
 export class map {
@@ -17,7 +17,8 @@ export class map {
             .attr('height', height)
             .append('g')
             .classed('map', true);
-        new title(this._container, width, 'Number of famous people by country');
+        new title(this._container, width, height)
+            .text('Number of famous people by country');
         var countries = this._container
             .append('g')
             .classed('countries', true)

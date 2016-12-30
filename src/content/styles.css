@@ -43,6 +43,11 @@ ui-view, :host, .flex-container{
 .menu-item.highlight{
     border: 1px solid wheat;
 }
+
+.chart-title text{
+    text-anchor: middle;
+    font-size: 1.2em;
+}
 .series path{
     /*stroke:blue;*/
     fill:none;
