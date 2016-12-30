@@ -21,18 +21,15 @@ function controller(csvService: ICsvService) {
     var height = 350;
     d3.select('#chart')
         .append('svg')
-        .attr('id', 'histogram')
-        .style('border', '1px black solid');
+        .attr('id', 'histogram');
 
     d3.select('#chart')
         .append('svg')
-        .attr('id', 'map')
-        .style('border', '1px black solid');
+        .attr('id', 'map');
 
     d3.select('#chart')
         .append('svg')
-        .attr('id', 'other')
-        .style('border', '1px black solid');
+        .attr('id', 'other');
     // d3.select('#chart')
     //     .append('div')
     //     .attr('id', 'perYear')
