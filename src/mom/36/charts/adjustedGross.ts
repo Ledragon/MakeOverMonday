@@ -4,7 +4,7 @@ import { title } from '../../../charting/title';
 import { LeftCategoricalAxis } from '../../../charting/LeftCategoricalAxis';
 import { IMargins } from '../../../charting/IMargins';
 
-import { IDate } from './Idate';
+import { IDate } from './IDate';
 import { group } from './group';
 import { colors } from './colors';
 

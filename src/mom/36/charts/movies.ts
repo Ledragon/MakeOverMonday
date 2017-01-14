@@ -1,5 +1,5 @@
 import * as d3 from 'd3';
-import { IDate } from './Idate';
+import { IDate } from './IDate';
 import { IMargins } from './IMargins';
 import { group } from './group';
 
