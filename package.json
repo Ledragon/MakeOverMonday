@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "watch": "webpack --watch",
-    "serve": "live-server src"
+    "serve": "live-server src --port=8081"
   },
   "keywords": [],
   "author": "",
